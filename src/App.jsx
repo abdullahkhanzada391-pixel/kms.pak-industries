@@ -25,8 +25,8 @@ export default function App() {
       {/* Precision Interactive Desktop Cursor */}
       <CustomCursor />
 
-      <div className="min-h-screen bg-kps-dark text-slate-100 flex flex-col justify-between selection:bg-amber-500 selection:text-black">
-        {/* Top Global Navigation Bar */}
+      <div className="min-h-screen bg-[#111315] text-[#E8ECE9] flex flex-col justify-between selection:bg-[#174D38] selection:text-white">
+        {/* Top Global Dark Luxury Navigation Bar */}
         <Navbar />
 
         {/* Page Content Routes */}
@@ -50,7 +50,7 @@ export default function App() {
           </Routes>
         </main>
 
-        {/* Global Industrial Corporate Footer */}
+        {/* Global Dark Luxury Industrial Footer */}
         <Footer />
       </div>
     </BrowserRouter>

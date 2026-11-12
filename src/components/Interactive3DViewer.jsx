@@ -5,10 +5,9 @@ import { Cpu, Zap, Activity, Rotate3d, Play, Pause, Layers } from 'lucide-react'
 export default function Interactive3DViewer() {
   const mountRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(true);
-  const [mode, setMode] = useState('rotor'); // 'rotor' | 'flux' | 'dynamo'
   const [telemetry, setTelemetry] = useState({
     rpm: 1500,
-    voltage: 415,
+    voltage: 400,
     frequency: 50.0,
     load: 78,
   });
@@ -36,11 +35,11 @@ export default function Interactive3DViewer() {
     if (!mount) return;
 
     const width = mount.clientWidth;
-    const height = mount.clientHeight || 450;
+    const height = mount.clientHeight || 440;
 
     // SCENE
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x080C14, 0.04);
+    scene.fog = new THREE.FogExp2(0x111315, 0.04);
     sceneState.current.scene = scene;
 
     // CAMERA
@@ -54,23 +53,23 @@ export default function Interactive3DViewer() {
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.2;
+    renderer.toneMappingExposure = 1.15;
     mount.appendChild(renderer.domElement);
     sceneState.current.renderer = renderer;
 
-    // LIGHTS
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+    // LIGHTS: Forest green & technical white industrial lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
     scene.add(ambientLight);
 
-    const dirLight1 = new THREE.DirectionalLight(0xF59E0B, 2.5);
+    const dirLight1 = new THREE.DirectionalLight(0x216447, 2.8);
     dirLight1.position.set(5, 6, 4);
     scene.add(dirLight1);
 
-    const dirLight2 = new THREE.DirectionalLight(0x0EA5E9, 2.0);
+    const dirLight2 = new THREE.DirectionalLight(0xE8ECE9, 1.8);
     dirLight2.position.set(-5, -3, -4);
     scene.add(dirLight2);
 
-    const pointLight = new THREE.PointLight(0xFCD34D, 3, 10);
+    const pointLight = new THREE.PointLight(0x2E8B62, 3, 10);
     pointLight.position.set(0, 0, 0);
     scene.add(pointLight);
 
@@ -82,7 +81,7 @@ export default function Interactive3DViewer() {
     // 1. Central Drive Shaft (Industrial polished steel)
     const shaftGeom = new THREE.CylinderGeometry(0.2, 0.2, 3.8, 32);
     const shaftMat = new THREE.MeshStandardMaterial({
-      color: 0x94A3B8,
+      color: 0x929A96,
       metalness: 0.9,
       roughness: 0.2,
     });
@@ -93,7 +92,7 @@ export default function Interactive3DViewer() {
     // 2. Rotor Core Cylindrical Laminations
     const coreGeom = new THREE.CylinderGeometry(0.85, 0.85, 2.2, 32);
     const coreMat = new THREE.MeshStandardMaterial({
-      color: 0x1E293B,
+      color: 0x24282A,
       metalness: 0.7,
       roughness: 0.4,
     });
@@ -107,7 +106,7 @@ export default function Interactive3DViewer() {
       const angle = (i / poleCount) * Math.PI * 2;
       const poleGeom = new THREE.BoxGeometry(0.35, 1.9, 0.35);
       const copperMat = new THREE.MeshStandardMaterial({
-        color: 0xD97706,
+        color: 0xB45309,
         metalness: 0.85,
         roughness: 0.25,
       });
@@ -123,7 +122,7 @@ export default function Interactive3DViewer() {
       // Copper wire coil wraps around each pole
       const wireGeom = new THREE.TorusGeometry(0.25, 0.04, 12, 24);
       const wireMat = new THREE.MeshStandardMaterial({
-        color: 0xF59E0B,
+        color: 0xD97706,
         metalness: 0.9,
         roughness: 0.1,
       });
@@ -139,7 +138,7 @@ export default function Interactive3DViewer() {
 
     const statorGeom = new THREE.CylinderGeometry(1.4, 1.4, 2.6, 24, 1, true);
     const statorMat = new THREE.MeshStandardMaterial({
-      color: 0x0F172A,
+      color: 0x181C1B,
       metalness: 0.8,
       roughness: 0.4,
       wireframe: true,
@@ -148,13 +147,13 @@ export default function Interactive3DViewer() {
     stator.rotation.z = Math.PI / 2;
     statorGroup.add(stator);
 
-    // Stator End Rings
+    // Stator End Rings: Forest Green Accents
     [-1.3, 1.3].forEach(xPos => {
       const ringGeom = new THREE.TorusGeometry(1.4, 0.06, 16, 32);
       const ringMat = new THREE.MeshStandardMaterial({
-        color: 0x38BDF8,
-        emissive: 0x0284C7,
-        emissiveIntensity: 0.4,
+        color: 0x216447,
+        emissive: 0x174D38,
+        emissiveIntensity: 0.5,
         metalness: 0.9,
         roughness: 0.2,
       });
@@ -187,23 +186,18 @@ export default function Interactive3DViewer() {
     particleGeom.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
 
     const particleMat = new THREE.PointsMaterial({
-      color: 0xF59E0B,
-      size: 0.06,
+      color: 0x2E8B62,
+      size: 0.045,
       transparent: true,
       opacity: 0.85,
       blending: THREE.AdditiveBlending,
     });
+
     const fluxParticles = new THREE.Points(particleGeom, particleMat);
     scene.add(fluxParticles);
     sceneState.current.fluxParticles = fluxParticles;
 
-    // IntersectionObserver to pause when outside viewport
-    const observer = new IntersectionObserver(([entry]) => {
-      sceneState.current.isVisible = entry.isIntersecting;
-    }, { threshold: 0.1 });
-    observer.observe(mount);
-
-    // Mouse Interaction
+    // INTERACTION HANDLERS
     const onMouseDown = (e) => {
       sceneState.current.isDragging = true;
       sceneState.current.prevMouseX = e.clientX;
@@ -214,8 +208,8 @@ export default function Interactive3DViewer() {
       if (!sceneState.current.isDragging) return;
       const deltaX = e.clientX - sceneState.current.prevMouseX;
       const deltaY = e.clientY - sceneState.current.prevMouseY;
-      sceneState.current.targetRotY += deltaX * 0.008;
-      sceneState.current.targetRotX += deltaY * 0.008;
+      sceneState.current.targetRotY += deltaX * 0.007;
+      sceneState.current.targetRotX += deltaY * 0.007;
       sceneState.current.prevMouseX = e.clientX;
       sceneState.current.prevMouseY = e.clientY;
     };
@@ -224,12 +218,7 @@ export default function Interactive3DViewer() {
       sceneState.current.isDragging = false;
     };
 
-    const domEl = renderer.domElement;
-    domEl.addEventListener('mousedown', onMouseDown);
-    window.addEventListener('mousemove', onMouseMove);
-    window.addEventListener('mouseup', onMouseUp);
-
-    // Touch support for mobile
+    // Touch events for mobile
     const onTouchStart = (e) => {
       if (e.touches.length === 1) {
         sceneState.current.isDragging = true;
@@ -237,96 +226,86 @@ export default function Interactive3DViewer() {
         sceneState.current.prevMouseY = e.touches[0].clientY;
       }
     };
+
     const onTouchMove = (e) => {
       if (!sceneState.current.isDragging || e.touches.length !== 1) return;
       const deltaX = e.touches[0].clientX - sceneState.current.prevMouseX;
       const deltaY = e.touches[0].clientY - sceneState.current.prevMouseY;
-      sceneState.current.targetRotY += deltaX * 0.008;
-      sceneState.current.targetRotX += deltaY * 0.008;
+      sceneState.current.targetRotY += deltaX * 0.007;
+      sceneState.current.targetRotX += deltaY * 0.007;
       sceneState.current.prevMouseX = e.touches[0].clientX;
       sceneState.current.prevMouseY = e.touches[0].clientY;
     };
+
     const onTouchEnd = () => {
       sceneState.current.isDragging = false;
     };
 
-    domEl.addEventListener('touchstart', onTouchStart, { passive: true });
+    mount.addEventListener('mousedown', onMouseDown);
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mouseup', onMouseUp);
+    mount.addEventListener('touchstart', onTouchStart, { passive: true });
     window.addEventListener('touchmove', onTouchMove, { passive: true });
     window.addEventListener('touchend', onTouchEnd);
 
-    // Animation Loop
-    let clock = new THREE.Clock();
+    // RESIZE OBSERVER
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const { width: newWidth, height: newHeight } = entry.contentRect;
+        if (newWidth > 0 && newHeight > 0) {
+          camera.aspect = newWidth / newHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(newWidth, newHeight);
+        }
+      }
+    });
+    resizeObserver.observe(mount);
+
+    // ANIMATION LOOP
+    let angleOffset = 0;
     const animate = () => {
       sceneState.current.animId = requestAnimationFrame(animate);
 
-      if (!sceneState.current.isVisible) return;
+      // Smooth inertia rotation
+      sceneState.current.currentRotY += (sceneState.current.targetRotY - sceneState.current.currentRotY) * 0.08;
+      sceneState.current.currentRotX += (sceneState.current.targetRotX - sceneState.current.currentRotX) * 0.08;
 
-      const delta = clock.getDelta();
-
-      // Smooth damping rotation
-      sceneState.current.currentRotY += (sceneState.current.targetRotY - sceneState.current.currentRotY) * 0.1;
-      sceneState.current.currentRotX += (sceneState.current.targetRotX - sceneState.current.currentRotX) * 0.1;
-
-      // Auto rotation when playing
-      if (isPlaying) {
-        rotorGroup.rotation.x += delta * 2.5; // High speed rotor spin
-        sceneState.current.targetRotY += delta * 0.15; // Slow gentle display drift
+      if (rotorGroup) {
+        if (isPlaying) {
+          angleOffset += 0.04;
+          rotorGroup.rotation.x = angleOffset;
+        }
+        rotorGroup.rotation.y = sceneState.current.currentRotY;
+        rotorGroup.rotation.z = sceneState.current.currentRotX;
       }
 
-      rotorGroup.rotation.y = sceneState.current.currentRotY;
-      statorGroup.rotation.y = sceneState.current.currentRotY;
-      fluxParticles.rotation.y = sceneState.current.currentRotY;
-
-      rotorGroup.rotation.z = sceneState.current.currentRotX;
-      statorGroup.rotation.z = sceneState.current.currentRotX;
-      fluxParticles.rotation.z = sceneState.current.currentRotX;
-
-      // Animate Flux Particles along circumference
-      const posArray = particleGeom.attributes.position.array;
-      for (let i = 0; i < particleCount; i++) {
-        particleAngles[i] += particleSpeeds[i] * (isPlaying ? 1 : 0.2);
-        posArray[i * 3 + 1] = Math.cos(particleAngles[i]) * particleRadii[i];
-        posArray[i * 3 + 2] = Math.sin(particleAngles[i]) * particleRadii[i];
+      // Animate Flux Particles
+      if (fluxParticles && isPlaying) {
+        const positions = fluxParticles.geometry.attributes.position.array;
+        for (let i = 0; i < particleCount; i++) {
+          particleAngles[i] += particleSpeeds[i];
+          positions[i * 3 + 1] = Math.cos(particleAngles[i]) * particleRadii[i];
+          positions[i * 3 + 2] = Math.sin(particleAngles[i]) * particleRadii[i];
+        }
+        fluxParticles.geometry.attributes.position.needsUpdate = true;
       }
-      particleGeom.attributes.position.needsUpdate = true;
 
       renderer.render(scene, camera);
     };
     animate();
 
-    // Resize Handler
-    const handleResize = () => {
-      if (!mount) return;
-      const w = mount.clientWidth;
-      const h = mount.clientHeight || 450;
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
-      renderer.setSize(w, h);
-    };
-    window.addEventListener('resize', handleResize);
-
-    // Telemetry ticker
-    const telemetryInterval = setInterval(() => {
-      setTelemetry({
-        rpm: 1500 + Math.floor(Math.random() * 8 - 4),
-        voltage: 415 + Math.floor(Math.random() * 4 - 2),
-        frequency: Number((50.0 + (Math.random() * 0.1 - 0.05)).toFixed(2)),
-        load: 78 + Math.floor(Math.random() * 4 - 2),
-      });
-    }, 1500);
-
+    // CLEANUP
     return () => {
-      observer.disconnect();
-      clearInterval(telemetryInterval);
-      window.removeEventListener('resize', handleResize);
-      domEl.removeEventListener('mousedown', onMouseDown);
+      if (sceneState.current.animId) cancelAnimationFrame(sceneState.current.animId);
+      resizeObserver.disconnect();
+      mount.removeEventListener('mousedown', onMouseDown);
       window.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('mouseup', onMouseUp);
-      domEl.removeEventListener('touchstart', onTouchStart);
+      mount.removeEventListener('touchstart', onTouchStart);
       window.removeEventListener('touchmove', onTouchMove);
       window.removeEventListener('touchend', onTouchEnd);
-      if (sceneState.current.animId) cancelAnimationFrame(sceneState.current.animId);
-      if (renderer.domElement && mount.contains(renderer.domElement)) {
+
+      if (renderer && renderer.domElement && mount.contains(renderer.domElement)) {
         mount.removeChild(renderer.domElement);
       }
       renderer.dispose();
@@ -334,21 +313,20 @@ export default function Interactive3DViewer() {
   }, [isPlaying]);
 
   return (
-    <div className="relative w-full rounded-2xl bg-gradient-to-b from-kps-card to-kps-dark border border-slate-800 p-4 sm:p-6 shadow-2xl overflow-hidden">
-      {/* Background radial glow */}
-      <div className="absolute -top-24 -left-24 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
+    <div className="relative w-full rounded-2xl bg-[#24282A] border border-[#343B37] p-5 sm:p-6 shadow-2xl overflow-hidden">
+      {/* Background Lighting */}
+      <div className="absolute -top-24 -left-24 w-96 h-96 bg-[#174D38]/15 rounded-full blur-3xl pointer-events-none" />
 
       {/* Header bar */}
-      <div className="relative z-10 flex flex-wrap items-center justify-between gap-3 border-b border-slate-800/80 pb-4">
+      <div className="relative z-10 flex flex-wrap items-center justify-between gap-3 border-b border-[#343B37] pb-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-xs font-mono font-semibold tracking-wider text-amber-400 uppercase">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#216447] animate-pulse" />
+            <span className="text-xs font-mono font-semibold tracking-wider text-[#2E8B62] uppercase">
               3D Interactive Diagnostic
             </span>
           </div>
-          <h3 className="text-xl sm:text-2xl font-bold text-slate-100 font-display mt-0.5">
+          <h3 className="text-xl sm:text-2xl font-bold text-[#E8ECE9] font-display mt-0.5">
             Heavy-Duty Industrial Alternator & Rotor Core
           </h3>
         </div>
@@ -357,72 +335,71 @@ export default function Interactive3DViewer() {
         <div className="flex items-center gap-2">
           <button
             onClick={() => setIsPlaying(!isPlaying)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium border border-slate-700 bg-slate-900/80 hover:border-amber-500/50 hover:text-amber-400 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium border border-[#343B37] bg-[#181C1B] hover:border-[#216447] hover:text-[#E8ECE9] transition-colors"
             title={isPlaying ? "Pause rotation" : "Start rotation"}
           >
-            {isPlaying ? <Pause className="w-3.5 h-3.5 text-amber-400" /> : <Play className="w-3.5 h-3.5 text-emerald-400" />}
+            {isPlaying ? <Pause className="w-3.5 h-3.5 text-[#2E8B62]" /> : <Play className="w-3.5 h-3.5 text-[#216447]" />}
             {isPlaying ? "Live Spin" : "Paused"}
           </button>
-          <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono text-slate-400 border border-slate-800 bg-slate-900/50">
-            <Rotate3d className="w-3.5 h-3.5 text-amber-400" />
+          <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono text-[#929A96] border border-[#343B37] bg-[#181C1B]">
+            <Rotate3d className="w-3.5 h-3.5 text-[#2E8B62]" />
             <span>Click & Drag to Inspect</span>
           </div>
         </div>
       </div>
 
       {/* Main 3D Canvas Mount */}
-      <div className="relative w-full h-[380px] sm:h-[440px] cursor-grab active:cursor-grabbing">
+      <div className="relative w-full h-[360px] sm:h-[420px] cursor-grab active:cursor-grabbing">
         <div ref={mountRef} className="w-full h-full" />
 
         {/* Floating Telemetry HUD */}
-        <div className="absolute bottom-4 left-4 right-4 sm:right-auto sm:max-w-xs z-10 bg-slate-950/80 backdrop-blur-md border border-slate-800/90 rounded-xl p-3.5 shadow-xl font-mono text-xs">
-          <div className="flex items-center justify-between text-slate-400 border-b border-slate-800 pb-2 mb-2.5">
-            <span className="flex items-center gap-1.5 font-semibold text-slate-300">
-              <Activity className="w-3.5 h-3.5 text-amber-400" />
+        <div className="absolute bottom-4 left-4 right-4 sm:right-auto sm:max-w-xs z-10 bg-[#181C1B]/90 backdrop-blur-md border border-[#343B37] rounded-xl p-3.5 shadow-xl font-mono text-xs">
+          <div className="flex items-center justify-between text-[#929A96] border-b border-[#343B37] pb-2 mb-2.5">
+            <span className="flex items-center gap-1.5 font-semibold text-[#E8ECE9]">
+              <Activity className="w-3.5 h-3.5 text-[#216447]" />
               TELEMETRY SPEC
             </span>
-            <span className="text-[11px] text-emerald-400 font-bold bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20">
+            <span className="text-[11px] text-[#2E8B62] font-bold bg-[#174D38]/30 px-1.5 py-0.5 rounded border border-[#216447]/40">
               SYNC OPTIMAL
             </span>
           </div>
 
           <div className="grid grid-cols-2 gap-2.5">
-            <div className="bg-slate-900/60 p-2 rounded border border-slate-800/60">
-              <span className="text-[10px] text-slate-500 block">RPM SPEED</span>
-              <span className="text-sm font-bold text-slate-200">{telemetry.rpm}</span>
-              <span className="text-[10px] text-slate-500 ml-1">r/min</span>
+            <div className="bg-[#24282A] p-2 rounded border border-[#343B37]">
+              <span className="text-[10px] text-[#929A96] block">RPM SPEED</span>
+              <span className="text-sm font-bold text-[#E8ECE9]">{telemetry.rpm}</span>
+              <span className="text-[10px] text-[#929A96] ml-1">r/min</span>
             </div>
-            <div className="bg-slate-900/60 p-2 rounded border border-slate-800/60">
-              <span className="text-[10px] text-slate-500 block">OUTPUT VOLTAGE</span>
-              <span className="text-sm font-bold text-amber-400">{telemetry.voltage}</span>
-              <span className="text-[10px] text-slate-500 ml-1">V AC</span>
+            <div className="bg-[#24282A] p-2 rounded border border-[#343B37]">
+              <span className="text-[10px] text-[#929A96] block">OUTPUT VOLTAGE</span>
+              <span className="text-sm font-bold text-[#2E8B62]">{telemetry.voltage}</span>
+              <span className="text-[10px] text-[#929A96] ml-1">V AC</span>
             </div>
-            <div className="bg-slate-900/60 p-2 rounded border border-slate-800/60">
-              <span className="text-[10px] text-slate-500 block">FREQUENCY</span>
-              <span className="text-sm font-bold text-cyan-400">{telemetry.frequency}</span>
-              <span className="text-[10px] text-slate-500 ml-1">Hz</span>
+            <div className="bg-[#24282A] p-2 rounded border border-[#343B37]">
+              <span className="text-[10px] text-[#929A96] block">FREQUENCY</span>
+              <span className="text-sm font-bold text-[#E8ECE9]">{telemetry.frequency}</span>
+              <span className="text-[10px] text-[#929A96] ml-1">Hz</span>
             </div>
-            <div className="bg-slate-900/60 p-2 rounded border border-slate-800/60">
-              <span className="text-[10px] text-slate-500 block">LOAD FACTOR</span>
-              <span className="text-sm font-bold text-emerald-400">{telemetry.load}%</span>
-              <span className="text-[10px] text-slate-500 ml-1">Active</span>
+            <div className="bg-[#24282A] p-2 rounded border border-[#343B37]">
+              <span className="text-[10px] text-[#929A96] block">LOAD FACTOR</span>
+              <span className="text-sm font-bold text-[#2E8B62]">{telemetry.load}%</span>
+              <span className="text-[10px] text-[#929A96] ml-1">Active</span>
             </div>
           </div>
         </div>
 
         {/* Technical Callout overlay (Right side) */}
         <div className="hidden lg:block absolute top-6 right-6 z-10 space-y-2 pointer-events-none">
-          <div className="bg-slate-950/75 backdrop-blur-md border border-slate-800 rounded-lg p-2.5 text-right font-mono text-[11px]">
-            <span className="text-amber-400 font-bold block">SALIENT POLE ROTOR</span>
-            <span className="text-slate-400">Class H Copper Enamel Wire</span>
+          <div className="bg-[#181C1B]/85 backdrop-blur-md border border-[#343B37] rounded-lg p-2.5 text-right font-mono text-[11px]">
+            <span className="text-[#2E8B62] font-bold block">SALIENT POLE ROTOR</span>
+            <span className="text-[#929A96]">Class H Copper Enamel Wire</span>
           </div>
-          <div className="bg-slate-950/75 backdrop-blur-md border border-slate-800 rounded-lg p-2.5 text-right font-mono text-[11px]">
-            <span className="text-cyan-400 font-bold block">ELECTROMAGNETIC STATOR</span>
-            <span className="text-slate-400">2/3 Pitch Low Harmonic Winding</span>
+          <div className="bg-[#181C1B]/85 backdrop-blur-md border border-[#343B37] rounded-lg p-2.5 text-right font-mono text-[11px]">
+            <span className="text-[#E8ECE9] font-bold block">ELECTROMAGNETIC STATOR</span>
+            <span className="text-[#929A96]">2/3 Pitch Low Harmonic Winding</span>
           </div>
         </div>
       </div>
     </div>
   );
 }
-

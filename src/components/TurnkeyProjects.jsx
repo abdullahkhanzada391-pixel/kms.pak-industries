@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import TiltCard from './TiltCard';
-import { Layers, ArrowRight, ShieldCheck, CheckCircle2, Factory, Network } from 'lucide-react';
+import { Layers, ArrowRight, ShieldCheck, CheckCircle2, Factory, Network, Cpu, Wrench, Zap, Sliders } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -10,34 +11,53 @@ export default function TurnkeyProjects() {
   const containerRef = useRef(null);
   const headerRef = useRef(null);
   const clipImageRef = useRef(null);
-  const stepsListRef = useRef(null);
+  const showcaseGridRef = useRef(null);
+  const phasesListRef = useRef(null);
 
-  const phases = [
+  const showcaseAreas = [
     {
-      step: '01',
-      title: 'Power Load Audit & Electrical Design',
-      desc: 'Engineers perform comprehensive single-line diagrams (SLD), transient motor starting calculations, and fault-current analysis.'
+      title: 'Electrical Panels',
+      category: 'Switchgear Engineering',
+      desc: 'Custom LT & HT distribution panels, ATS/AMF automatic changeover synchronization boards, and power factor capacitor banks.',
+      image: '/assets/services/electrical-panel-switchgear.jpg',
+      stat: 'IEC 61439 Certified'
     },
     {
-      step: '02',
-      title: 'Equipment Supply & Generator Selection',
-      desc: 'Sourcing of prime/standby diesel or gas generators (Lovol, Perkins, Weichai, Cummins) matched to precision duty requirements.'
+      title: 'New & Used Generators',
+      category: '15 – 2500 kVA',
+      desc: 'Supplying brand-certified diesel and gas generators with Lovol, Perkins, Weichai, and Cummins power units.',
+      image: '/assets/services/generator-cummins-perkins.jpg',
+      stat: 'Prime & Standby'
     },
     {
-      step: '03',
-      title: 'Custom In-House Switchgear Fabrication',
-      desc: 'Manufacturing of LT/HT distribution panels, ATS/AMF automatic changeover boards, and power factor correction banks.'
+      title: 'Generator Servicing & Overhauls',
+      category: '24/7 Field Dispatch',
+      desc: 'Complete engine rebuilds, top-end overhauls, radiator cleaning, and resistive load bank testing up to full load.',
+      image: '/assets/services/generator-maintenance-engine.jpg',
+      stat: '9-Point Protocol'
     },
     {
-      step: '04',
-      title: 'On-Site Civil, Mechanical & Fuel Piping',
-      desc: 'Foundation pad engineering, soundproof acoustic canopy placement, exhaust ducting, and certified bulk fuel tank piping.'
+      title: 'Electrical Panel Maintenance',
+      category: 'Thermal Diagnostics',
+      desc: 'Thermographic busbar inspection, contactor replacements, protection relay calibration, and power factor optimization.',
+      image: '/assets/services/electrical-ats-panel.jpg',
+      stat: 'Zero Downtime'
     },
     {
-      step: '05',
-      title: 'Commissioning, Load Banking & Handover',
-      desc: 'Full-load resistive bank testing, thermal imaging of busbars, protection relay calibration, and operator handover training.'
+      title: 'Complete Engineering Solutions',
+      category: 'Turnkey EPC Scope',
+      desc: 'Integrated civil pad construction, acoustic canopy fabrication, exhaust ducting, fuel piping, and final handover.',
+      image: '/assets/services/turnkey-engineering-facility.jpg',
+      stat: 'Turnkey Single-Source'
     }
+  ];
+
+  const executionPhases = [
+    { step: '01', title: 'Power Load Audit & SLD Electrical Design', desc: 'Comprehensive engineering calculation of peak starting inrush, harmonics, and cable sizing.' },
+    { step: '02', title: 'Engine Selection & Switchgear Manufacturing', desc: 'Fabricating matching LT/HT distribution panels and synchronizing generator controllers.' },
+    { step: '03', title: 'Acoustic Canopy, Fuel Piping & Civil Setup', desc: 'In-house heavy steel fabrication of soundproof enclosures and certified fuel storage tanks.' },
+    { step: '04', title: 'Resistive Load Banking & Commissioning', desc: 'Full capacity testing under realistic step-loads with thermal imaging certification.' },
+    { step: '05', title: 'Handover & Nationwide AMC Operations', desc: '24/7 emergency dispatch coverage, genuine OEM filters, and dedicated maintenance teams.' },
   ];
 
   useEffect(() => {
@@ -45,28 +65,50 @@ export default function TurnkeyProjects() {
     if (prefersReducedMotion) return;
 
     const ctx = gsap.context(() => {
-      // 1. Header reveal
-      gsap.fromTo(
-        headerRef.current.children,
-        { opacity: 0, y: 30 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          stagger: 0.12,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: headerRef.current,
-            start: 'top 85%',
+      // 1. Header Reveal
+      if (headerRef.current) {
+        gsap.fromTo(
+          headerRef.current.children,
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            stagger: 0.12,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: headerRef.current,
+              start: 'top 85%',
+            }
           }
-        }
-      );
+        );
+      }
 
-      // 2. Image Clipping Reveal (Horizontal Curtain Wipe)
+      // 2. Showcase Grid Stagger
+      if (showcaseGridRef.current) {
+        gsap.fromTo(
+          showcaseGridRef.current.children,
+          { opacity: 0, y: 35, scale: 0.96 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.85,
+            stagger: 0.1,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: showcaseGridRef.current,
+              start: 'top 85%',
+            }
+          }
+        );
+      }
+
+      // 3. Image Clipping Mask Reveal
       if (clipImageRef.current) {
         gsap.fromTo(
           clipImageRef.current,
-          { clipPath: 'polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)', scale: 1.08, opacity: 0.3 },
+          { clipPath: 'polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)', scale: 1.06, opacity: 0.3 },
           {
             clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
             scale: 1,
@@ -81,19 +123,19 @@ export default function TurnkeyProjects() {
         );
       }
 
-      // 3. Staggered Timeline Steps
-      if (stepsListRef.current) {
+      // 4. Execution Phases Stagger
+      if (phasesListRef.current) {
         gsap.fromTo(
-          stepsListRef.current.children,
-          { opacity: 0, x: 35 },
+          phasesListRef.current.children,
+          { opacity: 0, x: 30 },
           {
             opacity: 1,
             x: 0,
-            duration: 0.7,
-            stagger: 0.14,
+            duration: 0.6,
+            stagger: 0.1,
             ease: 'power3.out',
             scrollTrigger: {
-              trigger: stepsListRef.current,
+              trigger: phasesListRef.current,
               start: 'top 85%',
             }
           }
@@ -108,99 +150,131 @@ export default function TurnkeyProjects() {
     <section
       ref={containerRef}
       id="turnkey"
-      className="relative py-24 sm:py-32 bg-kps-surface border-t border-slate-900 overflow-hidden"
+      className="relative py-24 sm:py-32 bg-gradient-to-b from-[#0D2E21] via-[#174D38] to-[#0A2017] border-y-2 border-[#216447]/60 overflow-hidden shadow-2xl"
     >
       {/* Background Decor */}
-      <div className="absolute top-0 left-0 w-full h-full bg-industrial-grid opacity-20 pointer-events-none" />
-      <div className="absolute top-1/2 right-0 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-0 left-0 w-full h-full bg-industrial-grid opacity-25 pointer-events-none" />
+      <div className="absolute top-1/4 right-0 w-[600px] h-[600px] bg-[#2E8B62]/10 rounded-full blur-[160px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Section Header */}
-        <div ref={headerRef} className="max-w-3xl mb-16 sm:mb-20">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-mono uppercase tracking-widest mb-4">
-            <Network className="w-3.5 h-3.5" />
-            <span>End-to-End Execution</span>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-16">
+        {/* Section Header with Exact Prompt Heading */}
+        <div ref={headerRef} className="max-w-3xl">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0D2E21]/80 border border-[#216447] text-[#E8ECE9] text-xs font-mono uppercase tracking-widest mb-4 shadow-md">
+            <Network className="w-3.5 h-3.5 text-[#2E8B62]" />
+            <span>FOREST GREEN FEATURE DIVISION</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-white font-display tracking-tight leading-tight">
-            Turnkey Engineering Solutions Countrywide.
+          <h2 className="text-3xl sm:text-5xl font-extrabold text-[#E8ECE9] font-display tracking-tight leading-tight">
+            ENGINEERED FROM CONCEPT TO COMPLETION.
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-slate-300">
-            From initial design to commissioning and long-term lifecycle support, KPS provides unified single-source engineering accountability for industrial and commercial projects across Pakistan.
+          <p className="mt-4 text-base sm:text-lg text-[#E8ECE9]/85 leading-relaxed">
+            From single-source electrical design and in-house switchgear fabrication to generator synchronization and lifecycle O&M contracts countrywide across Pakistan.
           </p>
         </div>
 
-        {/* Clean Split Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-          {/* Left Column: Image with Clipping Mask Reveal */}
-          <div className="lg:col-span-6 space-y-6">
-            <div ref={clipImageRef} className="will-change-transform rounded-xl overflow-hidden">
-              <TiltCard
-                image="/assets/services/turnkey-engineering-facility.jpg"
-                alt="Keen Power Solutions Turnkey Project Facility"
-                title="Industrial Power Generation & Panel Infrastructure"
-                subtitle="Turnkey substation, ATS synchronization board, and acoustic generator installation executed for premier commercial facilities."
-                aspectRatio="aspect-[16/11]"
-                maxTilt={8}
-              >
-                <div className="mt-3 pt-3 border-t border-slate-800 flex items-center justify-between text-xs font-mono text-slate-400">
-                  <span>Integrated Engineering EPC</span>
-                  <span className="text-amber-400 font-semibold">100% In-House Execution</span>
+        {/* Core Showcase: Electrical Panels, Generators, Servicing, Maintenance, Complete Solutions */}
+        <div ref={showcaseGridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {showcaseAreas.map((item, idx) => (
+            <div
+              key={idx}
+              className={`rounded-2xl border overflow-hidden shadow-2xl transition-all duration-300 flex flex-col justify-between group ${
+                idx === 4
+                  ? 'md:col-span-2 lg:col-span-2 bg-[#0D2E21]/90 border-[#216447]'
+                  : 'bg-[#0D2E21]/80 border-[#216447]/50 hover:border-[#2E8B62]'
+              }`}
+            >
+              <div className="relative aspect-[16/10] overflow-hidden bg-[#0A2017]">
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0D2E21] via-transparent to-transparent" />
+                <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
+                  <span className="text-[10px] font-mono font-bold tracking-wider text-[#2E8B62] bg-[#0A2017]/90 px-2.5 py-1 rounded border border-[#216447]">
+                    {item.category}
+                  </span>
+                  <span className="text-[10px] font-mono text-[#E8ECE9] bg-[#0A2017]/90 px-2 py-0.5 rounded border border-[#216447]/60">
+                    {item.stat}
+                  </span>
                 </div>
-              </TiltCard>
+              </div>
+
+              <div className="p-6 flex-1 flex flex-col justify-between space-y-3">
+                <div>
+                  <h3 className="text-lg sm:text-xl font-bold text-[#E8ECE9] font-display group-hover:text-white transition-colors">
+                    {item.title}
+                  </h3>
+                  <p className="mt-1.5 text-xs text-[#E8ECE9]/75 leading-relaxed">
+                    {item.desc}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+
+          {/* Prominent Crimson Call-to-Action Card */}
+          <div className="rounded-2xl border border-[#B51F32]/60 bg-gradient-to-br from-[#B51F32]/25 via-[#0D2E21] to-[#0A2017] p-7 shadow-2xl flex flex-col justify-between space-y-6">
+            <div className="space-y-3">
+              <span className="text-[11px] font-mono font-bold tracking-widest text-[#E83E55] uppercase block">
+                TURNKEY CONSULTATION
+              </span>
+              <h3 className="text-2xl font-extrabold text-[#E8ECE9] font-display leading-snug">
+                Have a Complex Industrial Power Project?
+              </h3>
+              <p className="text-xs text-[#E8ECE9]/80 leading-relaxed">
+                Connect directly with our senior power engineers for single-line designs, equipment supply, and custom switchgear manufacturing.
+              </p>
             </div>
 
-            {/* Turnkey Pillars Banner */}
-            <div className="grid grid-cols-2 gap-4">
-              <div className="p-4 rounded-xl bg-kps-card border border-slate-800 space-y-1">
-                <span className="text-amber-400 font-bold text-sm block">Turnkey Deliverables</span>
-                <p className="text-xs text-slate-400">
-                  Panels + Generators + Ducting + Fabrication + Maintenance under single contract.
-                </p>
-              </div>
-              <div className="p-4 rounded-xl bg-kps-card border border-slate-800 space-y-1">
-                <span className="text-cyan-400 font-bold text-sm block">Countrywide Service</span>
-                <p className="text-xs text-slate-400">
-                  Rapid engineering dispatch covering Lahore, Karachi, Islamabad, and industrial hubs.
-                </p>
-              </div>
+            <Link
+              to="/contact"
+              className="btn-crimson inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider w-full shadow-xl"
+            >
+              <span>DISCUSS YOUR PROJECT</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </div>
+
+        {/* Turnkey Project Execution Lifecycle Split */}
+        <div className="pt-8 border-t border-[#216447]/40 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          <div className="lg:col-span-5 space-y-4">
+            <div ref={clipImageRef} className="will-change-transform rounded-2xl overflow-hidden border border-[#216447] shadow-2xl">
+              <TiltCard
+                image="/assets/services/turnkey-site-engineering.jpg"
+                alt="Keen Power Solutions On-Site Engineering Installation"
+                title="On-Site Industrial Engineering Commissioning"
+                subtitle="Full generator pad civil work, acoustic canopy placement, fuel piping, and resistive load bank testing."
+                aspectRatio="aspect-[4/3]"
+              />
             </div>
           </div>
 
-          {/* Right Column: 5-Stage Turnkey Process Timeline */}
-          <div className="lg:col-span-6 space-y-4">
-            <h3 className="text-xl font-bold text-slate-100 font-display mb-4">
-              Turnkey Project Execution Lifecycle
+          <div className="lg:col-span-7 space-y-4">
+            <h3 className="text-xl sm:text-2xl font-bold text-[#E8ECE9] font-display mb-3">
+              Turnkey Project Delivery Stages
             </h3>
 
-            <div ref={stepsListRef} className="space-y-3">
-              {phases.map((p, idx) => (
+            <div ref={phasesListRef} className="space-y-2.5">
+              {executionPhases.map((phase, idx) => (
                 <div
                   key={idx}
-                  className="flex items-start gap-4 p-4 rounded-xl bg-kps-card/70 border border-slate-800/80 hover:border-amber-500/40 hover:bg-kps-card transition-all will-change-transform"
+                  className="flex items-start gap-4 p-3.5 rounded-xl bg-[#0D2E21]/70 border border-[#216447]/50 hover:border-[#2E8B62] transition-colors"
                 >
-                  <span className="text-lg font-extrabold font-mono text-amber-400 bg-amber-500/10 border border-amber-500/30 px-3 py-1 rounded-lg shrink-0">
-                    {p.step}
+                  <span className="text-base font-extrabold font-mono text-[#2E8B62] bg-[#0A2017] border border-[#216447] px-2.5 py-1 rounded shrink-0">
+                    {phase.step}
                   </span>
                   <div>
-                    <h4 className="text-sm sm:text-base font-bold text-slate-200">
-                      {p.title}
+                    <h4 className="text-sm font-bold text-[#E8ECE9]">
+                      {phase.title}
                     </h4>
-                    <p className="mt-1 text-xs text-slate-400 leading-relaxed">
-                      {p.desc}
+                    <p className="text-xs text-[#E8ECE9]/75 mt-0.5 leading-snug">
+                      {phase.desc}
                     </p>
                   </div>
                 </div>
               ))}
-            </div>
-
-            <div className="pt-4">
-              <a
-                href="#contact"
-                className="inline-flex items-center gap-2.5 px-6 py-3 rounded-xl text-xs font-bold text-black bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 shadow-xl transition-all"
-              >
-                <span>Discuss Your Turnkey Project</span>
-                <ArrowRight className="w-4 h-4" />
-              </a>
             </div>
           </div>
         </div>

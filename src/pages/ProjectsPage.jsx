@@ -6,15 +6,12 @@ export default function ProjectsPage() {
   return (
     <div className="space-y-0">
       <PageHeader
-        badge="END-TO-END EPC ACCOUNTABILITY"
-        title="Turnkey Engineering"
-        highlight="Project Solutions"
-        subtitle="From single-line diagram electrical designs and switchgear manufacturing to site foundation, soundproof canopy installation, and load-bank commissioning countrywide."
-        breadcrumbs={[{ label: 'Turnkey Projects' }]}
+        title="Turnkey Projects:"
+        highlight="Concept to Completion"
+        subtitle="From single-line electrical engineering and in-house switchgear fabrication to generator synchronization and lifecycle O&M contracts countrywide across Pakistan."
       />
 
       <TurnkeyProjects />
     </div>
   );
 }
-

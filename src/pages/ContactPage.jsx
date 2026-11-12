@@ -6,15 +6,12 @@ export default function ContactPage({ preselectedService }) {
   return (
     <div className="space-y-0">
       <PageHeader
-        badge="GET IN TOUCH"
-        title="Contact Our Team &"
-        highlight="Engineering Desk"
-        subtitle="Request generator quotations, preventative maintenance agreements, electrical switchgear designs, or consult directly with our senior power engineering specialists."
-        breadcrumbs={[{ label: 'Contact' }]}
+        title="Let's Power Your"
+        highlight="Next Project"
+        subtitle="Contact our Lahore headquarters for generator sales, technical maintenance, turnkey electrical switchgear, or nationwide project quotes."
       />
 
       <ContactSection preselectedService={preselectedService} />
     </div>
   );
 }
-

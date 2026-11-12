@@ -45,7 +45,7 @@ export default function TiltCard({
       style={{ perspective: '1000px' }}
     >
       <div
-        className="w-full h-full rounded-xl overflow-hidden border border-slate-800 bg-kps-card transition-all duration-300 ease-out shadow-xl group-hover:border-amber-500/50 group-hover:shadow-2xl group-hover:shadow-amber-500/10"
+        className="w-full h-full rounded-xl overflow-hidden border border-[#343B37] bg-[#24282A] transition-all duration-300 ease-out shadow-xl group-hover:border-[#216447] group-hover:shadow-2xl group-hover:shadow-[#174D38]/20"
         style={{
           transform: isHovered
             ? `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`
@@ -55,7 +55,7 @@ export default function TiltCard({
         }}
       >
         {/* Image layer */}
-        <div className={`relative w-full ${aspectRatio} overflow-hidden bg-slate-900`}>
+        <div className={`relative w-full ${aspectRatio} overflow-hidden bg-[#111315]`}>
           {image ? (
             <img
               src={image}
@@ -64,20 +64,20 @@ export default function TiltCard({
               loading="lazy"
             />
           ) : (
-            <div className="w-full h-full bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center">
-              <span className="text-slate-600 font-mono text-sm">[KPS ENGINEERING]</span>
+            <div className="w-full h-full bg-gradient-to-br from-[#181C1B] to-[#24282A] flex items-center justify-center">
+              <span className="text-[#929A96] font-mono text-sm">[KPS ENGINEERING]</span>
             </div>
           )}
 
           {/* Dark gradient overlay for contrast */}
-          <div className="absolute inset-0 bg-gradient-to-t from-kps-card via-kps-card/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#24282A] via-[#24282A]/40 to-transparent" />
 
           {/* Glare specular light following cursor */}
           {isHovered && (
             <div
               className="absolute inset-0 pointer-events-none transition-opacity duration-300"
               style={{
-                background: `radial-gradient(circle at ${glareX}% ${glareY}%, rgba(255, 255, 255, 0.15) 0%, transparent 60%)`,
+                background: `radial-gradient(circle at ${glareX}% ${glareY}%, rgba(255, 255, 255, 0.12) 0%, transparent 60%)`,
               }}
             />
           )}
@@ -85,12 +85,12 @@ export default function TiltCard({
           {/* Badges on top */}
           <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-10">
             {category && (
-              <span className="inline-flex items-center px-2.5 py-1 rounded bg-black/60 backdrop-blur-md text-[11px] font-mono tracking-wider text-amber-400 border border-amber-500/30">
+              <span className="inline-flex items-center px-2.5 py-1 rounded bg-[#111315]/80 backdrop-blur-md text-[11px] font-mono tracking-wider text-[#2E8B62] border border-[#216447]/50">
                 {category}
               </span>
             )}
             {badge && (
-              <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-amber-500 text-black">
+              <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-[#B51F32] text-white">
                 {badge}
               </span>
             )}
@@ -106,12 +106,12 @@ export default function TiltCard({
           }}
         >
           {title && (
-            <h3 className="text-lg font-bold text-slate-100 group-hover:text-amber-400 transition-colors duration-200">
+            <h3 className="text-lg font-bold text-[#E8ECE9] group-hover:text-white transition-colors duration-200">
               {title}
             </h3>
           )}
           {subtitle && (
-            <p className="mt-1.5 text-xs text-slate-400 line-clamp-2 leading-relaxed">
+            <p className="mt-1.5 text-xs text-[#929A96] line-clamp-2 leading-relaxed">
               {subtitle}
             </p>
           )}
@@ -121,4 +121,3 @@ export default function TiltCard({
     </div>
   );
 }
-

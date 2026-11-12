@@ -83,7 +83,7 @@ export default function CustomCursor() {
       {/* Precision center dot */}
       <div
         ref={cursorRef}
-        className="fixed top-0 left-0 w-2 h-2 -ml-1 -mt-1 bg-amber-400 rounded-full pointer-events-none z-50 mix-blend-difference transition-opacity duration-200"
+        className="fixed top-0 left-0 w-2 h-2 -ml-1 -mt-1 bg-[#2E8B62] rounded-full pointer-events-none z-50 transition-opacity duration-200"
         style={{ willChange: 'transform' }}
       />
       {/* Fluid trailing ring */}
@@ -91,14 +91,13 @@ export default function CustomCursor() {
         ref={followerRef}
         className={`fixed top-0 left-0 rounded-full pointer-events-none z-40 border transition-all duration-150 ease-out ${
           clicked
-            ? 'w-10 h-10 -ml-5 -mt-5 bg-amber-400/20 border-amber-400'
+            ? 'w-10 h-10 -ml-5 -mt-5 bg-[#B51F32]/25 border-[#B51F32]'
             : hovered
-            ? 'w-12 h-12 -ml-6 -mt-6 bg-amber-500/10 border-amber-400/80 scale-125'
-            : 'w-7 h-7 -ml-3.5 -mt-3.5 border-amber-400/40'
+            ? 'w-12 h-12 -ml-6 -mt-6 bg-[#174D38]/20 border-[#2E8B62] scale-125'
+            : 'w-7 h-7 -ml-3.5 -mt-3.5 border-[#216447]/60'
         }`}
         style={{ willChange: 'transform' }}
       />
     </>
   );
 }
-

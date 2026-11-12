@@ -4,11 +4,16 @@
 
 @layer base {
   :root {
-    --bg-dark: #070A0F;
-    --bg-surface: #0E1524;
-    --bg-card: #131C31;
-    --accent-gold: #F59E0B;
-    --accent-cyan: #0EA5E9;
+    --bg-dark: #111315;
+    --bg-surface: #181C1B;
+    --bg-card: #24282A;
+    --color-green: #174D38;
+    --color-green-light: #216447;
+    --color-crimson: #B51F32;
+    --color-crimson-hover: #D12B42;
+    --color-text: #E8ECE9;
+    --color-text-secondary: #929A96;
+    --color-border: #343B37;
   }
 
   html {
@@ -17,57 +22,126 @@
   }
 
   body {
-    background-color: #070A0F;
-    color: #F1F5F9;
+    background-color: #111315;
+    color: #E8ECE9;
     font-family: 'Archivo', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     overflow-x: hidden;
+    selection-background-color: #174D38;
+    selection-color: #E8ECE9;
   }
 
-  /* Custom scrollbar */
+  ::selection {
+    background: #174D38;
+    color: #FFFFFF;
+  }
+
+  /* Dark Luxury Industrial Custom Scrollbar */
   ::-webkit-scrollbar {
     width: 8px;
   }
   ::-webkit-scrollbar-track {
-    background: #070A0F;
+    background: #111315;
   }
   ::-webkit-scrollbar-thumb {
-    background: #1E293B;
+    background: #24282A;
     border-radius: 4px;
-    border: 1px solid rgba(245, 158, 11, 0.2);
+    border: 1px solid #343B37;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #334155;
+    background: #174D38;
+    border-color: #216447;
   }
 }
 
-/* Industrial Grid Background */
+/* Subtle Technical Industrial Grid */
 .bg-industrial-grid {
-  background-size: 40px 40px;
+  background-size: 48px 48px;
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    linear-gradient(to right, rgba(52, 59, 55, 0.3) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(52, 59, 55, 0.3) 1px, transparent 1px);
 }
 
 .bg-radial-vignette {
-  background: radial-gradient(circle at center, transparent 30%, rgba(7, 10, 15, 0.8) 100%);
+  background: radial-gradient(circle at center, transparent 30%, rgba(17, 19, 21, 0.85) 100%);
 }
 
-.text-gold-gradient {
-  background: linear-gradient(135deg, #FCD34D 0%, #F59E0B 50%, #D97706 100%);
+/* Luxury Industrial Typography Highlights */
+.text-forest-gradient {
+  background: linear-gradient(135deg, #E8ECE9 0%, #216447 60%, #174D38 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-crimson-gradient {
+  background: linear-gradient(135deg, #FFFFFF 0%, #E83E55 50%, #B51F32 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .text-silver-gradient {
-  background: linear-gradient(135deg, #FFFFFF 0%, #E2E8F0 60%, #94A3B8 100%);
+  background: linear-gradient(135deg, #FFFFFF 0%, #E8ECE9 60%, #929A96 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-/* Subtle amber glowing border */
-.border-gold-glow {
-  border-color: rgba(245, 158, 11, 0.3);
-  box-shadow: 0 0 25px -5px rgba(245, 158, 11, 0.15);
+/* Luxury Crimson CTA Button */
+.btn-crimson {
+  background-color: #B51F32;
+  color: #FFFFFF;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 20px -2px rgba(181, 31, 50, 0.45);
+}
+.btn-crimson:hover {
+  background-color: #D12B42;
+  box-shadow: 0 6px 28px rgba(209, 43, 66, 0.6);
+  transform: translateY(-2px);
+}
+.btn-crimson:active {
+  transform: translateY(0);
+}
+
+/* Luxury Forest Green Button */
+.btn-forest {
+  background-color: #174D38;
+  color: #E8ECE9;
+  border: 1px solid #216447;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn-forest:hover {
+  background-color: #216447;
+  border-color: #2E8B62;
+  color: #FFFFFF;
+  box-shadow: 0 4px 20px rgba(23, 77, 56, 0.4);
+  transform: translateY(-2px);
+}
+.btn-forest:active {
+  transform: translateY(0);
+}
+
+/* Dark Industrial Outline Button */
+.btn-outline-industrial {
+  background-color: rgba(36, 40, 42, 0.7);
+  color: #E8ECE9;
+  border: 1px solid #343B37;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn-outline-industrial:hover {
+  background-color: #24282A;
+  border-color: #216447;
+  color: #FFFFFF;
+  transform: translateY(-2px);
+}
+
+/* Subtle Green Glowing Border */
+.border-forest-glow {
+  border-color: rgba(33, 100, 71, 0.4);
+  box-shadow: 0 0 25px -5px rgba(23, 77, 56, 0.25);
+}
+
+/* Subtle Crimson Glowing Border */
+.border-crimson-glow {
+  border-color: rgba(181, 31, 50, 0.5);
+  box-shadow: 0 0 25px -5px rgba(181, 31, 50, 0.3);
 }
 
 /* 3D tilt stage */
@@ -76,16 +150,16 @@
   transform-style: preserve-3d;
 }
 
-/* Subtle scanline effect for technical industrial feel */
+/* Subtle technical scanline overlay */
 .scanline-overlay {
   background: linear-gradient(
-    rgba(18, 16, 16, 0) 50%, 
-    rgba(0, 0, 0, 0.25) 50%
+    rgba(17, 19, 21, 0) 50%, 
+    rgba(0, 0, 0, 0.3) 50%
   ), linear-gradient(
     90deg,
-    rgba(255, 0, 0, 0.01),
-    rgba(0, 255, 0, 0.005),
-    rgba(0, 0, 255, 0.01)
+    rgba(23, 77, 56, 0.02),
+    rgba(0, 0, 0, 0),
+    rgba(181, 31, 50, 0.015)
   );
   background-size: 100% 4px, 6px 100%;
 }
@@ -133,4 +207,3 @@
   mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
   -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
 }
-

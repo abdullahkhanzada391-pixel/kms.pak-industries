@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import Hero from '../components/Hero';
 import Interactive3DViewer from '../components/Interactive3DViewer';
+import TurnkeyProjects from '../components/TurnkeyProjects';
 import TiltCard from '../components/TiltCard';
 import { 
   Zap, 
@@ -12,9 +13,10 @@ import {
   CheckCircle2, 
   ShieldCheck, 
   Award, 
-  Network,
-  Users,
-  PhoneCall
+  Network, 
+  Users, 
+  PhoneCall,
+  Sparkles
 } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -34,6 +36,7 @@ export default function HomePage() {
     {
       title: 'Industrial Diesel & Gas Generators',
       capacity: '15 – 2500 kVA Range',
+      theme: 'forest',
       desc: 'Sales, rentals, overhauls and certified O&M contracts featuring Lovol, Perkins, Weichai, and Cummins engines.',
       image: '/assets/services/generator-main.jpg',
       link: '/services'
@@ -41,6 +44,7 @@ export default function HomePage() {
     {
       title: 'Electrical Engineering & Switchgear',
       capacity: 'Custom LT & HT Panels',
+      theme: 'charcoal',
       desc: 'ATS/AMF synchronization panels, power factor capacitor banks, and smart distribution boards built to IEC standards.',
       image: '/assets/services/electrical-panel-switchgear.jpg',
       link: '/services'
@@ -48,6 +52,7 @@ export default function HomePage() {
     {
       title: 'Acoustic Canopies & Heavy Fabrication',
       capacity: '68–75 dBA Attenuation',
+      theme: 'forest',
       desc: 'Weatherproof soundproof generator enclosures, bulk fuel tanks, mobile trolleys, and certified fuel piping systems.',
       image: '/assets/services/fabrication-canopy-tanks.jpg',
       link: '/services'
@@ -55,6 +60,7 @@ export default function HomePage() {
     {
       title: 'Commercial & Industrial Solar Solutions',
       capacity: 'On-Grid, Off-Grid & Hybrid',
+      theme: 'charcoal',
       desc: 'Turnkey solar photovoltaic installations engineered for high-efficiency commercial peak-shaving and energy independence.',
       image: '/assets/services/solar-installation-commercial.jpg',
       link: '/services'
@@ -183,45 +189,52 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div ref={containerRef} className="space-y-0">
+    <div ref={containerRef} className="space-y-0 bg-[#111315]">
       {/* 1. Cinematic Video Hero Section */}
       <Hero />
 
-      {/* 2. Executive Overview Teaser */}
-      <section className="py-20 sm:py-28 bg-kps-surface border-t border-slate-900 relative overflow-hidden">
+      {/* 2. Executive Overview Teaser in Dark Charcoal */}
+      <section className="py-20 sm:py-28 bg-[#181C1B] border-t border-[#343B37] relative overflow-hidden">
         <div className="absolute top-0 right-0 w-full h-full bg-industrial-grid opacity-20 pointer-events-none" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
             <div ref={teaserTextRef} className="lg:col-span-7 space-y-6">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-mono uppercase tracking-widest">
-                <ShieldCheck className="w-3.5 h-3.5" />
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#174D38]/30 border border-[#216447]/60 text-[#E8ECE9] text-xs font-mono uppercase tracking-widest">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#216447]" />
                 <span>Engineering Leadership</span>
               </div>
-              <h2 className="text-3xl sm:text-5xl font-extrabold text-white font-display tracking-tight leading-tight">
+              <h2 className="text-3xl sm:text-5xl font-extrabold text-[#E8ECE9] font-display tracking-tight leading-tight">
                 Turnkey Power & Engineering Solutions Designed to Keep Businesses Moving Forward.
               </h2>
-              <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
+              <p className="text-base sm:text-lg text-[#929A96] leading-relaxed">
                 Keen Power Solutions (KPS) is a quality-driven engineering entity specializing in heavy electrical infrastructure, generator power plants up to 2500 kVA, industrial fabrication, and renewable energy nationwide.
               </p>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                <div className="flex items-center gap-2.5 text-xs text-slate-300 bg-slate-900/60 p-3 rounded-lg border border-slate-800">
-                  <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
+                <div className="flex items-center gap-2.5 text-xs text-[#E8ECE9] bg-[#24282A] p-3 rounded-lg border border-[#343B37]">
+                  <CheckCircle2 className="w-4 h-4 text-[#216447] shrink-0" />
                   <span>100+ Satisfied Corporate Clients</span>
                 </div>
-                <div className="flex items-center gap-2.5 text-xs text-slate-300 bg-slate-900/60 p-3 rounded-lg border border-slate-800">
-                  <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
+                <div className="flex items-center gap-2.5 text-xs text-[#E8ECE9] bg-[#24282A] p-3 rounded-lg border border-[#343B37]">
+                  <CheckCircle2 className="w-4 h-4 text-[#216447] shrink-0" />
                   <span>24/7 Field Dispatch & Emergency AMC</span>
                 </div>
               </div>
 
-              <div className="pt-2">
+              <div className="pt-2 flex flex-wrap items-center gap-4">
                 <Link
                   to="/about"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-xs font-bold text-black bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 shadow-xl transition-all"
+                  className="btn-forest inline-flex items-center gap-2 px-6 py-3 rounded-xl text-xs font-bold uppercase tracking-wider"
                 >
                   <span>Explore Company Profile & DNA</span>
                   <ArrowRight className="w-4 h-4" />
+                </Link>
+
+                <Link
+                  to="/contact"
+                  className="btn-crimson inline-flex items-center gap-2 px-6 py-3 rounded-xl text-xs font-bold uppercase tracking-wider"
+                >
+                  <span>Get a Quote</span>
                 </Link>
               </div>
             </div>
@@ -230,7 +243,7 @@ export default function HomePage() {
               <TiltCard
                 image="/assets/services/generator-workshop.jpg"
                 alt="Keen Power Solutions Lahore Engineering Facility"
-                title="Lahore Engineering Facility"
+                title="Lahore Central Facility"
                 subtitle="Full engine rebuild bays, resistive load banking, switchgear testing, and certified technician dispatch center."
                 aspectRatio="aspect-[4/3]"
               />
@@ -240,20 +253,20 @@ export default function HomePage() {
       </section>
 
       {/* 3. Flagship Engineering Solutions Preview */}
-      <section className="py-24 sm:py-32 bg-kps-dark border-t border-slate-900 relative">
+      <section className="py-24 sm:py-32 bg-[#111315] border-t border-[#343B37] relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-14">
           <div ref={divisionsHeaderRef} className="flex flex-col sm:flex-row sm:items-end justify-between gap-6">
             <div>
-              <span className="text-xs font-mono font-bold tracking-widest text-amber-400 uppercase block mb-2">
+              <span className="text-xs font-mono font-bold tracking-widest text-[#2E8B62] uppercase block mb-1">
                 CORE CAPABILITIES
               </span>
-              <h2 className="text-3xl sm:text-5xl font-extrabold text-white font-display">
+              <h2 className="text-3xl sm:text-5xl font-extrabold text-[#E8ECE9] font-display">
                 Featured Engineering Divisions.
               </h2>
             </div>
             <Link
               to="/services"
-              className="inline-flex items-center gap-2 text-xs font-mono font-bold text-amber-400 hover:text-amber-300 group"
+              className="inline-flex items-center gap-2 text-xs font-mono font-bold text-[#2E8B62] hover:text-[#E8ECE9] group"
             >
               <span>View All 8 Divisions</span>
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -264,27 +277,27 @@ export default function HomePage() {
             {flagshipSolutions.map((sol, idx) => (
               <div
                 key={idx}
-                className="bg-kps-card rounded-2xl border border-slate-800 overflow-hidden shadow-xl hover:border-amber-500/50 hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group"
+                className="bg-[#24282A] rounded-2xl border border-[#343B37] overflow-hidden shadow-xl hover:border-[#216447] hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group"
               >
-                <div className="relative aspect-[16/10] overflow-hidden bg-slate-950">
+                <div className="relative aspect-[16/10] overflow-hidden bg-[#111315]">
                   <img src={sol.image} alt={sol.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-kps-card via-transparent to-transparent" />
-                  <span className="absolute top-3 left-3 text-[10px] font-mono font-bold text-amber-400 bg-black/70 px-2.5 py-1 rounded border border-amber-500/30">
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#24282A] via-transparent to-transparent" />
+                  <span className="absolute top-3 left-3 text-[10px] font-mono font-bold text-[#2E8B62] bg-[#111315]/80 px-2.5 py-1 rounded border border-[#216447]/50">
                     {sol.capacity}
                   </span>
                 </div>
                 <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
                   <div>
-                    <h3 className="text-base font-bold text-slate-100 group-hover:text-amber-400 transition-colors">
+                    <h3 className="text-base font-bold text-[#E8ECE9] group-hover:text-white transition-colors">
                       {sol.title}
                     </h3>
-                    <p className="mt-1.5 text-xs text-slate-400 leading-relaxed">
+                    <p className="mt-1.5 text-xs text-[#929A96] leading-relaxed">
                       {sol.desc}
                     </p>
                   </div>
                   <Link
                     to={sol.link}
-                    className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-amber-400 hover:text-amber-300 pt-3 border-t border-slate-800"
+                    className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-[#2E8B62] hover:text-[#E8ECE9] pt-3 border-t border-[#343B37]"
                   >
                     <span>Inspect Specs</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -296,26 +309,29 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 4. 3D Alternator Spotlight with Link to Maintenance Page */}
-      <section className="py-24 sm:py-32 bg-kps-surface border-t border-slate-900 relative overflow-hidden">
+      {/* 4. TURNKEY PROJECTS — FOREST GREEN FEATURE SECTION (Visual Break) */}
+      <TurnkeyProjects />
+
+      {/* 5. 3D Alternator Spotlight with Link to Maintenance Page */}
+      <section className="py-24 sm:py-32 bg-[#181C1B] border-t border-[#343B37] relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-10">
           <div ref={labHeaderRef} className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
             <div>
-              <span className="text-xs font-mono font-bold tracking-widest text-amber-400 uppercase block mb-2">
+              <span className="text-xs font-mono font-bold tracking-widest text-[#2E8B62] uppercase block mb-1">
                 3D INTERACTIVE TECHNICAL LAB
               </span>
-              <h2 className="text-3xl sm:text-5xl font-extrabold text-white font-display">
+              <h2 className="text-3xl sm:text-5xl font-extrabold text-[#E8ECE9] font-display">
                 Generator Alternator & 9-Point Maintenance.
               </h2>
-              <p className="mt-3 text-slate-300 max-w-2xl text-sm sm:text-base">
+              <p className="mt-3 text-[#929A96] max-w-2xl text-sm sm:text-base">
                 Rotate the 3D generator core below and explore our standard 9-point preventative maintenance protocol designed to avoid costly commercial blackouts.
               </p>
             </div>
             <Link
               to="/maintenance"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-xs font-bold text-black bg-amber-400 hover:bg-amber-300 transition-all shadow-lg shrink-0"
+              className="btn-forest inline-flex items-center gap-2 px-6 py-3 rounded-xl text-xs font-bold uppercase tracking-wider shrink-0"
             >
-              <span>View 9-Point Maintenance Protocol</span>
+              <span>View 9-Point Protocol</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
@@ -324,17 +340,17 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 5. Direct Action CTA Strip */}
-      <section ref={ctaStripRef} className="py-20 bg-gradient-to-r from-amber-500/15 via-kps-card to-slate-950 border-t border-slate-900 relative">
+      {/* 6. Direct Action CTA Strip with Crimson Accent */}
+      <section ref={ctaStripRef} className="py-20 bg-gradient-to-r from-[#174D38]/20 via-[#24282A] to-[#111315] border-t border-[#343B37] relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="space-y-2 text-center md:text-left">
-            <span className="text-xs font-mono uppercase tracking-widest text-amber-400 font-bold">
+            <span className="text-xs font-mono uppercase tracking-widest text-[#2E8B62] font-bold">
               READY FOR UNINTERRUPTED POWER?
             </span>
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-white font-display">
+            <h2 className="text-2xl sm:text-4xl font-extrabold text-[#E8ECE9] font-display">
               Request a Free Technical Engineering Consultation.
             </h2>
-            <p className="text-xs sm:text-sm text-slate-300">
+            <p className="text-xs sm:text-sm text-[#929A96]">
               Speak directly with our senior power engineers for load calculations, equipment quotes, and AMC contracts.
             </p>
           </div>
@@ -342,14 +358,14 @@ export default function HomePage() {
           <div className="flex flex-wrap items-center justify-center gap-4 shrink-0">
             <a
               href="tel:04235957670"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-xs font-mono font-bold text-slate-200 border border-slate-700 bg-slate-900/80 hover:text-amber-400 hover:border-amber-400 transition-all"
+              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl text-xs font-mono font-bold text-[#E8ECE9] border border-[#343B37] bg-[#181C1B] hover:text-[#2E8B62] hover:border-[#216447] transition-all"
             >
-              <PhoneCall className="w-4 h-4 text-amber-400" />
+              <PhoneCall className="w-4 h-4 text-[#216447]" />
               <span>0423 595 7670</span>
             </a>
             <Link
               to="/contact"
-              className="inline-flex items-center gap-2 px-7 py-3 rounded-xl text-xs font-bold text-black bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 shadow-xl transition-all"
+              className="btn-crimson inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-xs font-bold uppercase tracking-wider"
             >
               <span>Request Project Quotation</span>
               <ArrowRight className="w-4 h-4" />

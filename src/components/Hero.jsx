@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Zap, Shield, Cog, Activity } from 'lucide-react';
+import { ArrowRight, Zap, Shield, Cog, Activity, ChevronDown } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -17,6 +17,7 @@ export default function Hero() {
   const headlineRef = useRef(null);
   const subtextRef = useRef(null);
   const ctaRef = useRef(null);
+  const scrollIndicatorRef = useRef(null);
   const telemetryRef = useRef(null);
 
   useEffect(() => {
@@ -44,7 +45,7 @@ export default function Hero() {
       )
       .fromTo(
         headlineRef.current,
-        { opacity: 0, y: 45 },
+        { opacity: 0, y: 40 },
         { opacity: 1, y: 0, duration: 1.1 },
         '-=0.5'
       )
@@ -59,6 +60,12 @@ export default function Hero() {
         { opacity: 0, y: 20 },
         { opacity: 1, y: 0, duration: 0.8 },
         '-=0.6'
+      )
+      .fromTo(
+        scrollIndicatorRef.current,
+        { opacity: 0, y: 15 },
+        { opacity: 1, y: 0, duration: 0.8 },
+        '-=0.4'
       )
       .fromTo(
         telemetryRef.current,
@@ -107,9 +114,9 @@ export default function Hero() {
     <section
       ref={containerRef}
       id="hero"
-      className="relative min-h-screen w-full flex flex-col justify-between overflow-hidden bg-kps-dark"
+      className="relative min-h-screen w-full flex flex-col justify-between overflow-hidden bg-[#111315]"
     >
-      {/* Cinematic Background Video Container with Parallax Depth */}
+      {/* Cinematic Background Video Container with Dark Luxury Industrial Grading */}
       <div ref={videoWrapperRef} className="absolute inset-0 w-full h-full z-0 overflow-hidden will-change-transform">
         <video
           ref={videoRef}
@@ -121,7 +128,7 @@ export default function Hero() {
           onLoadedData={() => setVideoLoaded(true)}
           onError={() => setVideoError(true)}
           className={`w-full h-full object-cover object-center scale-105 transition-opacity duration-1000 ${
-            videoLoaded ? 'opacity-55' : 'opacity-25'
+            videoLoaded ? 'opacity-50' : 'opacity-25'
           }`}
         >
           <source src="/assets/hero-generator-workshop.mp4" type="video/mp4" />
@@ -136,23 +143,27 @@ export default function Hero() {
           />
         )}
 
-        {/* Sophisticated Dark Industrial Overlays for Readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-kps-dark via-kps-dark/70 to-kps-dark/40" />
-        <div className="absolute inset-0 bg-radial-vignette opacity-80" />
-        <div className="absolute inset-0 bg-industrial-grid opacity-30 pointer-events-none" />
-        <div className="absolute inset-0 scanline-overlay opacity-15 pointer-events-none" />
+        {/* Deep Charcoal & Forest-Green Industrial CSS Color Grading Overlays */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#111315] via-[#111315]/75 to-[#111315]/45" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#111315]/90 via-[#174D38]/15 to-[#111315]/70" />
+        <div className="absolute inset-0 bg-radial-vignette opacity-85" />
+        <div className="absolute inset-0 bg-industrial-grid opacity-25 pointer-events-none" />
+        <div className="absolute inset-0 scanline-overlay opacity-20 pointer-events-none" />
       </div>
 
       {/* Hero Main Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 sm:pt-40 lg:pt-44 pb-12 my-auto w-full">
         <div className="max-w-4xl space-y-6">
-          {/* Introductory Engineering Label */}
-          <div ref={badgeRef} className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full border border-amber-500/40 bg-amber-500/10 backdrop-blur-md shadow-lg shadow-amber-500/10">
+          {/* Introductory Eyebrow with Forest-Green Beacon */}
+          <div
+            ref={badgeRef}
+            className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full border border-[#216447]/60 bg-[#174D38]/25 backdrop-blur-md shadow-lg"
+          >
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500" />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#2E8B62] opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#216447]" />
             </span>
-            <span className="text-[11px] sm:text-xs font-mono font-bold tracking-widest text-amber-400 uppercase">
+            <span className="text-[11px] sm:text-xs font-mono font-bold tracking-widest text-[#E8ECE9] uppercase">
               KEEN POWER SOLUTIONS | ENGINEERING EXCELLENCE
             </span>
           </div>
@@ -160,27 +171,27 @@ export default function Hero() {
           {/* Main Headline with Reveal */}
           <h1
             ref={headlineRef}
-            className="text-4xl sm:text-6xl md:text-7xl lg:text-7xl font-extrabold tracking-tight text-white font-display leading-[1.08] will-change-transform"
+            className="text-4xl sm:text-6xl md:text-7xl lg:text-7xl font-extrabold tracking-tight text-[#E8ECE9] font-display leading-[1.08] will-change-transform"
           >
-            Powering Industries.{' '}
-            <span className="text-gold-gradient block sm:inline mt-1 sm:mt-0">
-              Engineering Tomorrow.
+            POWERING INDUSTRIES.{' '}
+            <span className="text-forest-gradient block sm:inline mt-1 sm:mt-0">
+              ENGINEERING TOMORROW.
             </span>
           </h1>
 
           {/* Supporting Text */}
           <p
             ref={subtextRef}
-            className="text-base sm:text-xl md:text-2xl text-slate-300 font-normal leading-relaxed max-w-3xl will-change-transform"
+            className="text-base sm:text-xl md:text-2xl text-[#929A96] font-normal leading-relaxed max-w-3xl will-change-transform"
           >
-            Reliable power generation, electrical engineering and turnkey energy solutions designed to keep businesses moving forward.
+            Delivering reliable power generation, electrical engineering and turnkey energy solutions designed to keep businesses moving forward.
           </p>
 
-          {/* CTA Buttons */}
+          {/* CTA Buttons: Primary Crimson + Secondary Industrial Outline */}
           <div ref={ctaRef} className="pt-4 flex flex-wrap items-center gap-4 sm:gap-5 will-change-transform">
             <Link
               to="/services"
-              className="inline-flex items-center justify-center gap-3 px-7 py-3.5 rounded-xl font-bold text-sm tracking-wide text-black bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:from-amber-300 hover:to-amber-500 shadow-xl shadow-amber-500/25 transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0 group"
+              className="btn-crimson inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl font-bold text-sm tracking-wide group"
             >
               <span>Explore Our Solutions</span>
               <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -188,47 +199,68 @@ export default function Hero() {
 
             <Link
               to="/contact"
-              className="inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl font-semibold text-sm tracking-wide text-slate-200 border border-slate-700 bg-slate-900/70 hover:border-amber-500/60 hover:text-amber-400 hover:bg-slate-900 transition-all duration-200 backdrop-blur-md"
+              className="btn-outline-industrial inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-xl font-semibold text-sm tracking-wide backdrop-blur-md"
             >
               <span>Contact Our Team</span>
             </Link>
           </div>
+
+          {/* Elegant Animated Scroll Indicator */}
+          <div
+            ref={scrollIndicatorRef}
+            className="pt-6 sm:pt-8 flex items-center gap-3 text-xs font-mono text-[#929A96]"
+          >
+            <div className="w-5 h-8 rounded-full border border-[#343B37] flex items-start justify-center p-1 bg-[#181C1B]/80">
+              <span className="w-1 h-2 rounded-full bg-[#216447] animate-bounce" />
+            </div>
+            <span className="tracking-wider uppercase text-[11px] text-[#929A96]">
+              Scroll to explore technical capabilities
+            </span>
+          </div>
         </div>
       </div>
 
-      {/* Hero Bottom Industrial Telemetry */}
-      <div ref={telemetryRef} className="relative z-10 w-full border-t border-slate-800/80 bg-slate-950/70 backdrop-blur-md">
+      {/* Hero Bottom Industrial Telemetry Strip */}
+      <div ref={telemetryRef} className="relative z-10 w-full border-t border-[#343B37] bg-[#181C1B]/90 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-wrap items-center justify-between gap-4">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-8 text-xs font-mono w-full sm:w-auto">
-            <div className="flex items-center gap-2">
-              <Zap className="w-4 h-4 text-amber-400 shrink-0" />
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-lg bg-[#174D38]/30 border border-[#216447]/40 text-[#2E8B62]">
+                <Zap className="w-4 h-4" />
+              </div>
               <div>
-                <span className="text-slate-400 block text-[10px]">POWER RANGE</span>
-                <span className="font-bold text-slate-200">15 – 2500 kVA</span>
+                <span className="text-[#929A96] block text-[10px] uppercase tracking-wider">POWER RANGE</span>
+                <span className="font-bold text-[#E8ECE9]">15 – 2500 kVA</span>
               </div>
             </div>
 
-            <div className="flex items-center gap-2">
-              <Shield className="w-4 h-4 text-amber-400 shrink-0" />
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-lg bg-[#174D38]/30 border border-[#216447]/40 text-[#2E8B62]">
+                <Shield className="w-4 h-4" />
+              </div>
               <div>
-                <span className="text-slate-400 block text-[10px]">VERIFIED CLIENTS</span>
-                <span className="font-bold text-slate-200">100+ Satisfied</span>
+                <span className="text-[#929A96] block text-[10px] uppercase tracking-wider">VERIFIED CLIENTS</span>
+                <span className="font-bold text-[#E8ECE9]">100+ Satisfied</span>
               </div>
             </div>
 
-            <div className="flex items-center gap-2">
-              <Cog className="w-4 h-4 text-amber-400 shrink-0" />
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-lg bg-[#174D38]/30 border border-[#216447]/40 text-[#2E8B62]">
+                <Cog className="w-4 h-4" />
+              </div>
               <div>
-                <span className="text-slate-400 block text-[10px]">PROJECT SCOPE</span>
-                <span className="font-bold text-slate-200">Turnkey Solutions</span>
+                <span className="text-[#929A96] block text-[10px] uppercase tracking-wider">PROJECT SCOPE</span>
+                <span className="font-bold text-[#E8ECE9]">Turnkey Solutions</span>
               </div>
             </div>
 
-            <div className="flex items-center gap-2">
-              <Activity className="w-4 h-4 text-amber-400 shrink-0" />
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-lg bg-[#174D38]/30 border border-[#216447]/40 text-[#2E8B62]">
+                <Activity className="w-4 h-4" />
+              </div>
               <div>
-                <span className="text-slate-400 block text-[10px]">COVERAGE</span>
-                <span className="font-bold text-slate-200">Nationwide Pakistan</span>
+                <span className="text-[#929A96] block text-[10px] uppercase tracking-wider">COVERAGE</span>
+                <span className="font-bold text-[#E8ECE9]">Nationwide Pakistan</span>
               </div>
             </div>
           </div>

@@ -6,15 +6,12 @@ export default function MaintenancePage() {
   return (
     <div className="space-y-0">
       <PageHeader
-        badge="PREVENTATIVE ASSET PROTECTION"
-        title="Generator Maintenance &"
-        highlight="Technical Inspections"
-        subtitle="Unplanned power outages cause catastrophic business loss. Our certified field engineers enforce a rigorous 9-point preventative maintenance protocol on all prime and standby generator contracts."
-        breadcrumbs={[{ label: 'Generator Maintenance' }]}
+        title="Reliability Doesn't"
+        highlight="Happen by Accident"
+        subtitle="Explore our standard 9-point preventative generator maintenance protocol executed on every industrial service contract across Pakistan."
       />
 
       <GeneratorMaintenance />
     </div>
   );
 }
-

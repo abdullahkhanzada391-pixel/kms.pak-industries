@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import TiltCard from './TiltCard';
-import { ShieldCheck, Award, Factory, Cpu, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { ShieldCheck, Award, Factory, Cpu, ArrowRight, CheckCircle2, ChevronRight } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -105,7 +105,6 @@ export default function About() {
 
       // 5. Image Mask Reveal & Subtle Scale on Scroll
       if (imageWrapperRef.current) {
-        // Mask clip-path reveal
         gsap.fromTo(
           imageWrapperRef.current,
           { clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)', opacity: 0.3 },
@@ -121,7 +120,6 @@ export default function About() {
           }
         );
 
-        // Subtle scale scrub as user continues scrolling past
         gsap.to(imageWrapperRef.current, {
           yPercent: -8,
           ease: 'none',
@@ -142,91 +140,135 @@ export default function About() {
     <section
       ref={sectionRef}
       id="about"
-      className="relative py-24 sm:py-32 bg-kps-dark border-t border-slate-900 overflow-hidden"
+      className="relative py-24 sm:py-32 bg-[#181C1B] border-t border-[#343B37] overflow-hidden"
     >
-      {/* Background Subtle Gradient Accents */}
-      <div className="absolute top-1/4 -right-40 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-10 -left-40 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none" />
+      {/* Background Decor */}
+      <div className="absolute top-0 right-0 w-full h-full bg-industrial-grid opacity-20 pointer-events-none" />
+      <div className="absolute -top-32 left-1/4 w-[500px] h-[500px] bg-[#174D38]/10 rounded-full blur-[140px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div ref={headerRef} className="max-w-3xl mb-16 sm:mb-20">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-mono uppercase tracking-widest mb-4">
-            <Factory className="w-3.5 h-3.5" />
-            <span>Company Profile & Engineering DNA</span>
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#174D38]/30 border border-[#216447]/60 text-[#E8ECE9] text-xs font-mono uppercase tracking-widest mb-4">
+            <span className="w-2 h-2 rounded-full bg-[#216447]" />
+            <span>WHO WE ARE</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-white font-display tracking-tight leading-tight">
-            Engineering Service Provider Built On Precision, Trust & Quality.
+          <h2 className="text-3xl sm:text-5xl font-extrabold text-[#E8ECE9] font-display tracking-tight leading-tight">
+            An Established Engineering Entity Built on Technical Precision.
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed">
-            Keen Power Solutions (KPS) is a premier engineering entity with established commands in electrical engineering, power generation, industrial fabrication, and turnkey energy infrastructure nationwide.
+          <p className="mt-4 text-base sm:text-lg text-[#929A96] leading-relaxed">
+            Keen Power Solutions (KPS) is a premier Pakistani engineering service provider delivering heavy electrical power generation, switchgear manufacturing, industrial fabrication, and nationwide turnkey infrastructure.
           </p>
         </div>
 
-        {/* Editorial Split Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-          {/* Left Column: Authentic Editorial Story & Values */}
-          <div ref={storyRef} className="lg:col-span-7 space-y-6">
-            <div className="border-l-2 border-amber-500 pl-5">
-              <h3 className="text-xl sm:text-2xl font-bold text-slate-100 font-display">
-                Delivering Excellence Without Interruption
-              </h3>
-              <p className="mt-2 text-sm sm:text-base text-slate-300 leading-relaxed">
-                KPS aspires for a leading market position by delivering best engineering services with customized products, reinforcing national and international brand alliances, and upholding the highest quality and ethical standards as the backbone of progressive growth.
+        {/* Asymmetrical Editorial Split Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          {/* Left Column: Editorial Content */}
+          <div className="lg:col-span-7 space-y-8">
+            <div ref={storyRef} className="space-y-6 text-[#929A96] leading-relaxed text-base">
+              <div className="border-l-2 border-[#216447] pl-5 space-y-2">
+                <span className="text-[11px] font-mono uppercase tracking-widest text-[#2E8B62] font-bold block">
+                  CORPORATE HERITAGE & PROFILE
+                </span>
+                <h3 className="text-xl sm:text-2xl font-bold text-[#E8ECE9] font-display">
+                  Delivering Best Engineering Services with Customized Products
+                </h3>
+              </div>
+
+              <p>
+                Keen Power Solutions (KPS) is an engineering service provider having commands in electrical products and services and engineering solutions. The products line ranges from LT Panels, HT Panels, generators, soundproof canopies, trolleys, power transmissions, distribution and synchronization panels, indoor outdoor LED lights, solar panels, and specialized commercial equipment.
+              </p>
+
+              <p>
+                KPS aspires for a leading market position by delivering best engineering services with customized products, reinforcing national and international brand alliances, and upholding best quality and ethical standards as the company's backbone of progressive growth.
               </p>
             </div>
 
-            <p className="text-sm sm:text-base text-slate-400 leading-relaxed">
-              We raise the level of customer satisfaction through uncompromising field services and dedicated backup support for all our power equipment. By grouping highly qualified and experienced engineers, technicians, and specialized vendors, we conduct operations with top-tier legitimacy, contributing to technological progress and national infrastructure welfare.
-            </p>
-
-            {/* Core Capability Checklist */}
+            {/* Core Capabilities Pills */}
             <div className="pt-2">
-              <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-amber-400 mb-3">
-                Core Engineering Capabilities:
+              <h4 className="text-xs font-mono uppercase tracking-wider text-[#E8ECE9] font-bold mb-3 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#B51F32]" />
+                <span>INTEGRATED ENGINEERING SCOPE:</span>
               </h4>
               <div ref={capabilitiesRef} className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                 {capabilities.map((item, idx) => (
-                  <div key={idx} className="flex items-start gap-2.5 text-xs text-slate-300 bg-slate-900/60 p-2.5 rounded-lg border border-slate-800/80">
-                    <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
-                    <span>{item}</span>
+                  <div
+                    key={idx}
+                    className="flex items-start gap-2.5 text-xs text-[#E8ECE9] bg-[#24282A] p-3 rounded-lg border border-[#343B37] hover:border-[#216447] transition-colors"
+                  >
+                    <CheckCircle2 className="w-4 h-4 text-[#216447] shrink-0 mt-0.5" />
+                    <span className="leading-snug">{item}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Quick Metrics Bar */}
-            <div ref={metricsRef} className="grid grid-cols-3 gap-4 pt-4 border-t border-slate-800">
-              <div className="p-3 bg-kps-card rounded-xl border border-slate-800 text-center">
-                <span className="block text-2xl sm:text-3xl font-extrabold text-amber-400 font-display">100+</span>
-                <span className="text-[11px] font-mono text-slate-400 uppercase">Satisfied Clients</span>
+            {/* Corporate Milestones */}
+            <div ref={metricsRef} className="grid grid-cols-3 gap-4 pt-4 border-t border-[#343B37]">
+              <div className="p-4 rounded-xl bg-[#24282A] border border-[#343B37]">
+                <span className="text-2xl sm:text-3xl font-extrabold text-[#E8ECE9] font-display block">
+                  2500<span className="text-sm font-mono text-[#216447]"> kVA</span>
+                </span>
+                <span className="text-[11px] font-mono text-[#929A96] block mt-1">
+                  Peak Generator Capacity
+                </span>
               </div>
-              <div className="p-3 bg-kps-card rounded-xl border border-slate-800 text-center">
-                <span className="block text-2xl sm:text-3xl font-extrabold text-slate-100 font-display">2500</span>
-                <span className="text-[11px] font-mono text-slate-400 uppercase">Max kVA Range</span>
+
+              <div className="p-4 rounded-xl bg-[#24282A] border border-[#343B37]">
+                <span className="text-2xl sm:text-3xl font-extrabold text-[#E8ECE9] font-display block">
+                  100<span className="text-sm font-mono text-[#B51F32]">+</span>
+                </span>
+                <span className="text-[11px] font-mono text-[#929A96] block mt-1">
+                  Verified Clients
+                </span>
               </div>
-              <div className="p-3 bg-kps-card rounded-xl border border-slate-800 text-center">
-                <span className="block text-2xl sm:text-3xl font-extrabold text-cyan-400 font-display">24/7</span>
-                <span className="text-[11px] font-mono text-slate-400 uppercase">Emergency Service</span>
+
+              <div className="p-4 rounded-xl bg-[#24282A] border border-[#343B37]">
+                <span className="text-2xl sm:text-3xl font-extrabold text-[#E8ECE9] font-display block">
+                  24/7
+                </span>
+                <span className="text-[11px] font-mono text-[#929A96] block mt-1">
+                  Emergency Dispatch
+                </span>
               </div>
             </div>
           </div>
 
-          {/* Right Column: Interactive 3D Depth Card with Mask Reveal */}
-          <div ref={imageWrapperRef} className="lg:col-span-5 will-change-transform">
-            <TiltCard
-              image="/assets/services/generator-workshop.jpg"
-              alt="Keen Power Solutions Generator Workshop and Engineering Facility"
-              title="State-of-the-Art Generator Workshop"
-              subtitle="Full testing facility, rebuild bays, load banking, and electrical synchronization testing at our Lahore engineering center."
-              aspectRatio="aspect-[4/3]"
-              maxTilt={10}
+          {/* Right Column: Large Industrial Engineering Image with Subtle Mask Reveal */}
+          <div className="lg:col-span-5 space-y-5">
+            <div
+              ref={imageWrapperRef}
+              className="will-change-transform rounded-2xl overflow-hidden border border-[#343B37] bg-[#24282A] shadow-2xl relative group"
             >
-              <div className="mt-3 pt-3 border-t border-slate-800 flex items-center justify-between text-xs font-mono text-slate-400">
-                <span>Head Office: Lahore, Pakistan</span>
-                <span className="text-amber-400 font-semibold">NTN: 5561026-7</span>
+              <div className="relative aspect-[4/3] overflow-hidden bg-[#111315]">
+                <img
+                  src="/assets/services/generator-workshop.jpg"
+                  alt="Keen Power Solutions Central Engineering Workshop"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#111315] via-transparent to-transparent opacity-80" />
+                <div className="absolute bottom-4 left-4 right-4 p-4 rounded-xl bg-[#181C1B]/90 backdrop-blur-md border border-[#343B37]">
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#2E8B62] block">
+                    LAHORE HEADQUARTERS & WORKSHOP
+                  </span>
+                  <p className="text-xs text-[#E8ECE9] mt-0.5 leading-snug">
+                    Rebuild bays, resistive load banking, switchgear assembly floor & field depot.
+                  </p>
+                </div>
               </div>
-            </TiltCard>
+            </div>
+
+            {/* Corporate Tax Identification Box */}
+            <div className="bg-[#24282A] p-5 rounded-xl border border-[#343B37] font-mono text-xs space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-[#929A96]">Sales Tax Registration (STRN):</span>
+                <span className="text-[#E8ECE9] font-bold">3277876180555</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-[#929A96]">National Tax Number (NTN):</span>
+                <span className="text-[#E8ECE9] font-bold">5561026-7</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Handshake, Award, ShieldCheck, CheckCircle2, Users, Building, ArrowUpRight } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -73,7 +73,7 @@ export default function PartnersClients() {
         const counterObj = { val: 0 };
         gsap.to(counterObj, {
           val: 100,
-          duration: 2.4,
+          duration: 2.2,
           ease: 'power2.out',
           scrollTrigger: {
             trigger: counterCardRef.current,
@@ -131,61 +131,61 @@ export default function PartnersClients() {
     <section
       ref={containerRef}
       id="partners"
-      className="relative py-24 sm:py-32 bg-kps-dark border-t border-slate-900 overflow-hidden"
+      className="relative py-24 sm:py-32 bg-[#111315] border-t border-[#343B37] overflow-hidden"
     >
       {/* Background Lighting */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[500px] bg-amber-500/5 rounded-full blur-[160px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[500px] bg-[#174D38]/10 rounded-full blur-[160px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-14">
         {/* Section Header & Milestone Metric */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
           <div ref={headerRef} className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-mono uppercase tracking-widest mb-4">
-              <Handshake className="w-3.5 h-3.5" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#174D38]/30 border border-[#216447]/60 text-[#E8ECE9] text-xs font-mono uppercase tracking-widest mb-4">
+              <Handshake className="w-3.5 h-3.5 text-[#216447]" />
               <span>National Alliances & Corporate Relationships</span>
             </div>
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-white font-display tracking-tight leading-tight">
+            <h2 className="text-3xl sm:text-5xl font-extrabold text-[#E8ECE9] font-display tracking-tight leading-tight">
               Trusted by Industry Leaders Across Pakistan.
             </h2>
-            <p className="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed">
+            <p className="mt-4 text-base sm:text-lg text-[#929A96] leading-relaxed">
               Forging enduring alliances with global power equipment manufacturers and delivering mission-critical energy uptime to leading industrial conglomerates, textile mills, financial institutions, and hospitals.
             </p>
           </div>
 
-          {/* 100+ Satisfied Clients Milestone Metric Card (GSAP ScrollTrigger Animated) */}
+          {/* 100+ Satisfied Clients Milestone Metric Card (Section 12: ACHIEVEMENTS) */}
           <div
             ref={counterCardRef}
-            className="bg-gradient-to-br from-kps-card via-slate-900 to-slate-950 p-6 sm:p-7 rounded-2xl border border-amber-500/40 shadow-2xl shrink-0 min-w-[280px] text-center lg:text-left relative overflow-hidden group hover:border-amber-400 transition-colors duration-300"
+            className="bg-gradient-to-br from-[#24282A] via-[#181C1B] to-[#111315] p-7 rounded-2xl border border-[#343B37] shadow-2xl shrink-0 min-w-[290px] text-center lg:text-left relative overflow-hidden group hover:border-[#216447] transition-colors duration-300"
           >
-            <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl group-hover:bg-amber-500/20 transition-colors" />
+            <div className="absolute top-0 right-0 w-32 h-32 bg-[#174D38]/15 rounded-full blur-2xl group-hover:bg-[#174D38]/25 transition-colors" />
             <div className="flex items-center justify-between mb-2">
-              <span className="text-[11px] font-mono font-bold tracking-widest text-amber-400 uppercase">
+              <span className="text-[11px] font-mono font-bold tracking-widest text-[#2E8B62] uppercase">
                 OFFICIAL TRACK RECORD
               </span>
-              <ShieldCheck className="w-4 h-4 text-amber-400" />
+              <ShieldCheck className="w-4 h-4 text-[#216447]" />
             </div>
             <div className="flex items-baseline justify-center lg:justify-start gap-1">
               <span
                 ref={counterNumRef}
-                className="text-5xl sm:text-6xl font-extrabold text-white font-display tabular-nums"
+                className="text-5xl sm:text-6xl font-extrabold text-[#E8ECE9] font-display tabular-nums"
               >
                 0
               </span>
-              <span className="text-3xl sm:text-4xl font-extrabold text-amber-400 font-display">
+              <span className="text-3xl sm:text-4xl font-extrabold text-[#B51F32] font-display">
                 +
               </span>
-              <span className="text-xl font-bold text-amber-400/90 font-display ml-2">
+              <span className="text-xl font-bold text-[#E8ECE9] font-display ml-2">
                 CLIENTS
               </span>
             </div>
-            <span className="text-xs text-slate-400 font-mono block mt-1.5">
-              100+ Verified Corporate Client Portfolio
+            <span className="text-xs text-[#929A96] font-mono block mt-1.5">
+              100+ Satisfied Corporate Clients
             </span>
-            <div className="mt-3 pt-3 border-t border-slate-800/80 flex items-center justify-between text-[11px] font-mono text-slate-400">
+            <div className="mt-3.5 pt-3 border-t border-[#343B37] flex items-center justify-between text-[11px] font-mono text-[#929A96]">
               <span>National Operations</span>
-              <span className="text-emerald-400 font-bold flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                Active Verified
+              <span className="text-[#2E8B62] font-bold flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#216447] animate-pulse" />
+                Verified Track Record
               </span>
             </div>
           </div>
@@ -194,34 +194,34 @@ export default function PartnersClients() {
         {/* Global OEM Engine & Electrical Alliances Strip */}
         <div
           ref={alliancesRef}
-          className="p-6 rounded-2xl bg-kps-surface border border-slate-800 space-y-3.5 shadow-lg"
+          className="p-6 rounded-2xl bg-[#181C1B] border border-[#343B37] space-y-3.5 shadow-xl"
         >
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between text-xs font-mono text-slate-400 gap-1">
-            <span className="font-bold uppercase tracking-wider text-amber-400">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between text-xs font-mono text-[#929A96] gap-1">
+            <span className="font-bold uppercase tracking-wider text-[#2E8B62]">
               GLOBAL OEM BRAND ALLIANCES & TECHNOLOGY PARTNERS:
             </span>
             <span>Certified Integration, Genuine Spares & Field Service</span>
           </div>
-          <div className="flex flex-wrap items-center justify-between gap-3 pt-1 text-xs sm:text-sm font-display font-bold text-slate-300">
-            <span className="px-4 py-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-200 hover:border-amber-500/40 hover:text-amber-300 transition-colors">PERKINS</span>
-            <span className="px-4 py-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-200 hover:border-amber-500/40 hover:text-amber-300 transition-colors">CUMMINS</span>
-            <span className="px-4 py-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-200 hover:border-amber-500/40 hover:text-amber-300 transition-colors">LOVOL</span>
-            <span className="px-4 py-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-200 hover:border-amber-500/40 hover:text-amber-300 transition-colors">WEICHAI</span>
-            <span className="px-4 py-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-200 hover:border-amber-500/40 hover:text-amber-300 transition-colors">DEEP SEA ELECTRONICS</span>
-            <span className="px-4 py-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-200 hover:border-amber-500/40 hover:text-amber-300 transition-colors">SCHNEIDER ELECTRIC</span>
-            <span className="px-4 py-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-200 hover:border-amber-500/40 hover:text-amber-300 transition-colors">ABB</span>
+          <div className="flex flex-wrap items-center justify-between gap-3 pt-1 text-xs sm:text-sm font-display font-bold text-[#E8ECE9]">
+            <span className="px-4 py-2 rounded-lg bg-[#24282A] border border-[#343B37] text-[#E8ECE9] hover:border-[#216447] transition-colors">PERKINS</span>
+            <span className="px-4 py-2 rounded-lg bg-[#24282A] border border-[#343B37] text-[#E8ECE9] hover:border-[#216447] transition-colors">CUMMINS</span>
+            <span className="px-4 py-2 rounded-lg bg-[#24282A] border border-[#343B37] text-[#E8ECE9] hover:border-[#216447] transition-colors">LOVOL</span>
+            <span className="px-4 py-2 rounded-lg bg-[#24282A] border border-[#343B37] text-[#E8ECE9] hover:border-[#216447] transition-colors">WEICHAI</span>
+            <span className="px-4 py-2 rounded-lg bg-[#24282A] border border-[#343B37] text-[#E8ECE9] hover:border-[#216447] transition-colors">DEEP SEA ELECTRONICS</span>
+            <span className="px-4 py-2 rounded-lg bg-[#24282A] border border-[#343B37] text-[#E8ECE9] hover:border-[#216447] transition-colors">SCHNEIDER ELECTRIC</span>
+            <span className="px-4 py-2 rounded-lg bg-[#24282A] border border-[#343B37] text-[#E8ECE9] hover:border-[#216447] transition-colors">ABB</span>
           </div>
         </div>
 
-        {/* Continuous Smooth Logo Marquee with Pause on Hover */}
+        {/* Section 13: Continuous Smooth Logo Marquee with Pause on Hover */}
         <div ref={marqueeContainerRef} className="space-y-4">
-          <div className="flex items-center justify-between text-xs font-mono text-slate-400 pb-2 border-b border-slate-800">
+          <div className="flex items-center justify-between text-xs font-mono text-[#929A96] pb-2 border-b border-[#343B37]">
             <span className="flex items-center gap-2">
-              <Building className="w-3.5 h-3.5 text-amber-400" />
-              <span>CORPORATE CLIENT & ALLIANCE MARQUEE</span>
+              <Building className="w-3.5 h-3.5 text-[#216447]" />
+              <span>OFFICIAL CLIENT & PARTNER MARQUEE</span>
             </span>
-            <span className="text-[11px] text-slate-400 hidden sm:inline">
-              Hover over marquee to inspect logos
+            <span className="text-[11px] text-[#929A96] hidden sm:inline">
+              Hover over marquee to pause & inspect
             </span>
           </div>
 
@@ -230,11 +230,10 @@ export default function PartnersClients() {
             {/* Track 1: Gliding Left */}
             <div className="overflow-hidden">
               <div className="animate-marquee-left flex gap-4 items-center">
-                {/* First set of row1 */}
                 {row1Logos.map((item) => (
                   <div
                     key={`r1-a-${item.id}`}
-                    className="w-40 sm:w-48 h-24 rounded-xl bg-slate-900/90 border border-slate-800/90 p-3.5 flex items-center justify-center shrink-0 hover:border-amber-500/60 hover:bg-slate-900 transition-all duration-300 shadow-md group"
+                    className="w-40 sm:w-48 h-24 rounded-xl bg-[#24282A] border border-[#343B37] p-3.5 flex items-center justify-center shrink-0 hover:border-[#216447] hover:bg-[#2C3234] transition-all duration-300 shadow-md group"
                   >
                     <img
                       src={item.src}
@@ -248,7 +247,7 @@ export default function PartnersClients() {
                 {row1Logos.map((item) => (
                   <div
                     key={`r1-b-${item.id}`}
-                    className="w-40 sm:w-48 h-24 rounded-xl bg-slate-900/90 border border-slate-800/90 p-3.5 flex items-center justify-center shrink-0 hover:border-amber-500/60 hover:bg-slate-900 transition-all duration-300 shadow-md group"
+                    className="w-40 sm:w-48 h-24 rounded-xl bg-[#24282A] border border-[#343B37] p-3.5 flex items-center justify-center shrink-0 hover:border-[#216447] hover:bg-[#2C3234] transition-all duration-300 shadow-md group"
                   >
                     <img
                       src={item.src}
@@ -264,11 +263,10 @@ export default function PartnersClients() {
             {/* Track 2: Gliding Right */}
             <div className="overflow-hidden">
               <div className="animate-marquee-right flex gap-4 items-center">
-                {/* First set of row2 */}
                 {row2Logos.map((item) => (
                   <div
                     key={`r2-a-${item.id}`}
-                    className="w-40 sm:w-48 h-24 rounded-xl bg-slate-900/90 border border-slate-800/90 p-3.5 flex items-center justify-center shrink-0 hover:border-amber-500/60 hover:bg-slate-900 transition-all duration-300 shadow-md group"
+                    className="w-40 sm:w-48 h-24 rounded-xl bg-[#24282A] border border-[#343B37] p-3.5 flex items-center justify-center shrink-0 hover:border-[#216447] hover:bg-[#2C3234] transition-all duration-300 shadow-md group"
                   >
                     <img
                       src={item.src}
@@ -282,7 +280,7 @@ export default function PartnersClients() {
                 {row2Logos.map((item) => (
                   <div
                     key={`r2-b-${item.id}`}
-                    className="w-40 sm:w-48 h-24 rounded-xl bg-slate-900/90 border border-slate-800/90 p-3.5 flex items-center justify-center shrink-0 hover:border-amber-500/60 hover:bg-slate-900 transition-all duration-300 shadow-md group"
+                    className="w-40 sm:w-48 h-24 rounded-xl bg-[#24282A] border border-[#343B37] p-3.5 flex items-center justify-center shrink-0 hover:border-[#216447] hover:bg-[#2C3234] transition-all duration-300 shadow-md group"
                   >
                     <img
                       src={item.src}

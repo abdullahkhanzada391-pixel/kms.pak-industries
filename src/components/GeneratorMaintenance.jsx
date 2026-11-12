@@ -134,7 +134,7 @@ export default function GeneratorMaintenance() {
     if (prefersReducedMotion) return;
 
     const ctx = gsap.context(() => {
-      // Setup Scrollytelling for each maintenance step card
+      // Setup Scrollytelling triggers for each maintenance step card
       stepCardRefs.current.forEach((el, index) => {
         if (!el) return;
 
@@ -146,7 +146,7 @@ export default function GeneratorMaintenance() {
           onEnterBack: () => setActiveStepIndex(index),
         });
 
-        // Subtle entrance animation as each card scrolls in
+        // Entrance animation as each card scrolls into center view
         gsap.fromTo(
           el,
           { opacity: 0.35, y: 30 },
@@ -173,57 +173,75 @@ export default function GeneratorMaintenance() {
     <section
       ref={containerRef}
       id="maintenance"
-      className="relative py-24 sm:py-32 bg-kps-dark border-t border-slate-900 overflow-hidden"
+      className="relative py-24 sm:py-32 bg-[#111315] border-t border-[#343B37] overflow-hidden"
     >
       {/* Background Ambience */}
-      <div className="absolute top-1/2 left-0 w-96 h-96 bg-amber-500/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/2 left-0 w-96 h-96 bg-[#174D38]/10 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-10 right-0 w-96 h-96 bg-[#B51F32]/5 rounded-full blur-[140px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-16">
-        {/* Section Header */}
+        {/* Section Header with Exact Prompt Heading */}
         <div className="max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-mono uppercase tracking-widest mb-4">
-            <CheckSquare className="w-3.5 h-3.5" />
-            <span>KPS Technical Service Protocol</span>
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#174D38]/30 border border-[#216447]/60 text-[#E8ECE9] text-xs font-mono uppercase tracking-widest mb-4">
+            <CheckSquare className="w-3.5 h-3.5 text-[#216447]" />
+            <span>KPS TECHNICAL SERVICE PROTOCOL</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-white font-display tracking-tight leading-tight">
-            Preventative Generator Maintenance Checklist.
+          <h2 className="text-3xl sm:text-5xl font-extrabold text-[#E8ECE9] font-display tracking-tight leading-tight">
+            RELIABILITY DOESN'T HAPPEN BY ACCIDENT.
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-slate-300">
+          <p className="mt-4 text-base sm:text-lg text-[#929A96]">
             Unplanned power outages cost businesses millions. KPS maintenance technicians execute a rigorous 9-point technical inspection protocol on every generator service contract.
           </p>
         </div>
 
         {/* Sticky Scrollytelling Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start relative">
-          {/* Left Column: Fixed / Sticky 3D Alternator & Live Status HUD */}
+          {/* Left Column: Fixed / Sticky 3D Alternator & Forest-Green Progress HUD */}
           <div className="lg:col-span-6 lg:sticky lg:top-28 space-y-5 z-20">
             <Interactive3DViewer />
 
-            {/* Currently Active Scrollytelling Step Pill */}
-            <div className="p-4 rounded-xl bg-slate-950/90 border border-amber-500/40 backdrop-blur-md shadow-xl flex items-center justify-between font-mono text-xs">
+            {/* Currently Active Scrollytelling Step Pill with Crimson Accent */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-[#181C1B]/95 border border-[#343B37] backdrop-blur-md shadow-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 font-mono text-xs">
               <div className="flex items-center gap-3">
-                <span className="w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping" />
+                <span className="w-2.5 h-2.5 rounded-full bg-[#B51F32] animate-ping shrink-0" />
                 <div>
-                  <span className="text-[10px] text-slate-400 uppercase block">
-                    ACTIVE SCROLLYTELLING INSPECTION
+                  <span className="text-[10px] text-[#929A96] uppercase block">
+                    ACTIVE PROTOCOL INSPECTION
                   </span>
-                  <span className="text-sm font-bold text-amber-400">
+                  <span className="text-sm font-bold text-[#E8ECE9]">
                     Step 0{activeStepIndex + 1}: {checklistItems[activeStepIndex]?.title}
                   </span>
                 </div>
               </div>
 
-              <span className="text-xs font-bold px-2.5 py-1 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40">
-                {checklistItems[activeStepIndex]?.criticality} Priority
-              </span>
+              {/* Forest Green Step Progress Pill */}
+              <div className="flex items-center gap-2">
+                <div className="flex gap-1">
+                  {checklistItems.map((_, i) => (
+                    <span
+                      key={i}
+                      className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                        i === activeStepIndex
+                          ? 'bg-[#B51F32] w-5'
+                          : i < activeStepIndex
+                          ? 'bg-[#216447]'
+                          : 'bg-[#343B37]'
+                      }`}
+                    />
+                  ))}
+                </div>
+                <span className="text-[11px] font-bold px-2 py-0.5 rounded bg-[#174D38]/40 text-[#2E8B62] border border-[#216447]/40">
+                  {activeStepIndex + 1}/9
+                </span>
+              </div>
             </div>
           </div>
 
           {/* Right Column: 9 Scrolling Maintenance Step Cards */}
           <div ref={stepsContainerRef} className="lg:col-span-6 space-y-6">
-            <div className="flex items-center justify-between pb-2 border-b border-slate-800 text-xs font-mono text-slate-400">
+            <div className="flex items-center justify-between pb-2 border-b border-[#343B37] text-xs font-mono text-[#929A96]">
               <span>9-POINT INSPECTION PROTOCOL</span>
-              <span className="text-amber-400 font-bold">SCROLL TO INSPECT STEPS</span>
+              <span className="text-[#2E8B62] font-bold">SCROLL TO INSPECT STEPS</span>
             </div>
 
             {checklistItems.map((item, idx) => {
@@ -236,46 +254,50 @@ export default function GeneratorMaintenance() {
                   ref={(el) => (stepCardRefs.current[idx] = el)}
                   className={`p-6 sm:p-7 rounded-2xl border transition-all duration-300 ${
                     isActive
-                      ? 'bg-kps-card border-amber-500 shadow-2xl shadow-amber-500/10 scale-[1.02]'
-                      : 'bg-slate-950/70 border-slate-800/80 hover:border-slate-700'
+                      ? 'bg-[#24282A] border-[#B51F32] shadow-2xl shadow-[#B51F32]/10 scale-[1.02]'
+                      : 'bg-[#181C1B]/80 border-[#343B37] hover:border-[#216447]/60'
                   }`}
                 >
-                  <div className="flex items-start justify-between gap-4 border-b border-slate-800/80 pb-4">
+                  <div className="flex items-start justify-between gap-4 border-b border-[#343B37] pb-4">
                     <div className="flex items-center gap-3.5">
                       <div className={`p-3 rounded-xl border ${
                         isActive
-                          ? 'bg-amber-500/20 border-amber-500 text-amber-400'
-                          : 'bg-slate-900 border-slate-800 text-slate-400'
+                          ? 'bg-[#B51F32]/20 border-[#B51F32] text-[#E83E55]'
+                          : 'bg-[#24282A] border-[#343B37] text-[#929A96]'
                       }`}>
                         <IconComponent className="w-5 h-5" />
                       </div>
                       <div>
-                        <span className="text-[11px] font-mono text-slate-400 uppercase tracking-wider block">
+                        <span className="text-[11px] font-mono text-[#929A96] uppercase tracking-wider block">
                           CHECKPOINT 0{idx + 1} OF 09
                         </span>
-                        <h3 className={`text-lg sm:text-xl font-bold font-display ${isActive ? 'text-amber-400' : 'text-slate-100'}`}>
+                        <h3 className={`text-lg sm:text-xl font-bold font-display ${isActive ? 'text-[#E8ECE9]' : 'text-[#929A96]'}`}>
                           {item.title}
                         </h3>
                       </div>
                     </div>
 
-                    <span className="text-xs font-mono text-slate-300 bg-slate-900 px-3 py-1 rounded-lg border border-slate-800 shrink-0">
+                    <span className={`text-xs font-mono px-3 py-1 rounded-lg border shrink-0 ${
+                      isActive
+                        ? 'text-[#FFFFFF] bg-[#B51F32] border-[#D12B42]'
+                        : 'text-[#929A96] bg-[#24282A] border-[#343B37]'
+                    }`}>
                       {item.interval}
                     </span>
                   </div>
 
-                  <p className="mt-4 text-xs sm:text-sm text-slate-300 leading-relaxed">
+                  <p className="mt-4 text-xs sm:text-sm text-[#929A96] leading-relaxed">
                     {item.desc}
                   </p>
 
                   <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono">
-                    <div className="bg-slate-900/80 p-3 rounded-lg border border-slate-800 space-y-1">
-                      <span className="text-[10px] text-slate-400 uppercase block">Tolerance</span>
-                      <span className="text-slate-200 font-semibold block">{item.tolerance}</span>
+                    <div className="bg-[#181C1B] p-3 rounded-lg border border-[#343B37] space-y-1">
+                      <span className="text-[10px] text-[#929A96] uppercase block">Tolerance</span>
+                      <span className="text-[#E8ECE9] font-semibold block">{item.tolerance}</span>
                     </div>
-                    <div className="bg-slate-900/80 p-3 rounded-lg border border-slate-800 space-y-1">
-                      <span className="text-[10px] text-amber-400/90 uppercase block">Prevention</span>
-                      <span className="text-slate-200 font-semibold block">{item.impact}</span>
+                    <div className="bg-[#181C1B] p-3 rounded-lg border border-[#343B37] space-y-1">
+                      <span className="text-[10px] text-[#2E8B62] uppercase block">Prevention</span>
+                      <span className="text-[#E8ECE9] font-semibold block">{item.impact}</span>
                     </div>
                   </div>
                 </div>
