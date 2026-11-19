@@ -3,17 +3,16 @@ import {
   Phone, 
   Mail, 
   MapPin, 
-  Globe, 
   Send, 
   CheckCircle2, 
   AlertCircle, 
   Clock, 
   ShieldCheck, 
-  MessageSquare, 
   FileText
 } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import SpecularButton from './SpecularButton';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -66,14 +65,17 @@ export default function ContactSection({ preselectedService }) {
         );
       }
 
-      // 2. Left Column Slide & Fade
+      const isMobile = window.innerWidth < 768;
+
+      // 2. Left Column Slide & Fade (Vertical on mobile to prevent horizontal overflow)
       if (leftColRef.current) {
         gsap.fromTo(
           leftColRef.current,
-          { opacity: 0, x: -35 },
+          { opacity: 0, x: isMobile ? 0 : -35, y: isMobile ? 25 : 0 },
           {
             opacity: 1,
             x: 0,
+            y: 0,
             duration: 0.9,
             ease: 'power3.out',
             scrollTrigger: {
@@ -84,14 +86,15 @@ export default function ContactSection({ preselectedService }) {
         );
       }
 
-      // 3. Right Column Slide & Fade
+      // 3. Right Column Slide & Fade (Vertical on mobile to prevent horizontal overflow)
       if (rightColRef.current) {
         gsap.fromTo(
           rightColRef.current,
-          { opacity: 0, x: 35 },
+          { opacity: 0, x: isMobile ? 0 : 35, y: isMobile ? 25 : 0 },
           {
             opacity: 1,
             x: 0,
+            y: 0,
             duration: 0.9,
             ease: 'power3.out',
             scrollTrigger: {
@@ -188,48 +191,44 @@ export default function ContactSection({ preselectedService }) {
     <section
       ref={containerRef}
       id="contact"
-      className="relative py-24 sm:py-32 bg-[#181C1B] border-t border-[#343B37] overflow-hidden"
+      className="relative py-16 sm:py-20 lg:py-28 bg-[#F8FAFC] border-t border-[#E2E8F0] overflow-hidden"
     >
-      {/* Background Decor */}
-      <div className="absolute top-0 right-0 w-full h-full bg-industrial-grid opacity-20 pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-[#174D38]/10 rounded-full blur-[160px] pointer-events-none" />
+      {/* Background Architectural Grid Decor */}
+      <div className="absolute top-0 right-0 w-full h-full bg-architectural-grid opacity-30 pointer-events-none" />
+      <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-[#C59B27]/10 rounded-full blur-[160px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Section Header with Exact Prompt Heading */}
-        <div ref={headerRef} className="max-w-3xl mb-16 sm:mb-20">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#174D38]/30 border border-[#216447]/60 text-[#E8ECE9] text-xs font-mono uppercase tracking-widest mb-4">
-            <MessageSquare className="w-3.5 h-3.5 text-[#216447]" />
-            <span>Consult Our Engineering Desk</span>
-          </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-[#E8ECE9] font-display tracking-tight leading-tight">
+        {/* Section Header */}
+        <div ref={headerRef} className="max-w-3xl mb-10 sm:mb-12 lg:mb-16">
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#0B192C] tracking-tight leading-tight">
             LET'S POWER YOUR NEXT PROJECT.
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-[#929A96]">
+          <p className="mt-3 sm:mt-4 text-sm sm:text-base lg:text-lg text-[#334155] leading-relaxed">
             Contact our Lahore headquarters for generator sales, technical maintenance, turnkey electrical switchgear, or nationwide project quotes.
           </p>
         </div>
 
         {/* Main Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           {/* Left Column: Official Corporate Contact Information */}
           <div ref={leftColRef} className="lg:col-span-5 space-y-6">
-            <div className="bg-[#24282A] p-6 sm:p-8 rounded-2xl border border-[#343B37] shadow-xl space-y-6">
-              <h3 className="text-xl font-bold text-[#E8ECE9] font-display border-b border-[#343B37] pb-4">
-                Keen Power Solutions (KPS)
+            <div className="bg-white p-6 sm:p-8 rounded-2xl border border-[#E2E8F0] shadow-warm-md space-y-6">
+              <h3 className="text-xl font-serif font-bold text-[#0B192C] border-b border-[#E2E8F0] pb-4">
+                HK Power Industries
               </h3>
 
               {/* Contact List */}
               <div className="space-y-5 text-sm">
                 {/* Address */}
                 <div className="flex items-start gap-4">
-                  <div className="p-2.5 rounded-xl bg-[#174D38]/30 border border-[#216447]/50 text-[#2E8B62] shrink-0 mt-0.5">
+                  <div className="p-2.5 rounded-xl bg-[#FFFBEB] border border-[#FDE68A] text-[#C59B27] shrink-0 mt-0.5">
                     <MapPin className="w-5 h-5" />
                   </div>
                   <div>
-                    <span className="text-[11px] font-mono uppercase tracking-wider text-[#929A96] block">
+                    <span className="text-[11px] font-mono uppercase tracking-wider text-[#64748B] block">
                       HEAD OFFICE ADDRESS
                     </span>
-                    <p className="text-[#E8ECE9] font-medium mt-0.5 leading-snug">
+                    <p className="text-[#0B192C] font-medium mt-0.5 leading-snug">
                       26B Block B, Nawab Town, Raiwind Road, Lahore, Pakistan.
                     </p>
                   </div>
@@ -237,85 +236,65 @@ export default function ContactSection({ preselectedService }) {
 
                 {/* Phone */}
                 <div className="flex items-start gap-4">
-                  <div className="p-2.5 rounded-xl bg-[#174D38]/30 border border-[#216447]/50 text-[#2E8B62] shrink-0 mt-0.5">
+                  <div className="p-2.5 rounded-xl bg-[#FFFBEB] border border-[#FDE68A] text-[#C59B27] shrink-0 mt-0.5">
                     <Phone className="w-5 h-5" />
                   </div>
                   <div>
-                    <span className="text-[11px] font-mono uppercase tracking-wider text-[#929A96] block">
+                    <span className="text-[11px] font-mono uppercase tracking-wider text-[#64748B] block">
                       TELEPHONE / DIRECT DESK
                     </span>
                     <a
                       href="tel:04235957670"
-                      className="text-[#E8ECE9] hover:text-[#2E8B62] font-bold font-mono text-base block mt-0.5 transition-colors"
+                      className="text-[#0B192C] hover:text-[#C59B27] font-bold font-mono text-base block mt-0.5 transition-colors min-h-[44px] flex items-center"
                     >
                       0423 595 7670
                     </a>
-                    <span className="text-xs text-[#929A96] font-mono">24/7 Field Dispatch Available</span>
-                  </div>
-                </div>
-
-                {/* Website */}
-                <div className="flex items-start gap-4">
-                  <div className="p-2.5 rounded-xl bg-[#174D38]/30 border border-[#216447]/50 text-[#2E8B62] shrink-0 mt-0.5">
-                    <Globe className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <span className="text-[11px] font-mono uppercase tracking-wider text-[#929A96] block">
-                      OFFICIAL WEBSITE
-                    </span>
-                    <a
-                      href="http://www.kpspak.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-[#929A96] hover:text-[#E8ECE9] font-mono text-sm block mt-0.5 transition-colors"
-                    >
-                      www.kpspak.com
-                    </a>
+                    <span className="text-xs text-[#64748B] font-mono">24/7 Field Dispatch Available</span>
                   </div>
                 </div>
               </div>
 
               {/* Tax & Registration Credentials */}
-              <div className="pt-4 border-t border-[#343B37] bg-[#181C1B] -mx-6 -mb-6 p-6 rounded-b-2xl space-y-2 text-xs font-mono">
+              <div className="pt-4 border-t border-[#E2E8F0] bg-[#F8FAFC] -mx-6 sm:-mx-8 -mb-6 sm:-mb-8 p-5 sm:p-6 rounded-b-2xl space-y-2 text-xs font-mono">
                 <div className="flex items-center justify-between">
-                  <span className="text-[#929A96]">Sales Tax Registration (STRN):</span>
-                  <span className="text-[#E8ECE9] font-bold">3277876180555</span>
+                  <span className="text-[#64748B]">Sales Tax (STRN):</span>
+                  <span className="text-[#0B192C] font-bold">3277876180555</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-[#929A96]">National Tax Number (NTN):</span>
-                  <span className="text-[#E8ECE9] font-bold">5561026-7</span>
+                  <span className="text-[#64748B]">Income Tax (NTN):</span>
+                  <span className="text-[#0B192C] font-bold">5561026-7</span>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Right Column: Contact & Project Request Form */}
-          <div ref={rightColRef} className="lg:col-span-7 bg-[#24282A] p-6 sm:p-10 rounded-2xl border border-[#343B37] shadow-2xl relative">
+          <div ref={rightColRef} className="lg:col-span-7 bg-white p-5 sm:p-8 lg:p-10 rounded-2xl border border-[#E2E8F0] shadow-warm-lg relative">
             {submitted ? (
               <div className="py-12 text-center space-y-5 animate-in fade-in duration-300">
-                <div className="w-16 h-16 rounded-full bg-[#174D38]/30 border-2 border-[#216447] text-[#2E8B62] flex items-center justify-center mx-auto">
+                <div className="w-16 h-16 rounded-full bg-[#FFFBEB] border-2 border-[#C59B27] text-[#C59B27] flex items-center justify-center mx-auto">
                   <CheckCircle2 className="w-8 h-8" />
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold text-[#E8ECE9] font-display">
+                  <h3 className="text-2xl font-serif font-bold text-[#0B192C]">
                     Thank You, {formData.name}!
                   </h3>
-                  <p className="mt-2 text-sm text-[#929A96] max-w-md mx-auto leading-relaxed">
-                    Your inquiry regarding <strong className="text-[#E8ECE9]">{formData.service}</strong> has been logged for our engineering desk. For immediate emergency dispatch or urgent pricing, call our Lahore office directly at{' '}
-                    <span className="font-mono text-[#E8ECE9]">0423 595 7670</span>.
+                  <p className="mt-2 text-sm text-[#334155] max-w-md mx-auto leading-relaxed">
+                    Your inquiry regarding <strong className="text-[#0B192C]">{formData.service}</strong> has been logged for our engineering desk. For immediate emergency dispatch or urgent pricing, call our Lahore office directly at{' '}
+                    <a href="tel:04235957670" className="font-mono text-[#C59B27] font-bold hover:underline">0423 595 7670</a>.
                   </p>
                 </div>
 
-                <div className="pt-4 flex flex-wrap items-center justify-center gap-3">
+                <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
                   <a
                     href="tel:04235957670"
-                    className="btn-crimson px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider"
+                    className="btn-navy px-6 py-3 rounded-xl text-xs font-bold uppercase tracking-wider min-h-[48px] w-full sm:w-auto inline-flex items-center justify-center"
                   >
                     Call 0423 595 7670 Directly
                   </a>
                   <button
                     onClick={handleReset}
-                    className="px-5 py-2.5 rounded-xl text-xs font-mono text-[#929A96] bg-[#181C1B] border border-[#343B37] hover:text-[#E8ECE9]"
+                    className="px-6 py-3 rounded-xl text-xs font-mono text-[#334155] bg-[#F8FAFC] border border-[#E2E8F0] hover:text-[#C59B27] min-h-[48px] w-full sm:w-auto transition-colors"
                   >
                     Submit Another Inquiry
                   </button>
@@ -324,19 +303,19 @@ export default function ContactSection({ preselectedService }) {
             ) : (
               <form onSubmit={handleSubmit} noValidate className="space-y-5">
                 <div ref={formFieldsRef} className="space-y-5">
-                  <div className="border-b border-[#343B37] pb-3">
-                    <h3 className="text-xl font-bold text-[#E8ECE9] font-display">
+                  <div className="border-b border-[#E2E8F0] pb-3">
+                    <h3 className="text-xl font-serif font-bold text-[#0B192C]">
                       Request Engineering Quotation
                     </h3>
-                    <p className="text-xs text-[#929A96] mt-0.5">
+                    <p className="text-xs text-[#64748B] mt-0.5">
                       Fill in your project specifications below and an engineer will review your requirements.
                     </p>
                   </div>
 
                   {/* Name & Email Row */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                     <div>
-                      <label className="block text-xs font-mono uppercase tracking-wider text-[#929A96] mb-1.5">
+                      <label className="block text-xs font-mono uppercase tracking-wider text-[#64748B] mb-1.5">
                         Full Name *
                       </label>
                       <input
@@ -344,19 +323,19 @@ export default function ContactSection({ preselectedService }) {
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         placeholder="e.g. Engr. Ahmad Khan"
-                        className={`w-full px-4 py-2.5 rounded-xl bg-[#181C1B] border text-sm text-[#E8ECE9] placeholder-[#929A96]/60 focus:outline-none transition-colors ${
-                          errors.name ? 'border-red-500 focus:border-red-500' : 'border-[#343B37] focus:border-[#216447]'
+                        className={`w-full px-4 py-3 rounded-xl bg-[#F8FAFC] border text-base sm:text-sm text-[#0B192C] placeholder-[#64748B]/60 focus:outline-none focus:bg-white transition-colors min-h-[48px] ${
+                          errors.name ? 'border-red-500 focus:border-red-500' : 'border-[#E2E8F0] focus:border-[#0B192C]'
                         }`}
                       />
                       {errors.name && (
-                        <span className="text-[11px] text-red-400 font-mono mt-1 flex items-center gap-1">
+                        <span className="text-[11px] text-red-500 font-mono mt-1 flex items-center gap-1">
                           <AlertCircle className="w-3 h-3" /> {errors.name}
                         </span>
                       )}
                     </div>
 
                     <div>
-                      <label className="block text-xs font-mono uppercase tracking-wider text-[#929A96] mb-1.5">
+                      <label className="block text-xs font-mono uppercase tracking-wider text-[#64748B] mb-1.5">
                         Email Address *
                       </label>
                       <input
@@ -364,12 +343,12 @@ export default function ContactSection({ preselectedService }) {
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         placeholder="e.g. ahmad@company.com"
-                        className={`w-full px-4 py-2.5 rounded-xl bg-[#181C1B] border text-sm text-[#E8ECE9] placeholder-[#929A96]/60 focus:outline-none transition-colors ${
-                          errors.email ? 'border-red-500 focus:border-red-500' : 'border-[#343B37] focus:border-[#216447]'
+                        className={`w-full px-4 py-3 rounded-xl bg-[#F8FAFC] border text-base sm:text-sm text-[#0B192C] placeholder-[#64748B]/60 focus:outline-none focus:bg-white transition-colors min-h-[48px] ${
+                          errors.email ? 'border-red-500 focus:border-red-500' : 'border-[#E2E8F0] focus:border-[#0B192C]'
                         }`}
                       />
                       {errors.email && (
-                        <span className="text-[11px] text-red-400 font-mono mt-1 flex items-center gap-1">
+                        <span className="text-[11px] text-red-500 font-mono mt-1 flex items-center gap-1">
                           <AlertCircle className="w-3 h-3" /> {errors.email}
                         </span>
                       )}
@@ -377,9 +356,9 @@ export default function ContactSection({ preselectedService }) {
                   </div>
 
                   {/* Phone & Service Row */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                     <div>
-                      <label className="block text-xs font-mono uppercase tracking-wider text-[#929A96] mb-1.5">
+                      <label className="block text-xs font-mono uppercase tracking-wider text-[#64748B] mb-1.5">
                         Phone Number *
                       </label>
                       <input
@@ -387,28 +366,28 @@ export default function ContactSection({ preselectedService }) {
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                         placeholder="e.g. 0300 1234567"
-                        className={`w-full px-4 py-2.5 rounded-xl bg-[#181C1B] border text-sm text-[#E8ECE9] placeholder-[#929A96]/60 focus:outline-none transition-colors ${
-                          errors.phone ? 'border-red-500 focus:border-red-500' : 'border-[#343B37] focus:border-[#216447]'
+                        className={`w-full px-4 py-3 rounded-xl bg-[#F8FAFC] border text-base sm:text-sm text-[#0B192C] placeholder-[#64748B]/60 focus:outline-none focus:bg-white transition-colors min-h-[48px] ${
+                          errors.phone ? 'border-red-500 focus:border-red-500' : 'border-[#E2E8F0] focus:border-[#0B192C]'
                         }`}
                       />
                       {errors.phone && (
-                        <span className="text-[11px] text-red-400 font-mono mt-1 flex items-center gap-1">
+                        <span className="text-[11px] text-red-500 font-mono mt-1 flex items-center gap-1">
                           <AlertCircle className="w-3 h-3" /> {errors.phone}
                         </span>
                       )}
                     </div>
 
                     <div>
-                      <label className="block text-xs font-mono uppercase tracking-wider text-[#929A96] mb-1.5">
+                      <label className="block text-xs font-mono uppercase tracking-wider text-[#64748B] mb-1.5">
                         Interested Service
                       </label>
                       <select
                         value={formData.service}
                         onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                        className="w-full px-4 py-2.5 rounded-xl bg-[#181C1B] border border-[#343B37] text-sm text-[#E8ECE9] focus:outline-none focus:border-[#216447] transition-colors"
+                        className="w-full px-4 py-3 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-base sm:text-sm text-[#0B192C] focus:outline-none focus:border-[#0B192C] transition-colors min-h-[48px]"
                       >
                         {serviceOptions.map((opt, i) => (
-                          <option key={i} value={opt} className="bg-[#181C1B] text-[#E8ECE9]">
+                          <option key={i} value={opt} className="bg-white text-[#0B192C]">
                             {opt}
                           </option>
                         ))}
@@ -418,7 +397,7 @@ export default function ContactSection({ preselectedService }) {
 
                   {/* Message */}
                   <div>
-                    <label className="block text-xs font-mono uppercase tracking-wider text-[#929A96] mb-1.5">
+                    <label className="block text-xs font-mono uppercase tracking-wider text-[#64748B] mb-1.5">
                       Project Scope / Message *
                     </label>
                     <textarea
@@ -426,31 +405,44 @@ export default function ContactSection({ preselectedService }) {
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       placeholder="Describe your power requirements, generator capacity (kVA), project location, or specific engineering scope..."
-                      className={`w-full px-4 py-2.5 rounded-xl bg-[#181C1B] border text-sm text-[#E8ECE9] placeholder-[#929A96]/60 focus:outline-none transition-colors ${
-                        errors.message ? 'border-red-500 focus:border-red-500' : 'border-[#343B37] focus:border-[#216447]'
+                      className={`w-full px-4 py-3 rounded-xl bg-[#F8FAFC] border text-base sm:text-sm text-[#0B192C] placeholder-[#64748B]/60 focus:outline-none focus:bg-white transition-colors ${
+                        errors.message ? 'border-red-500 focus:border-red-500' : 'border-[#E2E8F0] focus:border-[#0B192C]'
                       }`}
                     />
                     {errors.message && (
-                      <span className="text-[11px] text-red-400 font-mono mt-1 flex items-center gap-1">
+                      <span className="text-[11px] text-red-500 font-mono mt-1 flex items-center gap-1">
                         <AlertCircle className="w-3 h-3" /> {errors.message}
                       </span>
                     )}
                   </div>
 
-                  {/* Submit button: Exact Prompt label SEND YOUR INQUIRY */}
+                  {/* Submit button */}
                   <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <span className="text-[11px] font-mono text-[#929A96]">
+                    <span className="text-[11px] font-mono text-[#64748B]">
                       Official Technical Review Within 24 Hours
                     </span>
 
-                    <button
+                    <SpecularButton
                       type="submit"
                       disabled={isSubmitting}
-                      className="btn-crimson inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider disabled:opacity-50"
+                      size="md"
+                      radius={14}
+                      tint="#0B192C"
+                      tintOpacity={1}
+                      hoverTint="#1E3A8A"
+                      textColor="#FFFFFF"
+                      lineColor="#F59E0B"
+                      baseColor="#071220"
+                      intensity={1.2}
+                      idleIntensity={0.35}
+                      thickness={1.4}
+                      glow={1.1}
+                      followMouse={true}
+                      className="font-bold text-xs uppercase tracking-wider min-h-[48px] px-8 py-3.5 w-full sm:w-auto shadow-warm-sm border border-[#C59B27]/40"
                     >
                       <span>{isSubmitting ? 'Processing...' : 'SEND YOUR INQUIRY'}</span>
-                      <Send className="w-4 h-4" />
-                    </button>
+                      <Send className="w-4 h-4 text-[#F59E0B] transition-transform group-hover:translate-x-1" />
+                    </SpecularButton>
                   </div>
                 </div>
               </form>

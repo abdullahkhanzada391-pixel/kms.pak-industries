@@ -5,11 +5,9 @@ export default function TiltCard({
   alt = 'Industrial engineering showcase',
   title,
   subtitle,
-  category,
-  badge,
   className = '',
   aspectRatio = 'aspect-[16/10]',
-  maxTilt = 12,
+  maxTilt = 10,
   children
 }) {
   const cardRef = useRef(null);
@@ -45,7 +43,7 @@ export default function TiltCard({
       style={{ perspective: '1000px' }}
     >
       <div
-        className="w-full h-full rounded-xl overflow-hidden border border-[#343B37] bg-[#24282A] transition-all duration-300 ease-out shadow-xl group-hover:border-[#216447] group-hover:shadow-2xl group-hover:shadow-[#174D38]/20"
+        className="w-full h-full rounded-xl overflow-hidden border border-[#E2E8F0] bg-white transition-all duration-300 ease-out shadow-warm-md group-hover:border-[#C59B27] group-hover:shadow-warm-xl"
         style={{
           transform: isHovered
             ? `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`
@@ -55,7 +53,7 @@ export default function TiltCard({
         }}
       >
         {/* Image layer */}
-        <div className={`relative w-full ${aspectRatio} overflow-hidden bg-[#111315]`}>
+        <div className={`relative w-full ${aspectRatio} overflow-hidden bg-slate-100`}>
           {image ? (
             <img
               src={image}
@@ -64,54 +62,40 @@ export default function TiltCard({
               loading="lazy"
             />
           ) : (
-            <div className="w-full h-full bg-gradient-to-br from-[#181C1B] to-[#24282A] flex items-center justify-center">
-              <span className="text-[#929A96] font-mono text-sm">[KPS ENGINEERING]</span>
+            <div className="w-full h-full bg-[#FFFBEB] flex items-center justify-center">
+              <span className="text-[#64748B] font-mono text-sm">[HK POWER ENGINEERING]</span>
             </div>
           )}
 
-          {/* Dark gradient overlay for contrast */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#24282A] via-[#24282A]/40 to-transparent" />
+          {/* Gentle gradient overlay for contrast */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
 
           {/* Glare specular light following cursor */}
           {isHovered && (
             <div
               className="absolute inset-0 pointer-events-none transition-opacity duration-300"
               style={{
-                background: `radial-gradient(circle at ${glareX}% ${glareY}%, rgba(255, 255, 255, 0.12) 0%, transparent 60%)`,
+                background: `radial-gradient(circle at ${glareX}% ${glareY}%, rgba(255, 255, 255, 0.25) 0%, transparent 60%)`,
               }}
             />
           )}
-
-          {/* Badges on top */}
-          <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-10">
-            {category && (
-              <span className="inline-flex items-center px-2.5 py-1 rounded bg-[#111315]/80 backdrop-blur-md text-[11px] font-mono tracking-wider text-[#2E8B62] border border-[#216447]/50">
-                {category}
-              </span>
-            )}
-            {badge && (
-              <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-[#B51F32] text-white">
-                {badge}
-              </span>
-            )}
-          </div>
         </div>
 
         {/* Card Body with 3D depth */}
         <div
-          className="p-5"
+          className="p-5 sm:p-6 bg-white"
           style={{
-            transform: isHovered ? 'translateZ(25px)' : 'translateZ(0px)',
+            transform: isHovered ? 'translateZ(20px)' : 'translateZ(0px)',
             transition: 'transform 0.2s ease-out',
           }}
         >
           {title && (
-            <h3 className="text-lg font-bold text-[#E8ECE9] group-hover:text-white transition-colors duration-200">
+            <h3 className="text-lg font-serif font-bold text-[#0B192C] group-hover:text-[#C59B27] transition-colors duration-200">
               {title}
             </h3>
           )}
           {subtitle && (
-            <p className="mt-1.5 text-xs text-[#929A96] line-clamp-2 leading-relaxed">
+            <p className="mt-2 text-xs text-[#64748B] line-clamp-2 leading-relaxed">
               {subtitle}
             </p>
           )}

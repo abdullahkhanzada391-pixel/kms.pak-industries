@@ -27,47 +27,47 @@ export default function AboutPage() {
   ];
 
   return (
-    <div className="space-y-0">
+    <div className="space-y-0 bg-white">
       {/* Page Header */}
       <PageHeader
-        title="About Keen Power Solutions:"
+        title="About HK Power Industries:"
         highlight="Engineering Tomorrow"
         subtitle="Quality-driven engineering service provider specializing in power generation, customized electrical switchgear, fabrication, and nationwide turnkey execution."
       />
 
       {/* Main Profile Story */}
-      <section className="py-20 sm:py-28 bg-[#181C1B] border-t border-[#343B37] relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-            <div className="lg:col-span-7 space-y-6">
-              <div className="border-l-2 border-[#216447] pl-5">
-                <span className="text-xs font-mono font-bold text-[#2E8B62] uppercase tracking-widest block mb-1">
+      <section className="py-16 sm:py-20 lg:py-28 bg-[#F8FAFC] border-t border-[#E2E8F0] relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 sm:space-y-12 lg:space-y-16">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            <div className="lg:col-span-7 space-y-5 sm:space-y-6">
+              <div className="border-l-2 border-[#C59B27] pl-4 sm:pl-5">
+                <span className="text-xs font-mono font-bold text-[#C59B27] uppercase tracking-widest block mb-1">
                   OFFICIAL COMPANY INTRODUCTION
                 </span>
-                <h2 className="text-2xl sm:text-4xl font-extrabold text-[#E8ECE9] font-display leading-tight">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#0B192C] font-serif leading-tight">
                   A Quality-Driven Engineering Entity Built on Technical Precision.
                 </h2>
               </div>
 
-              <p className="text-base text-[#929A96] leading-relaxed">
-                Keen Power Solutions (KPS) is an engineering service provider having commands in electrical products and services and engineering solutions. The products line ranges from LT Panels, HT Panels, generators, soundproof canopies, trolleys, power transmissions, distribution and synchronization panels, indoor outdoor LED lights, solar panels, and specialized commercial equipment.
+              <p className="text-sm sm:text-base text-[#334155] leading-relaxed">
+                HK Power Industries is an engineering service provider having commands in electrical products and services and engineering solutions. The products line ranges from LT Panels, HT Panels, generators, soundproof canopies, trolleys, power transmissions, distribution and synchronization panels, indoor outdoor LED lights, solar panels, and specialized commercial equipment.
               </p>
 
-              <p className="text-sm text-[#929A96] leading-relaxed">
-                KPS aspires for a leading market position by delivering best engineering services with customized products, reinforcing national and international brand alliances, and upholding best quality and ethical standards as the company's backbone of progressive growth.
+              <p className="text-xs sm:text-sm text-[#64748B] leading-relaxed">
+                HK Power Industries aspires for a leading market position by delivering best engineering services with customized products, reinforcing national and international brand alliances, and upholding best quality and ethical standards as the company's backbone of progressive growth.
               </p>
 
               {/* Core Capabilities */}
               <div className="pt-2">
-                <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-[#E8ECE9] mb-3 flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#B51F32]" />
+                <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-[#0B192C] mb-3 flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#C59B27]" />
                   <span>Integrated Engineering Scope:</span>
                 </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {capabilities.map((item, idx) => (
-                    <div key={idx} className="flex items-start gap-2.5 text-xs text-[#E8ECE9] bg-[#24282A] p-3 rounded-lg border border-[#343B37]">
-                      <CheckCircle2 className="w-4 h-4 text-[#216447] shrink-0 mt-0.5" />
-                      <span>{item}</span>
+                    <div key={idx} className="flex items-start gap-3 text-xs text-[#0B192C] bg-white p-3.5 rounded-xl border border-[#E2E8F0] shadow-warm-xs">
+                      <CheckCircle2 className="w-4 h-4 text-[#C59B27] shrink-0 mt-0.5" />
+                      <span className="leading-snug">{item}</span>
                     </div>
                   ))}
                 </div>
@@ -78,32 +78,11 @@ export default function AboutPage() {
             <div className="lg:col-span-5 space-y-4">
               <TiltCard
                 image="/assets/services/generator-workshop.jpg"
-                alt="Keen Power Solutions Generator Workshop and Rebuild Bays"
+                alt="HK Power Industries Generator Workshop and Rebuild Bays"
                 title="Lahore Central Workshop & Facility"
                 subtitle="Engine testing bays, resistive load banking, switchgear assembly floor, and emergency field dispatch depot."
                 aspectRatio="aspect-[4/3]"
-              >
-                <div className="mt-3 pt-3 border-t border-[#343B37] flex items-center justify-between text-xs font-mono text-[#929A96]">
-                  <span>Location: Lahore, Pakistan</span>
-                  <span className="text-[#2E8B62] font-semibold">NTN: 5561026-7</span>
-                </div>
-              </TiltCard>
-
-              {/* Corporate Credentials Box */}
-              <div className="bg-[#24282A] p-5 rounded-xl border border-[#343B37] font-mono text-xs space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="text-[#929A96]">Sales Tax (STRN):</span>
-                  <span className="text-[#E8ECE9] font-bold">3277876180555</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-[#929A96]">Income Tax (NTN):</span>
-                  <span className="text-[#E8ECE9] font-bold">5561026-7</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-[#929A96]">Satisfied Clients:</span>
-                  <span className="text-[#E8ECE9] font-bold">100+ Verified Accounts</span>
-                </div>
-              </div>
+              />
             </div>
           </div>
         </div>

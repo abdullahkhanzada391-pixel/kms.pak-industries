@@ -39,7 +39,7 @@ export default function Interactive3DViewer() {
 
     // SCENE
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x111315, 0.04);
+    scene.fog = new THREE.FogExp2(0xF8FAFC, 0.03);
     sceneState.current.scene = scene;
 
     // CAMERA
@@ -57,19 +57,19 @@ export default function Interactive3DViewer() {
     mount.appendChild(renderer.domElement);
     sceneState.current.renderer = renderer;
 
-    // LIGHTS: Forest green & technical white industrial lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+    // LIGHTS: Precision navy & gold architectural lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
     scene.add(ambientLight);
 
-    const dirLight1 = new THREE.DirectionalLight(0x216447, 2.8);
+    const dirLight1 = new THREE.DirectionalLight(0x0B192C, 1.8);
     dirLight1.position.set(5, 6, 4);
     scene.add(dirLight1);
 
-    const dirLight2 = new THREE.DirectionalLight(0xE8ECE9, 1.8);
+    const dirLight2 = new THREE.DirectionalLight(0xF8FAFC, 1.5);
     dirLight2.position.set(-5, -3, -4);
     scene.add(dirLight2);
 
-    const pointLight = new THREE.PointLight(0x2E8B62, 3, 10);
+    const pointLight = new THREE.PointLight(0xC59B27, 2.5, 10);
     pointLight.position.set(0, 0, 0);
     scene.add(pointLight);
 
@@ -147,13 +147,13 @@ export default function Interactive3DViewer() {
     stator.rotation.z = Math.PI / 2;
     statorGroup.add(stator);
 
-    // Stator End Rings: Forest Green Accents
+    // Stator End Rings: Gold Accents
     [-1.3, 1.3].forEach(xPos => {
       const ringGeom = new THREE.TorusGeometry(1.4, 0.06, 16, 32);
       const ringMat = new THREE.MeshStandardMaterial({
-        color: 0x216447,
-        emissive: 0x174D38,
-        emissiveIntensity: 0.5,
+        color: 0xC59B27,
+        emissive: 0x8A6D1C,
+        emissiveIntensity: 0.4,
         metalness: 0.9,
         roughness: 0.2,
       });
@@ -186,7 +186,7 @@ export default function Interactive3DViewer() {
     particleGeom.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
 
     const particleMat = new THREE.PointsMaterial({
-      color: 0x2E8B62,
+      color: 0xF59E0B,
       size: 0.045,
       transparent: true,
       opacity: 0.85,
@@ -313,20 +313,20 @@ export default function Interactive3DViewer() {
   }, [isPlaying]);
 
   return (
-    <div className="relative w-full rounded-2xl bg-[#24282A] border border-[#343B37] p-5 sm:p-6 shadow-2xl overflow-hidden">
+    <div className="relative w-full rounded-2xl bg-white border border-[#E2E8F0] p-5 sm:p-6 shadow-warm-xs overflow-hidden">
       {/* Background Lighting */}
-      <div className="absolute -top-24 -left-24 w-96 h-96 bg-[#174D38]/15 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute -top-24 -left-24 w-96 h-96 bg-[#C59B27]/10 rounded-full blur-3xl pointer-events-none" />
 
       {/* Header bar */}
-      <div className="relative z-10 flex flex-wrap items-center justify-between gap-3 border-b border-[#343B37] pb-4">
+      <div className="relative z-10 flex flex-wrap items-center justify-between gap-3 border-b border-[#E2E8F0] pb-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#216447] animate-pulse" />
-            <span className="text-xs font-mono font-semibold tracking-wider text-[#2E8B62] uppercase">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#C59B27] animate-pulse" />
+            <span className="text-xs font-mono font-semibold tracking-wider text-[#C59B27] uppercase">
               3D Interactive Diagnostic
             </span>
           </div>
-          <h3 className="text-xl sm:text-2xl font-bold text-[#E8ECE9] font-display mt-0.5">
+          <h3 className="text-xl sm:text-2xl font-bold text-[#0B192C] font-serif mt-0.5">
             Heavy-Duty Industrial Alternator & Rotor Core
           </h3>
         </div>
@@ -335,68 +335,68 @@ export default function Interactive3DViewer() {
         <div className="flex items-center gap-2">
           <button
             onClick={() => setIsPlaying(!isPlaying)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium border border-[#343B37] bg-[#181C1B] hover:border-[#216447] hover:text-[#E8ECE9] transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium border border-[#E2E8F0] bg-[#F8FAFC] text-[#0B192C] hover:border-[#C59B27] hover:text-[#C59B27] transition-colors"
             title={isPlaying ? "Pause rotation" : "Start rotation"}
           >
-            {isPlaying ? <Pause className="w-3.5 h-3.5 text-[#2E8B62]" /> : <Play className="w-3.5 h-3.5 text-[#216447]" />}
+            {isPlaying ? <Pause className="w-3.5 h-3.5 text-[#C59B27]" /> : <Play className="w-3.5 h-3.5 text-[#C59B27]" />}
             {isPlaying ? "Live Spin" : "Paused"}
           </button>
-          <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono text-[#929A96] border border-[#343B37] bg-[#181C1B]">
-            <Rotate3d className="w-3.5 h-3.5 text-[#2E8B62]" />
+          <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono text-[#64748B] border border-[#E2E8F0] bg-[#F8FAFC]">
+            <Rotate3d className="w-3.5 h-3.5 text-[#C59B27]" />
             <span>Click & Drag to Inspect</span>
           </div>
         </div>
       </div>
 
       {/* Main 3D Canvas Mount */}
-      <div className="relative w-full h-[360px] sm:h-[420px] cursor-grab active:cursor-grabbing">
+      <div className="relative w-full h-[260px] sm:h-[340px] lg:h-[420px] cursor-grab active:cursor-grabbing bg-gradient-to-b from-[#F8FAFC] to-[#F1F5F9] rounded-xl overflow-hidden">
         <div ref={mountRef} className="w-full h-full" />
 
         {/* Floating Telemetry HUD */}
-        <div className="absolute bottom-4 left-4 right-4 sm:right-auto sm:max-w-xs z-10 bg-[#181C1B]/90 backdrop-blur-md border border-[#343B37] rounded-xl p-3.5 shadow-xl font-mono text-xs">
-          <div className="flex items-center justify-between text-[#929A96] border-b border-[#343B37] pb-2 mb-2.5">
-            <span className="flex items-center gap-1.5 font-semibold text-[#E8ECE9]">
-              <Activity className="w-3.5 h-3.5 text-[#216447]" />
+        <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-auto sm:max-w-xs z-10 bg-white/95 backdrop-blur-md border border-[#E2E8F0] rounded-xl p-2.5 sm:p-3.5 shadow-warm-xs font-mono text-xs">
+          <div className="flex items-center justify-between text-[#64748B] border-b border-[#E2E8F0] pb-2 mb-2.5">
+            <span className="flex items-center gap-1.5 font-semibold text-[#0B192C]">
+              <Activity className="w-3.5 h-3.5 text-[#C59B27]" />
               TELEMETRY SPEC
             </span>
-            <span className="text-[11px] text-[#2E8B62] font-bold bg-[#174D38]/30 px-1.5 py-0.5 rounded border border-[#216447]/40">
+            <span className="text-[11px] text-[#0B192C] font-bold bg-[#FFFBEB] px-1.5 py-0.5 rounded border border-[#FDE68A]">
               SYNC OPTIMAL
             </span>
           </div>
 
           <div className="grid grid-cols-2 gap-2.5">
-            <div className="bg-[#24282A] p-2 rounded border border-[#343B37]">
-              <span className="text-[10px] text-[#929A96] block">RPM SPEED</span>
-              <span className="text-sm font-bold text-[#E8ECE9]">{telemetry.rpm}</span>
-              <span className="text-[10px] text-[#929A96] ml-1">r/min</span>
+            <div className="bg-[#F8FAFC] p-2 rounded border border-[#E2E8F0]">
+              <span className="text-[10px] text-[#64748B] block">RPM SPEED</span>
+              <span className="text-sm font-bold text-[#0B192C]">{telemetry.rpm}</span>
+              <span className="text-[10px] text-[#64748B] ml-1">r/min</span>
             </div>
-            <div className="bg-[#24282A] p-2 rounded border border-[#343B37]">
-              <span className="text-[10px] text-[#929A96] block">OUTPUT VOLTAGE</span>
-              <span className="text-sm font-bold text-[#2E8B62]">{telemetry.voltage}</span>
-              <span className="text-[10px] text-[#929A96] ml-1">V AC</span>
+            <div className="bg-[#F8FAFC] p-2 rounded border border-[#E2E8F0]">
+              <span className="text-[10px] text-[#64748B] block">OUTPUT VOLTAGE</span>
+              <span className="text-sm font-bold text-[#C59B27]">{telemetry.voltage}</span>
+              <span className="text-[10px] text-[#64748B] ml-1">V AC</span>
             </div>
-            <div className="bg-[#24282A] p-2 rounded border border-[#343B37]">
-              <span className="text-[10px] text-[#929A96] block">FREQUENCY</span>
-              <span className="text-sm font-bold text-[#E8ECE9]">{telemetry.frequency}</span>
-              <span className="text-[10px] text-[#929A96] ml-1">Hz</span>
+            <div className="bg-[#F8FAFC] p-2 rounded border border-[#E2E8F0]">
+              <span className="text-[10px] text-[#64748B] block">FREQUENCY</span>
+              <span className="text-sm font-bold text-[#0B192C]">{telemetry.frequency}</span>
+              <span className="text-[10px] text-[#64748B] ml-1">Hz</span>
             </div>
-            <div className="bg-[#24282A] p-2 rounded border border-[#343B37]">
-              <span className="text-[10px] text-[#929A96] block">LOAD FACTOR</span>
-              <span className="text-sm font-bold text-[#2E8B62]">{telemetry.load}%</span>
-              <span className="text-[10px] text-[#929A96] ml-1">Active</span>
+            <div className="bg-[#F8FAFC] p-2 rounded border border-[#E2E8F0]">
+              <span className="text-[10px] text-[#64748B] block">LOAD FACTOR</span>
+              <span className="text-sm font-bold text-[#C59B27]">{telemetry.load}%</span>
+              <span className="text-[10px] text-[#64748B] ml-1">Active</span>
             </div>
           </div>
         </div>
 
         {/* Technical Callout overlay (Right side) */}
         <div className="hidden lg:block absolute top-6 right-6 z-10 space-y-2 pointer-events-none">
-          <div className="bg-[#181C1B]/85 backdrop-blur-md border border-[#343B37] rounded-lg p-2.5 text-right font-mono text-[11px]">
-            <span className="text-[#2E8B62] font-bold block">SALIENT POLE ROTOR</span>
-            <span className="text-[#929A96]">Class H Copper Enamel Wire</span>
+          <div className="bg-white/95 backdrop-blur-md border border-[#E2E8F0] rounded-lg p-2.5 text-right font-mono text-[11px] shadow-warm-xs">
+            <span className="text-[#0B192C] font-bold block">SALIENT POLE ROTOR</span>
+            <span className="text-[#64748B]">Class H Copper Enamel Wire</span>
           </div>
-          <div className="bg-[#181C1B]/85 backdrop-blur-md border border-[#343B37] rounded-lg p-2.5 text-right font-mono text-[11px]">
-            <span className="text-[#E8ECE9] font-bold block">ELECTROMAGNETIC STATOR</span>
-            <span className="text-[#929A96]">2/3 Pitch Low Harmonic Winding</span>
+          <div className="bg-white/95 backdrop-blur-md border border-[#E2E8F0] rounded-lg p-2.5 text-right font-mono text-[11px] shadow-warm-xs">
+            <span className="text-[#0B192C] font-bold block">ELECTROMAGNETIC STATOR</span>
+            <span className="text-[#64748B]">2/3 Pitch Low Harmonic Winding</span>
           </div>
         </div>
       </div>

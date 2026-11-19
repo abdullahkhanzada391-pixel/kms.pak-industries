@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import ScrollToTop from './components/ScrollToTop';
 import CustomCursor from './components/CustomCursor';
+import CookieConsent from './components/CookieConsent';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 
@@ -25,12 +26,15 @@ export default function App() {
       {/* Precision Interactive Desktop Cursor */}
       <CustomCursor />
 
-      <div className="min-h-screen bg-[#111315] text-[#E8ECE9] flex flex-col justify-between selection:bg-[#174D38] selection:text-white">
-        {/* Top Global Dark Luxury Navigation Bar */}
+      {/* Cookie and Privacy Preferences Banner */}
+      <CookieConsent />
+
+      <div className="min-h-screen bg-white text-[#0B192C] flex flex-col justify-between selection:bg-[#0B192C] selection:text-[#F59E0B] w-full max-w-full overflow-x-hidden">
+        {/* Top Global Editorial Navigation Bar */}
         <Navbar />
 
         {/* Page Content Routes */}
-        <main className="flex-1">
+        <main className="flex-1 w-full max-w-full overflow-x-hidden">
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/about" element={<AboutPage />} />
@@ -50,7 +54,7 @@ export default function App() {
           </Routes>
         </main>
 
-        {/* Global Dark Luxury Industrial Footer */}
+        {/* Global Dark Mocha Footer */}
         <Footer />
       </div>
     </BrowserRouter>

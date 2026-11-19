@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Compass, Target, Sparkles, CheckCheck } from 'lucide-react';
+import { Compass, Target } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -12,8 +12,6 @@ export default function VisionMission() {
   const missionCardRef = useRef(null);
   const visionQuoteRef = useRef(null);
   const missionQuoteRef = useRef(null);
-  const visionListRef = useRef(null);
-  const missionListRef = useRef(null);
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -40,12 +38,12 @@ export default function VisionMission() {
       // 2. Vision & Mission Cards staggered entrance
       gsap.fromTo(
         [visionCardRef.current, missionCardRef.current],
-        { opacity: 0, y: 45 },
+        { opacity: 0, y: 40 },
         {
           opacity: 1,
           y: 0,
-          duration: 1.0,
-          stagger: 0.2,
+          duration: 0.9,
+          stagger: 0.18,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: visionCardRef.current,
@@ -54,16 +52,16 @@ export default function VisionMission() {
         }
       );
 
-      // 3. Line-by-line typography reveal in Vision Quote
+      // 3. Line-by-line reveal
       if (visionQuoteRef.current) {
         gsap.fromTo(
           visionQuoteRef.current.children,
-          { opacity: 0, y: 20 },
+          { opacity: 0, y: 15 },
           {
             opacity: 1,
             y: 0,
             duration: 0.7,
-            stagger: 0.12,
+            stagger: 0.1,
             ease: 'power2.out',
             scrollTrigger: {
               trigger: visionQuoteRef.current,
@@ -73,57 +71,19 @@ export default function VisionMission() {
         );
       }
 
-      // 4. Line-by-line typography reveal in Mission Quote
       if (missionQuoteRef.current) {
         gsap.fromTo(
           missionQuoteRef.current.children,
-          { opacity: 0, y: 20 },
+          { opacity: 0, y: 15 },
           {
             opacity: 1,
             y: 0,
             duration: 0.7,
-            stagger: 0.12,
+            stagger: 0.1,
             ease: 'power2.out',
             scrollTrigger: {
               trigger: missionQuoteRef.current,
               start: 'top 85%',
-            }
-          }
-        );
-      }
-
-      // 5. Checklist items staggered
-      if (visionListRef.current) {
-        gsap.fromTo(
-          visionListRef.current.children,
-          { opacity: 0, x: -15 },
-          {
-            opacity: 1,
-            x: 0,
-            duration: 0.5,
-            stagger: 0.08,
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: visionListRef.current,
-              start: 'top 90%',
-            }
-          }
-        );
-      }
-
-      if (missionListRef.current) {
-        gsap.fromTo(
-          missionListRef.current.children,
-          { opacity: 0, x: -15 },
-          {
-            opacity: 1,
-            x: 0,
-            duration: 0.5,
-            stagger: 0.08,
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: missionListRef.current,
-              start: 'top 90%',
             }
           }
         );
@@ -136,131 +96,95 @@ export default function VisionMission() {
   return (
     <section
       ref={containerRef}
-      className="relative py-24 sm:py-32 bg-[#111315] border-t border-[#343B37] overflow-hidden"
+      id="vision-mission"
+      className="relative py-16 sm:py-20 lg:py-28 bg-white border-t border-[#E2E8F0] overflow-hidden"
     >
-      {/* Background Lighting */}
-      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[600px] h-[350px] bg-[#174D38]/10 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[600px] h-[350px] bg-[#B51F32]/5 rounded-full blur-[140px] pointer-events-none" />
+      {/* Background Decor */}
+      <div className="absolute top-0 left-0 w-full h-full bg-architectural-grid opacity-20 pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Section Header */}
-        <div ref={headerRef} className="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#174D38]/30 border border-[#216447]/60 text-[#E8ECE9] text-xs font-mono uppercase tracking-widest mb-4">
-            <Sparkles className="w-3.5 h-3.5 text-[#216447]" />
-            <span>Guiding Principles</span>
-          </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-[#E8ECE9] font-display tracking-tight leading-tight">
-            Our Vision & Mission.
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-10 sm:space-y-12 lg:space-y-16">
+        {/* Editorial Section Header */}
+        <div ref={headerRef} className="max-w-3xl">
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-serif text-[#0B192C] tracking-tight leading-tight">
+            Our Vision & Strategic Mission.
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-[#929A96]">
-            Strategic pillars shaping our engineering discipline, client relationships, and technological advancement.
+          <p className="mt-3 sm:mt-4 text-sm sm:text-base lg:text-lg text-[#64748B] leading-relaxed">
+            Strategic pillars shaping our engineering discipline, client relationships, and nationwide technological advancement.
           </p>
         </div>
 
-        {/* Editorial Two-Column Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-          {/* Vision Card: Forest Green Accents */}
+        {/* Distinct Editorial Composition */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
+          {/* Vision Area (Col-Span-6) - Light Surface with Gold Accents */}
           <div
             ref={visionCardRef}
-            className="relative bg-gradient-to-br from-[#24282A] to-[#181C1B] p-8 sm:p-10 rounded-2xl border border-[#343B37] shadow-2xl space-y-6 group hover:border-[#216447] transition-all duration-300 will-change-transform"
+            className="lg:col-span-6 bg-[#F8FAFC] p-6 sm:p-8 lg:p-10 rounded-2xl border border-[#E2E8F0] shadow-warm-md space-y-6 sm:space-y-8 flex flex-col justify-between"
           >
-            <div className="flex items-center justify-between border-b border-[#343B37] pb-5">
-              <div className="flex items-center gap-3.5">
-                <div className="p-3 rounded-xl bg-[#174D38]/30 border border-[#216447]/50 text-[#2E8B62]">
-                  <Compass className="w-6 h-6" />
+            <div className="space-y-5 sm:space-y-6">
+              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#E2E8F0] pb-4 sm:pb-5">
+                <div className="flex items-center gap-3">
+                  <div className="p-2.5 sm:p-3 rounded-xl bg-white border border-[#E2E8F0] text-[#C59B27] shadow-sm">
+                    <Compass className="w-5 h-5 sm:w-6 sm:h-6" />
+                  </div>
+                  <div>
+                    <span className="text-[10px] sm:text-[11px] font-mono uppercase tracking-widest text-[#64748B] block">
+                      Strategic Direction
+                    </span>
+                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-serif text-[#0B192C]">
+                      Our Vision
+                    </h3>
+                  </div>
                 </div>
-                <div>
-                  <span className="text-[11px] font-mono uppercase tracking-widest text-[#929A96] block">
-                    Strategic Direction
-                  </span>
-                  <h3 className="text-2xl font-bold text-[#E8ECE9] font-display">
-                    Our Vision
-                  </h3>
-                </div>
               </div>
-              <span className="text-xs font-mono font-bold text-[#2E8B62] bg-[#111315] px-3 py-1 rounded-lg border border-[#343B37]">
-                ASPIRATION
-              </span>
-            </div>
 
-            {/* Line-by-Line Typography Reveal Container */}
-            <div ref={visionQuoteRef} className="border-l-2 border-[#216447] pl-4 py-1 space-y-2">
-              <p className="text-base sm:text-lg text-[#E8ECE9] leading-relaxed font-normal italic">
-                "KPS aspires for a leading market position by delivering best engineering services with customized products,
-              </p>
-              <p className="text-base sm:text-lg text-[#E8ECE9] leading-relaxed font-normal italic">
-                reinforcing national and international brand alliances,
-              </p>
-              <p className="text-base sm:text-lg text-[#E8ECE9] leading-relaxed font-normal italic">
-                and upholding best quality and ethical standards as the company's backbone of progressive growth."
-              </p>
-            </div>
-
-            <div ref={visionListRef} className="space-y-2.5 pt-2">
-              <div className="flex items-center gap-2.5 text-xs text-[#929A96]">
-                <CheckCheck className="w-4 h-4 text-[#216447] shrink-0" />
-                <span>Market leadership through customized engineering solutions</span>
-              </div>
-              <div className="flex items-center gap-2.5 text-xs text-[#929A96]">
-                <CheckCheck className="w-4 h-4 text-[#216447] shrink-0" />
-                <span>Reinforcing world-class brand partnerships (Perkins, Lovol, Weichai)</span>
-              </div>
-              <div className="flex items-center gap-2.5 text-xs text-[#929A96]">
-                <CheckCheck className="w-4 h-4 text-[#216447] shrink-0" />
-                <span>Uncompromising ethical and technical quality standards</span>
+              {/* Line-by-Line Typography Reveal Container */}
+              <div ref={visionQuoteRef} className="border-l-2 border-[#C59B27] pl-4 sm:pl-5 py-1 space-y-2.5">
+                <p className="text-sm sm:text-base lg:text-lg text-[#0B192C] leading-relaxed font-serif italic">
+                  "HK Power Industries aspires for a leading market position by delivering best engineering services with customized products,
+                </p>
+                <p className="text-sm sm:text-base lg:text-lg text-[#0B192C] leading-relaxed font-serif italic">
+                  reinforcing national and international brand alliances,
+                </p>
+                <p className="text-sm sm:text-base lg:text-lg text-[#0B192C] leading-relaxed font-serif italic">
+                  and upholding best quality and ethical standards as the company's backbone of progressive growth."
+                </p>
               </div>
             </div>
           </div>
 
-          {/* Mission Card: Crimson Accents */}
+          {/* Mission Area (Col-Span-6) - Deep Commanding Navy Surface with Gold Accents */}
           <div
             ref={missionCardRef}
-            className="relative bg-gradient-to-br from-[#24282A] to-[#181C1B] p-8 sm:p-10 rounded-2xl border border-[#343B37] shadow-2xl space-y-6 group hover:border-[#B51F32]/60 transition-all duration-300 will-change-transform"
+            className="lg:col-span-6 bg-[#0B192C] text-white p-6 sm:p-8 lg:p-10 rounded-2xl border border-[#1E3A8A] shadow-warm-lg space-y-6 sm:space-y-8 flex flex-col justify-between"
           >
-            <div className="flex items-center justify-between border-b border-[#343B37] pb-5">
-              <div className="flex items-center gap-3.5">
-                <div className="p-3 rounded-xl bg-[#B51F32]/15 border border-[#B51F32]/40 text-[#E83E55]">
-                  <Target className="w-6 h-6" />
+            <div className="space-y-5 sm:space-y-6">
+              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#1E3A8A] pb-4 sm:pb-5">
+                <div className="flex items-center gap-3">
+                  <div className="p-2.5 sm:p-3 rounded-xl bg-[#060E18] border border-[#1E3A8A] text-[#F59E0B]">
+                    <Target className="w-5 h-5 sm:w-6 sm:h-6" />
+                  </div>
+                  <div>
+                    <span className="text-[10px] sm:text-[11px] font-mono uppercase tracking-widest text-slate-400 block">
+                      Operational Purpose
+                    </span>
+                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-serif text-white">
+                      Our Mission
+                    </h3>
+                  </div>
                 </div>
-                <div>
-                  <span className="text-[11px] font-mono uppercase tracking-widest text-[#929A96] block">
-                    Operational Purpose
-                  </span>
-                  <h3 className="text-2xl font-bold text-[#E8ECE9] font-display">
-                    Our Mission
-                  </h3>
-                </div>
               </div>
-              <span className="text-xs font-mono font-bold text-[#E83E55] bg-[#111315] px-3 py-1 rounded-lg border border-[#343B37]">
-                COMMITMENT
-              </span>
-            </div>
 
-            {/* Line-by-Line Typography Reveal Container */}
-            <div ref={missionQuoteRef} className="border-l-2 border-[#B51F32] pl-4 py-1 space-y-2">
-              <p className="text-base sm:text-lg text-[#E8ECE9] leading-relaxed font-normal italic">
-                "To raise the level of customers' satisfaction by setting up to the mark through our services and backup support to our products,
-              </p>
-              <p className="text-base sm:text-lg text-[#E8ECE9] leading-relaxed font-normal italic">
-                grouping the qualified and experienced professionals as employees and vendors to conduct business with highest standards of quality, principles, and legitimacy,
-              </p>
-              <p className="text-base sm:text-lg text-[#E8ECE9] leading-relaxed font-normal italic">
-                besides being committed to continuous human and technological developments, and contribute for the welfare of the society and the nation."
-              </p>
-            </div>
-
-            <div ref={missionListRef} className="space-y-2.5 pt-2">
-              <div className="flex items-center gap-2.5 text-xs text-[#929A96]">
-                <CheckCheck className="w-4 h-4 text-[#B51F32] shrink-0" />
-                <span>Customer satisfaction through relentless backup and lifecycle support</span>
-              </div>
-              <div className="flex items-center gap-2.5 text-xs text-[#929A96]">
-                <CheckCheck className="w-4 h-4 text-[#B51F32] shrink-0" />
-                <span>Empowering certified engineering talent and ethical vendors</span>
-              </div>
-              <div className="flex items-center gap-2.5 text-xs text-[#929A96]">
-                <CheckCheck className="w-4 h-4 text-[#B51F32] shrink-0" />
-                <span>Continuous technological development contributing to societal welfare</span>
+              {/* Line-by-Line Typography Reveal Container */}
+              <div ref={missionQuoteRef} className="border-l-2 border-[#F59E0B] pl-4 sm:pl-5 py-1 space-y-2.5">
+                <p className="text-sm sm:text-base lg:text-lg text-white leading-relaxed font-serif italic">
+                  "To raise the level of customers' satisfaction by setting up to the mark through our services and backup support to our products,
+                </p>
+                <p className="text-sm sm:text-base lg:text-lg text-white leading-relaxed font-serif italic">
+                  grouping the qualified and experienced professionals as employees and vendors to conduct business with highest standards of quality, principles, and legitimacy,
+                </p>
+                <p className="text-sm sm:text-base lg:text-lg text-white leading-relaxed font-serif italic">
+                  besides being committed to continuous human and technological developments, and contribute for the welfare of the society and the nation."
+                </p>
               </div>
             </div>
           </div>

@@ -13,7 +13,6 @@ export default function CustomCursor() {
   const animFrame = useRef(null);
 
   useEffect(() => {
-    // Check for touch or reduced motion
     const isTouch = window.matchMedia('(pointer: coarse)').matches;
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (isTouch || prefersReducedMotion) return;
@@ -26,7 +25,6 @@ export default function CustomCursor() {
         cursorRef.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
       }
 
-      // Check if target is clickable
       const target = e.target;
       const isInteractive = target && (
         target.tagName === 'BUTTON' ||
@@ -53,11 +51,10 @@ export default function CustomCursor() {
     document.addEventListener('mouseleave', onMouseLeave);
     document.addEventListener('mouseenter', onMouseEnter);
 
-    // Follower animation loop with smooth lerp
     const lerp = (a, b, n) => (1 - n) * a + n * b;
     const animate = () => {
-      followerPos.current.x = lerp(followerPos.current.x, mousePos.current.x, 0.15);
-      followerPos.current.y = lerp(followerPos.current.y, mousePos.current.y, 0.15);
+      followerPos.current.x = lerp(followerPos.current.x, mousePos.current.x, 0.16);
+      followerPos.current.y = lerp(followerPos.current.y, mousePos.current.y, 0.16);
       
       if (followerRef.current) {
         followerRef.current.style.transform = `translate3d(${followerPos.current.x}px, ${followerPos.current.y}px, 0)`;
@@ -80,21 +77,21 @@ export default function CustomCursor() {
 
   return (
     <>
-      {/* Precision center dot */}
+      {/* Precision Gold Center Dot */}
       <div
         ref={cursorRef}
-        className="fixed top-0 left-0 w-2 h-2 -ml-1 -mt-1 bg-[#2E8B62] rounded-full pointer-events-none z-50 transition-opacity duration-200"
+        className="fixed top-0 left-0 w-2 h-2 -ml-1 -mt-1 bg-[#C59B27] rounded-full pointer-events-none z-50 transition-opacity duration-200"
         style={{ willChange: 'transform' }}
       />
-      {/* Fluid trailing ring */}
+      {/* Fluid Trailing Ring with Navy & Gold Accents */}
       <div
         ref={followerRef}
         className={`fixed top-0 left-0 rounded-full pointer-events-none z-40 border transition-all duration-150 ease-out ${
           clicked
-            ? 'w-10 h-10 -ml-5 -mt-5 bg-[#B51F32]/25 border-[#B51F32]'
+            ? 'w-10 h-10 -ml-5 -mt-5 bg-[#C59B27]/20 border-[#C59B27]'
             : hovered
-            ? 'w-12 h-12 -ml-6 -mt-6 bg-[#174D38]/20 border-[#2E8B62] scale-125'
-            : 'w-7 h-7 -ml-3.5 -mt-3.5 border-[#216447]/60'
+            ? 'w-12 h-12 -ml-6 -mt-6 bg-[#C59B27]/10 border-[#C59B27]/60 scale-125'
+            : 'w-7 h-7 -ml-3.5 -mt-3.5 border-[#0B192C]/30'
         }`}
         style={{ willChange: 'transform' }}
       />

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { 
   Zap, 
   Settings, 
@@ -10,24 +10,18 @@ import {
   Monitor, 
   ArrowRight, 
   Check, 
-  ChevronRight,
-  PhoneCall,
-  Sliders,
-  Sparkles
+  ChevronRight, 
+  PhoneCall 
 } from 'lucide-react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+import CircularCarousel from './CircularCarousel';
+import SpecularButton from './SpecularButton';
 
 export default function Services({ onSelectServiceForContact }) {
   const [selectedService, setSelectedService] = useState(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
   const [activePanelIndex, setActivePanelIndex] = useState(0);
 
   const sectionRef = useRef(null);
-  const pinContainerRef = useRef(null);
-  const trackRef = useRef(null);
+  const carouselRef = useRef(null);
 
   const servicesData = [
     {
@@ -35,7 +29,7 @@ export default function Services({ onSelectServiceForContact }) {
       title: 'Generators & Power Generation',
       division: 'DIV 01',
       badge: '15 – 2500 kVA',
-      theme: 'forest', // forest-green accented
+      theme: 'mocha',
       icon: Zap,
       image: '/assets/services/generator-main.jpg',
       altImage: '/assets/services/generator-cummins-perkins.jpg',
@@ -57,10 +51,10 @@ export default function Services({ onSelectServiceForContact }) {
     },
     {
       id: 'electrical',
-      title: 'Electrical Engineering & Switchgear',
+      title: 'Electrical Panels & Switchgear',
       division: 'DIV 02',
       badge: 'IEC Certified Panels',
-      theme: 'charcoal',
+      theme: 'ivory',
       icon: Settings,
       image: '/assets/services/electrical-panel-switchgear.jpg',
       altImage: '/assets/services/electrical-ats-panel.jpg',
@@ -80,10 +74,10 @@ export default function Services({ onSelectServiceForContact }) {
     },
     {
       id: 'fabrication',
-      title: 'Industrial Heavy Metal Fabrication',
+      title: 'Canopies & Industrial Fabrication',
       division: 'DIV 03',
       badge: 'Acoustic Enclosures',
-      theme: 'forest',
+      theme: 'mocha',
       icon: Wrench,
       image: '/assets/services/fabrication-canopy-tanks.jpg',
       altImage: '/assets/services/fabrication-plant.jpg',
@@ -104,10 +98,10 @@ export default function Services({ onSelectServiceForContact }) {
     },
     {
       id: 'solar',
-      title: 'Solar Power Projects & Renewables',
+      title: 'Solar Energy & Renewable Solutions',
       division: 'DIV 04',
       badge: 'Clean Energy',
-      theme: 'charcoal',
+      theme: 'ivory',
       icon: Sun,
       image: '/assets/services/solar-installation-commercial.jpg',
       altImage: '/assets/services/solar-grid-inverter.jpg',
@@ -130,7 +124,7 @@ export default function Services({ onSelectServiceForContact }) {
       title: 'Commercial Kitchen Equipment',
       division: 'DIV 05',
       badge: 'Hospitality EPC',
-      theme: 'forest',
+      theme: 'mocha',
       icon: Utensils,
       image: '/assets/services/commercial-kitchen.jpg',
       altImage: '/assets/services/kitchen-exhaust-hood.jpg',
@@ -153,7 +147,7 @@ export default function Services({ onSelectServiceForContact }) {
       title: 'Commercial & Industrial Ducting',
       division: 'DIV 06',
       badge: 'HVAC & Exhaust',
-      theme: 'charcoal',
+      theme: 'ivory',
       icon: Wind,
       image: '/assets/services/ducting-commercial-hvac.jpg',
       altImage: '/assets/services/ducting-industrial.jpg',
@@ -176,7 +170,7 @@ export default function Services({ onSelectServiceForContact }) {
       title: 'Fire Fighting Equipment Supply',
       division: 'DIV 07',
       badge: 'Life Safety',
-      theme: 'crimson', // subtle crimson themed card
+      theme: 'gold',
       icon: Flame,
       image: '/assets/services/fire-fighting-hydrant-pump.jpg',
       altImage: '/assets/services/fire-equipment-extinguishers.jpg',
@@ -199,7 +193,7 @@ export default function Services({ onSelectServiceForContact }) {
       title: 'SMD Screen & LED Video Walls',
       division: 'DIV 08',
       badge: 'Digital Displays',
-      theme: 'forest',
+      theme: 'mocha',
       icon: Monitor,
       image: '/assets/services/smd-screen-display-outdoor.jpg',
       altImage: '/assets/services/smd-led-videowall.jpg',
@@ -221,247 +215,200 @@ export default function Services({ onSelectServiceForContact }) {
     }
   ];
 
-  useEffect(() => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) return;
+  const carouselItems = servicesData.map((svc) => ({
+    src: svc.image,
+    alt: svc.title,
+    title: svc.title,
+    subtitle: `${svc.division} • ${svc.badge}`
+  }));
 
-    const mm = gsap.matchMedia();
-
-    mm.add('(min-width: 1024px)', () => {
-      const track = trackRef.current;
-      const section = sectionRef.current;
-      if (!track || !section) return;
-
-      const totalScrollWidth = track.scrollWidth - window.innerWidth + 120;
-
-      const horizontalTween = gsap.to(track, {
-        x: -totalScrollWidth,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: section,
-          start: 'top top',
-          end: () => `+=${totalScrollWidth}`,
-          pin: true,
-          scrub: 0.9,
-          invalidateOnRefresh: true,
-          anticipatePin: 1,
-          onUpdate: (self) => {
-            const p = self.progress;
-            setScrollProgress(Math.round(p * 100));
-            const activeIdx = Math.min(servicesData.length - 1, Math.floor(p * servicesData.length));
-            setActivePanelIndex(activeIdx);
-          }
-        }
-      });
-
-      return () => {
-        horizontalTween.kill();
-      };
-    });
-
-    return () => mm.revert();
-  }, []);
+  const currentService = servicesData[activePanelIndex] || servicesData[0];
 
   return (
     <section
       ref={sectionRef}
       id="services"
-      className="relative bg-[#181C1B] border-t border-[#343B37] overflow-hidden"
+      className="relative py-16 sm:py-20 lg:py-28 bg-[#F8FAFC] border-t border-[#E2E8F0] overflow-hidden"
     >
-      {/* Background Decor */}
-      <div className="absolute top-0 right-0 w-full h-full bg-industrial-grid opacity-20 pointer-events-none" />
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-[#174D38]/10 rounded-full blur-[140px] pointer-events-none" />
+      {/* Background Architectural Grid */}
+      <div className="absolute top-0 right-0 w-full h-full bg-architectural-grid opacity-30 pointer-events-none" />
 
-      {/* Pinned Desktop Container */}
-      <div ref={pinContainerRef} className="w-full min-h-screen py-16 sm:py-20 flex flex-col justify-between">
-        {/* Sticky Header with Exact Heading Requested in Prompt */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10 mb-8 sm:mb-10">
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-6 border-b border-[#343B37]">
-            <div>
-              <span className="text-xs font-mono font-bold tracking-widest text-[#2E8B62] uppercase block mb-1">
-                ENGINEERING CAPABILITIES
-              </span>
-              <h2 className="text-3xl sm:text-5xl font-extrabold text-[#E8ECE9] font-display tracking-tight">
-                POWERING EVERY POSSIBILITY.
-              </h2>
-            </div>
-
-            {/* Desktop Scroller HUD Indicator */}
-            <div className="hidden lg:flex items-center gap-6 font-mono text-xs text-[#929A96] bg-[#24282A]/90 px-5 py-2.5 rounded-xl border border-[#343B37]">
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-[#216447] animate-pulse" />
-                <span className="text-[#E8ECE9]">
-                  DIVISION 0{activePanelIndex + 1} / 0{servicesData.length}
-                </span>
-              </div>
-              <div className="w-32 h-1.5 rounded-full bg-[#111315] overflow-hidden">
-                <div
-                  className="h-full bg-[#216447] transition-all duration-150 ease-out"
-                  style={{ width: `${Math.max(12, scrollProgress)}%` }}
-                />
-              </div>
-              <span className="text-[#2E8B62] font-bold">{scrollProgress}%</span>
-            </div>
+      {/* Main Section Container */}
+      <div className="w-full flex flex-col justify-between">
+        {/* Header with Title */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10 mb-8 sm:mb-12">
+          <div className="pb-6 border-b border-[#E2E8F0]">
+            <span className="text-xs font-mono font-bold tracking-widest text-[#C59B27] uppercase block mb-1">
+              ENGINEERING CAPABILITIES
+            </span>
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-serif text-[#0B192C] tracking-tight">
+              Powering Every Possibility.
+            </h2>
           </div>
         </div>
 
-        {/* Desktop Horizontal Track (Pinned) & Mobile Fluid Vertical Flow */}
-        <div className="w-full relative overflow-x-visible lg:overflow-x-hidden flex-1 flex items-center">
-          <div
-            ref={trackRef}
-            className="flex flex-col lg:flex-row gap-8 lg:gap-8 px-4 sm:px-6 lg:px-12 w-full lg:w-max will-change-transform"
-          >
-            {servicesData.map((svc, idx) => {
-              const isForest = svc.theme === 'forest';
-              const isCrimson = svc.theme === 'crimson';
+        {/* Interactive 3D Circular Carousel */}
+        <div className="w-full relative px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col items-center">
+          {/* Circular 3D Carousel Viewport */}
+          <div className="w-full h-[480px] sm:h-[540px] md:h-[580px] relative">
+            <CircularCarousel
+              ref={carouselRef}
+              items={carouselItems}
+              preset="cylinder"
+              intro="rise"
+              cardWidth={280}
+              aspectRatio={1.3}
+              gap={24}
+              speed={12}
+              autoplay="drift"
+              draggable={true}
+              momentum={0.6}
+              snap={true}
+              pauseOnHover={true}
+              focusOnClick={true}
+              cornerRadius={16}
+              fadeColor="#F8FAFC"
+              depthFade={0.55}
+              captions={false}
+              onChange={(index) => {
+                setActivePanelIndex(index);
+              }}
+              onItemClick={(item, index) => {
+                if (index === activePanelIndex) {
+                  setSelectedService(servicesData[index]);
+                }
+              }}
+            />
+          </div>
 
-              return (
-                <div
-                  key={svc.id}
-                  className={`w-full lg:w-[480px] xl:w-[520px] shrink-0 rounded-2xl border overflow-hidden shadow-2xl transition-all duration-300 flex flex-col justify-between group ${
-                    isForest
-                      ? 'bg-gradient-to-b from-[#174D38]/20 via-[#24282A] to-[#24282A] border-[#216447]/60 hover:border-[#2E8B62]'
-                      : isCrimson
-                      ? 'bg-gradient-to-b from-[#B51F32]/15 via-[#24282A] to-[#24282A] border-[#B51F32]/50 hover:border-[#D12B42]'
-                      : 'bg-[#24282A] border-[#343B37] hover:border-[#216447]'
-                  }`}
-                >
-                  {/* Visual Image Header */}
-                  <div className="relative aspect-[16/10] overflow-hidden bg-[#111315]">
-                    <img
-                      src={svc.image}
-                      alt={svc.title}
-                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#24282A] via-[#24282A]/35 to-transparent" />
+          {/* Active Division Spotlight Summary Card */}
+          <div className="w-full mt-6 bg-white rounded-2xl border border-[#E2E8F0] p-5 sm:p-7 shadow-warm-md flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-6 transition-all duration-300">
+            <div className="space-y-3.5 flex-1">
+              <div className="flex flex-wrap items-center gap-2.5">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-mono tracking-wider bg-[#0B192C] text-white font-bold shadow-sm">
+                  {React.createElement(currentService.icon, { className: "w-3.5 h-3.5 text-[#F59E0B]" })}
+                  {currentService.badge}
+                </span>
+                <span className="text-xs font-mono font-bold uppercase tracking-widest text-[#B45309] bg-[#FFFBEB] px-2.5 py-1 rounded border border-[#FDE68A]">
+                  {currentService.division}
+                </span>
+                <span className="text-xs font-mono text-[#64748B]">
+                  Active Engineering Division
+                </span>
+              </div>
 
-                    {/* Badges */}
-                    <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-10">
-                      <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-[11px] font-mono tracking-wider backdrop-blur-md border ${
-                        isForest
-                          ? 'bg-[#174D38]/80 text-[#E8ECE9] border-[#216447]'
-                          : isCrimson
-                          ? 'bg-[#B51F32]/80 text-[#FFFFFF] border-[#D12B42]'
-                          : 'bg-[#111315]/80 text-[#2E8B62] border-[#343B37]'
-                      }`}>
-                        <svc.icon className="w-3.5 h-3.5" />
-                        {svc.badge}
-                      </span>
-                      <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#E8ECE9] bg-[#111315]/80 px-2.5 py-1 rounded border border-[#343B37]">
-                        {svc.division}
-                      </span>
-                    </div>
+              <h3 className="text-xl sm:text-2xl font-serif text-[#0B192C] font-bold">
+                {currentService.title}
+              </h3>
+              <p className="text-xs sm:text-sm text-[#334155] leading-relaxed max-w-3xl">
+                {currentService.lead}
+              </p>
+
+              {/* Quick Specs Pills */}
+              <div className="flex flex-wrap gap-2 pt-1">
+                {currentService.specs.map((sp, idx) => (
+                  <div key={idx} className="bg-[#F8FAFC] px-3 py-1.5 rounded-lg border border-[#E2E8F0] text-[11px] font-mono shadow-warm-xs">
+                    <span className="text-[#64748B] mr-1.5">{sp.label}:</span>
+                    <span className="text-[#0B192C] font-bold">{sp.val}</span>
                   </div>
+                ))}
+              </div>
+            </div>
 
-                  {/* Body Content */}
-                  <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between space-y-5">
-                    <div>
-                      <h3 className="text-xl sm:text-2xl font-bold text-[#E8ECE9] font-display group-hover:text-white transition-colors">
-                        {svc.title}
-                      </h3>
-                      <p className="mt-2.5 text-xs sm:text-sm text-[#929A96] leading-relaxed">
-                        {svc.lead}
-                      </p>
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row lg:flex-col shrink-0 gap-3 justify-center">
+              <SpecularButton
+                onClick={() => setSelectedService(currentService)}
+                size="md"
+                radius={12}
+                tint="#FFFFFF"
+                tintOpacity={1}
+                textColor="#0B192C"
+                borderColor="#E2E8F0"
+                hoverTint="#0B192C"
+                hoverTextColor="#FFFFFF"
+                hoverBorderColor="#0B192C"
+                lineColor="#C59B27"
+                baseColor="#E2E8F0"
+                intensity={1}
+                idleIntensity={0.3}
+                thickness={1.2}
+                glow={0.8}
+                followMouse={true}
+                className="font-bold text-xs uppercase tracking-wider min-h-[44px] px-5 py-3 shadow-warm-xs"
+              >
+                <span>Full Specifications</span>
+                <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </SpecularButton>
 
-                      {/* Scope Technical Deliverables */}
-                      <div className="mt-4 pt-4 border-t border-[#343B37] space-y-2">
-                        <span className="text-[10px] font-mono uppercase tracking-wider text-[#2E8B62] font-bold block">
-                          Technical Deliverables:
-                        </span>
-                        {svc.items.slice(0, 4).map((it, i) => (
-                          <div key={i} className="flex items-start gap-2 text-xs text-[#E8ECE9]">
-                            <Check className="w-3.5 h-3.5 text-[#216447] shrink-0 mt-0.5" />
-                            <span className="leading-snug">{it}</span>
-                          </div>
-                        ))}
-                        {svc.items.length > 4 && (
-                          <div className="text-[11px] font-mono text-[#929A96] pl-5">
-                            + {svc.items.length - 4} additional specialized capabilities
-                          </div>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Technical Specs & Buttons */}
-                    <div className="pt-4 border-t border-[#343B37] space-y-3">
-                      <div className="grid grid-cols-2 gap-2 text-[11px] font-mono bg-[#181C1B] p-2.5 rounded-lg border border-[#343B37]">
-                        {svc.specs.slice(0, 2).map((sp, i) => (
-                          <div key={i}>
-                            <span className="text-[#929A96] block text-[10px]">{sp.label}</span>
-                            <span className="text-[#E8ECE9] font-bold truncate block">{sp.val}</span>
-                          </div>
-                        ))}
-                      </div>
-
-                      <div className="flex items-center justify-between gap-3 pt-1">
-                        <button
-                          onClick={() => setSelectedService(svc)}
-                          className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-[#2E8B62] hover:text-[#E8ECE9] transition-colors"
-                        >
-                          <span>Full Specifications</span>
-                          <ChevronRight className="w-3.5 h-3.5" />
-                        </button>
-
-                        <button
-                          onClick={() => onSelectServiceForContact && onSelectServiceForContact(svc.title)}
-                          className="btn-crimson inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider"
-                        >
-                          <span>Inquire</span>
-                          <ArrowRight className="w-3 h-3" />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+              <SpecularButton
+                onClick={() => onSelectServiceForContact && onSelectServiceForContact(currentService.title)}
+                size="md"
+                radius={12}
+                tint="#0B192C"
+                tintOpacity={1}
+                hoverTint="#1E3A8A"
+                textColor="#FFFFFF"
+                lineColor="#F59E0B"
+                baseColor="#071220"
+                intensity={1.2}
+                idleIntensity={0.35}
+                thickness={1.4}
+                glow={1.1}
+                followMouse={true}
+                className="font-bold text-xs uppercase tracking-wider min-h-[44px] px-5 py-3 shadow-warm-xs border border-[#C59B27]/40"
+              >
+                <span>Inquire About Division</span>
+                <ArrowRight className="w-4 h-4 text-[#F59E0B] transition-transform group-hover:translate-x-1" />
+              </SpecularButton>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Modal / Detailed Technical Drawer for Service */}
+      {/* Modal / Detailed Technical Drawer */}
       {selectedService && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/85 backdrop-blur-md animate-in fade-in duration-200">
-          <div className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-[#24282A] rounded-2xl border border-[#343B37] p-6 sm:p-8 shadow-2xl space-y-6">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-[#0B192C]/70 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="relative w-full max-w-3xl max-h-[92vh] overflow-y-auto bg-white rounded-2xl border border-[#E2E8F0] p-5 sm:p-8 shadow-warm-xl space-y-5 sm:space-y-6">
             {/* Modal Header */}
-            <div className="flex items-start justify-between gap-4 border-b border-[#343B37] pb-4">
+            <div className="flex items-start justify-between gap-4 border-b border-[#E2E8F0] pb-4">
               <div>
-                <span className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-[#2E8B62] uppercase tracking-wider">
-                  <selectedService.icon className="w-4 h-4" />
+                <span className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-[#C59B27] uppercase tracking-wider">
+                  <selectedService.icon className="w-4 h-4 text-[#C59B27]" />
                   Engineering Division Spec Sheet
                 </span>
-                <h3 className="text-2xl sm:text-3xl font-extrabold text-[#E8ECE9] font-display mt-1">
+                <h3 className="text-xl sm:text-3xl font-serif text-[#0B192C] mt-1">
                   {selectedService.title}
                 </h3>
               </div>
               <button
                 onClick={() => setSelectedService(null)}
-                className="p-1.5 text-[#929A96] hover:text-[#E8ECE9] rounded-lg bg-[#181C1B] border border-[#343B37]"
+                className="w-10 h-10 flex items-center justify-center text-[#64748B] hover:text-[#0B192C] rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] active:scale-95 transition-transform"
+                aria-label="Close specification modal"
               >
                 ✕
               </button>
             </div>
 
-            {/* Images split */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="aspect-[16/10] rounded-xl overflow-hidden border border-[#343B37] bg-[#111315]">
+            {/* Images Split */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              <div className="aspect-[16/10] rounded-xl overflow-hidden border border-[#E2E8F0] bg-white shadow-sm">
                 <img src={selectedService.image} alt={selectedService.title} className="w-full h-full object-cover" />
               </div>
-              <div className="aspect-[16/10] rounded-xl overflow-hidden border border-[#343B37] bg-[#111315]">
+              <div className="aspect-[16/10] rounded-xl overflow-hidden border border-[#E2E8F0] bg-white shadow-sm">
                 <img src={selectedService.altImage || selectedService.image} alt={selectedService.title} className="w-full h-full object-cover" />
               </div>
             </div>
 
             {/* Complete Scope */}
             <div>
-              <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#2E8B62] mb-3">
+              <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#0B192C] mb-3">
                 Full Technical Scope & Deliverables:
               </h4>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
                 {selectedService.items.map((it, i) => (
-                  <div key={i} className="flex items-start gap-2.5 text-xs text-[#E8ECE9] bg-[#181C1B] p-3 rounded-lg border border-[#343B37]">
-                    <Check className="w-4 h-4 text-[#216447] shrink-0 mt-0.5" />
+                  <div key={i} className="flex items-start gap-2.5 text-xs text-[#0B192C] bg-[#F8FAFC] p-3 rounded-lg border border-[#E2E8F0]">
+                    <Check className="w-4 h-4 text-[#C59B27] shrink-0 mt-0.5" />
                     <span>{it}</span>
                   </div>
                 ))}
@@ -470,38 +417,51 @@ export default function Services({ onSelectServiceForContact }) {
 
             {/* Engineering Specifications Grid */}
             <div>
-              <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#2E8B62] mb-3">
+              <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#0B192C] mb-3">
                 Design & Testing Specifications:
               </h4>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
                 {selectedService.specs.map((sp, i) => (
-                  <div key={i} className="bg-[#181C1B] p-3 rounded-lg border border-[#343B37] text-xs font-mono">
-                    <span className="text-[#929A96] block text-[10px]">{sp.label}</span>
-                    <span className="text-[#E8ECE9] font-bold block mt-0.5">{sp.val}</span>
+                  <div key={i} className="bg-[#F8FAFC] p-3 rounded-lg border border-[#E2E8F0] text-xs font-mono">
+                    <span className="text-[#64748B] block text-[10px]">{sp.label}</span>
+                    <span className="text-[#0B192C] font-bold block mt-0.5">{sp.val}</span>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Modal Bottom Actions */}
-            <div className="pt-4 border-t border-[#343B37] flex flex-wrap items-center justify-between gap-4">
+            <div className="pt-4 border-t border-[#E2E8F0] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4">
               <a
                 href="tel:04235957670"
-                className="flex items-center gap-2 text-xs font-mono text-[#929A96] hover:text-[#E8ECE9]"
+                className="inline-flex items-center justify-center sm:justify-start gap-2 px-4 py-2.5 rounded-xl text-xs font-mono font-bold text-[#0B192C] bg-white border border-[#E2E8F0] hover:bg-[#0B192C] hover:text-white hover:border-[#0B192C] hover:-translate-y-0.5 hover:shadow-warm-md transition-all duration-300 shadow-warm-xs min-h-[44px] group"
               >
-                <PhoneCall className="w-4 h-4 text-[#216447]" />
-                <span>Direct Engineer Line: 0423 595 7670</span>
+                <PhoneCall className="w-4 h-4 text-[#C59B27] group-hover:text-[#F59E0B] transition-colors duration-300" />
+                <span>Direct Line: 0423 595 7670</span>
               </a>
 
-              <button
+              <SpecularButton
                 onClick={() => {
                   if (onSelectServiceForContact) onSelectServiceForContact(selectedService.title);
                   setSelectedService(null);
                 }}
-                className="btn-crimson px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider shadow-lg"
+                size="md"
+                radius={12}
+                tint="#0B192C"
+                tintOpacity={1}
+                hoverTint="#1E3A8A"
+                textColor="#FFFFFF"
+                lineColor="#F59E0B"
+                baseColor="#071220"
+                intensity={1.2}
+                idleIntensity={0.35}
+                thickness={1.4}
+                glow={1.1}
+                followMouse={true}
+                className="font-bold text-xs uppercase tracking-wider min-h-[44px] px-6 py-3 w-full sm:w-auto shadow-warm-sm border border-[#C59B27]/40"
               >
-                Request Quotation for this Solution
-              </button>
+                <span>Request Quotation for this Solution</span>
+              </SpecularButton>
             </div>
           </div>
         </div>

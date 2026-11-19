@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { UserCheck, Quote, Briefcase, Award } from 'lucide-react';
+import { Quote, Briefcase, Award } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -15,14 +15,14 @@ export default function Leadership() {
       name: 'Khalid Nazir',
       role: 'Chief Executive Officer',
       image: '/assets/team/khalid-nazir-ceo.jpg',
-      quote: 'At Keen Power Solutions, we are committed to delivering reliable, innovative, and cost-effective energy solutions that empower businesses to grow without interruption. Our focus on quality, integrity, and customer satisfaction drives everything we do.',
+      quote: 'At HK Power Industries, we are committed to delivering reliable, innovative, and cost-effective energy solutions that empower businesses to grow without interruption. Our focus on quality, integrity, and customer satisfaction drives everything we do.',
       credentials: 'Executive Leadership & Strategic Direction'
     },
     {
       name: 'Humayun Saeed',
       role: 'Director',
       image: '/assets/team/humayun-saeed-director.jpg',
-      quote: 'At Keen Power Solutions, we believe that every successful partnership begins with trust and a commitment to excellence. Our goal is to provide reliable energy solutions, exceptional service, and long-term value to every client we serve.',
+      quote: 'At HK Power Industries, we believe that every successful partnership begins with trust and a commitment to excellence. Our goal is to provide reliable energy solutions, exceptional service, and long-term value to every client we serve.',
       credentials: 'Operations, Brand Alliances & Engineering Oversight'
     }
   ];
@@ -79,71 +79,67 @@ export default function Leadership() {
     <section
       ref={containerRef}
       id="leadership"
-      className="relative py-24 sm:py-32 bg-[#181C1B] border-t border-[#343B37] overflow-hidden"
+      className="relative py-16 sm:py-20 lg:py-28 bg-[#F8FAFC] border-t border-[#E2E8F0] overflow-hidden"
     >
-      {/* Background Decor */}
-      <div className="absolute top-0 right-0 w-full h-full bg-industrial-grid opacity-20 pointer-events-none" />
-      <div className="absolute -top-40 left-1/3 w-96 h-96 bg-[#174D38]/10 rounded-full blur-[140px] pointer-events-none" />
+      {/* Background Architectural Grid Decor */}
+      <div className="absolute top-0 right-0 w-full h-full bg-architectural-grid opacity-30 pointer-events-none" />
+      <div className="absolute -top-40 left-1/3 w-96 h-96 bg-[#C59B27]/10 rounded-full blur-[140px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
-        <div ref={headerRef} className="max-w-3xl mb-16 sm:mb-20">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#174D38]/30 border border-[#216447]/60 text-[#E8ECE9] text-xs font-mono uppercase tracking-widest mb-4">
-            <UserCheck className="w-3.5 h-3.5 text-[#216447]" />
-            <span>Executive Governance</span>
-          </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-[#E8ECE9] font-display tracking-tight leading-tight">
+        <div ref={headerRef} className="max-w-3xl mb-10 sm:mb-12 lg:mb-16">
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#0B192C] tracking-tight leading-tight">
             Leadership Dedicated to Engineering Excellence.
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-[#929A96]">
+          <p className="mt-3 sm:mt-4 text-sm sm:text-base lg:text-lg text-[#64748B] leading-relaxed">
             Steered by industry professionals with decades of hands-on experience in power systems, electrical manufacturing, and nationwide project execution.
           </p>
         </div>
 
-        {/* Minimal Charcoal Leadership Grid */}
-        <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+        {/* Leadership Grid */}
+        <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-8">
           {leaders.map((leader, idx) => (
             <div
               key={idx}
-              className="bg-[#24282A] rounded-2xl border border-[#343B37] overflow-hidden shadow-2xl hover:border-[#216447] transition-all duration-300 flex flex-col justify-between group"
+              className="bg-white rounded-2xl border border-[#E2E8F0] overflow-hidden shadow-warm-lg hover:border-[#C59B27] transition-all duration-300 flex flex-col justify-between group"
             >
-              <div className="p-8 sm:p-10 space-y-6">
+              <div className="p-6 sm:p-8 lg:p-10 space-y-6">
                 {/* Header Profile Info */}
-                <div className="flex items-center gap-5">
-                  <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden border-2 border-[#216447] bg-[#111315] shrink-0 shadow-lg group-hover:border-[#2E8B62] transition-colors">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
+                  <div className="relative w-20 h-20 sm:w-24 sm:h-24 aspect-square rounded-2xl overflow-hidden border-2 border-[#E2E8F0] bg-white shrink-0 shadow-md group-hover:border-[#C59B27] transition-colors">
                     <img
                       src={leader.image}
                       alt={`${leader.name} - ${leader.role}`}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                       loading="lazy"
                     />
                   </div>
                   <div>
-                    <span className="text-[11px] font-mono font-bold tracking-wider text-[#2E8B62] uppercase block">
+                    <span className="text-[11px] font-mono font-bold tracking-wider text-[#C59B27] uppercase block">
                       {leader.role}
                     </span>
-                    <h3 className="text-2xl sm:text-3xl font-extrabold text-[#E8ECE9] font-display">
+                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-serif font-bold text-[#0B192C]">
                       {leader.name}
                     </h3>
-                    <span className="text-xs text-[#929A96] font-mono block mt-1">
+                    <span className="text-xs text-[#64748B] font-mono block mt-1">
                       {leader.credentials}
                     </span>
                   </div>
                 </div>
 
-                {/* Minimal Charcoal Quote Box */}
-                <div className="relative bg-[#181C1B] p-5 rounded-xl border border-[#343B37]">
-                  <Quote className="w-6 h-6 text-[#216447]/40 absolute top-3 right-3" />
-                  <p className="text-xs sm:text-sm text-[#929A96] italic leading-relaxed relative z-10">
+                {/* Quote Box */}
+                <div className="relative bg-[#F8FAFC] p-4 sm:p-5 rounded-xl border border-[#E2E8F0]">
+                  <Quote className="w-5 h-5 sm:w-6 sm:h-6 text-[#C59B27]/40 absolute top-3 right-3" />
+                  <p className="text-xs sm:text-sm text-[#334155] italic leading-relaxed relative z-10">
                     "{leader.quote}"
                   </p>
                 </div>
               </div>
 
               {/* Bottom Footer Strip */}
-              <div className="px-8 py-3.5 bg-[#111315] border-t border-[#343B37] flex items-center justify-between text-xs font-mono text-[#929A96]">
-                <span>KEEN POWER SOLUTIONS</span>
-                <span className="text-[#2E8B62] font-semibold">Lahore, Pakistan</span>
+              <div className="px-6 sm:px-8 py-4 bg-[#F8FAFC] border-t border-[#E2E8F0] flex items-center justify-between text-xs font-mono text-[#64748B]">
+                <span className="font-bold text-[#0B192C]">HK POWER INDUSTRIES</span>
+                <span className="text-[#C59B27] font-semibold">Lahore, Pakistan</span>
               </div>
             </div>
           ))}
