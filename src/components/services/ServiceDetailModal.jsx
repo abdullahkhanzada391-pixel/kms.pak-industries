@@ -3,23 +3,19 @@ import {
   X, 
   Check, 
   ArrowRight, 
-  ArrowLeft, 
   Shield, 
   Layers, 
   Wrench, 
   Building, 
   PhoneCall, 
   CalendarCheck,
-  Sliders,
-  Maximize2,
-  Minimize2
+  Sliders
 } from 'lucide-react';
 
 export default function ServiceDetailModal({ service, isOpen, onClose, onSelectService }) {
   const [isMounted, setIsMounted] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const [cachedService, setCachedService] = useState(null);
-  const [isFullWidth, setIsFullWidth] = useState(false);
 
   // Sync open/close transitions
   useEffect(() => {
@@ -102,34 +98,15 @@ export default function ServiceDetailModal({ service, isOpen, onClose, onSelectS
       {/* Expandable Service Detail Card - Automatically Adjusts to Screen Width */}
       <div
         onClick={(e) => e.stopPropagation()}
-        className={`bg-white shadow-2xl relative my-auto transition-all duration-300 ease-out flex flex-col overflow-hidden ${
-          isFullWidth
-            ? 'w-screen max-w-[100vw] min-w-full rounded-none border-y border-[#C8A34D]/35'
-            : 'w-full max-w-[94vw] lg:max-w-7xl xl:max-w-[1380px] mx-auto rounded-2xl sm:rounded-3xl border border-slate-200/90'
-        } ${
+        className={`bg-white shadow-2xl relative my-auto transition-all duration-300 ease-out flex flex-col overflow-hidden w-full max-w-[94vw] lg:max-w-7xl xl:max-w-[1380px] mx-auto rounded-2xl sm:rounded-3xl border border-slate-200/90 ${
           isAnimating 
             ? 'opacity-100 translate-y-0 scale-100' 
             : 'opacity-0 translate-y-4 scale-[0.985]'
         }`}
         style={{ maxHeight: '92vh' }}
       >
-        {/* Floating Top-Right Controls: Screen Width Adjust Toggle & Close Button */}
-        <div className="absolute top-4 right-4 sm:top-6 sm:right-8 z-30 flex items-center gap-2">
-          {/* Automatic Screen Adjustment Toggle Button */}
-          <button
-            onClick={() => setIsFullWidth(!isFullWidth)}
-            className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-[#102C4E] flex items-center justify-center transition-all duration-200 border border-slate-200 shadow-xs"
-            title={isFullWidth ? "Auto-adjust to screen" : "Expand to 100% full width"}
-            aria-label={isFullWidth ? "Auto-adjust to screen" : "Expand to 100% full width"}
-          >
-            {isFullWidth ? (
-              <Minimize2 className="w-4 h-4 text-slate-700" />
-            ) : (
-              <Maximize2 className="w-4 h-4 text-slate-700" />
-            )}
-          </button>
-
-          {/* Close Button */}
+        {/* Floating Top-Right Close Button */}
+        <div className="absolute top-4 right-4 sm:top-6 sm:right-8 z-30">
           <button
             onClick={handleClose}
             className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-[#102C4E] flex items-center justify-center transition-all duration-200 border border-slate-200 shadow-xs"
@@ -321,15 +298,6 @@ export default function ServiceDetailModal({ service, isOpen, onClose, onSelectS
                   RIGHT BOTTOM ACTION ROW (Cleanly Aligned to Right, Zero Text Overlap)
                  ========================================================================= */}
               <div className="flex flex-wrap items-center justify-end gap-3 pt-4 sm:pt-6 border-t border-slate-100">
-                {/* Secondary Back to Services Button */}
-                <button
-                  onClick={handleClose}
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-slate-300 hover:border-[#102C4E] bg-white text-[#102C4E] hover:bg-slate-50 font-semibold text-xs sm:text-sm transition-all duration-200"
-                >
-                  <ArrowLeft className="w-4 h-4 text-[#64748B]" />
-                  <span>Back to Services</span>
-                </button>
-
                 {/* Primary Book a Consultation Button (Exact Navy Blue, White & Gold Theme) */}
                 <button
                   onClick={handleBookConsultation}
