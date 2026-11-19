@@ -253,18 +253,6 @@ export default function ContactSection({ preselectedService }) {
                   </div>
                 </div>
               </div>
-
-              {/* Tax & Registration Credentials */}
-              <div className="pt-4 border-t border-[#E2E8F0] bg-[#F8FAFC] -mx-6 sm:-mx-8 -mb-6 sm:-mb-8 p-5 sm:p-6 rounded-b-2xl space-y-2 text-xs font-mono">
-                <div className="flex items-center justify-between">
-                  <span className="text-[#64748B]">Sales Tax (STRN):</span>
-                  <span className="text-[#0B192C] font-bold">3277876180555</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-[#64748B]">Income Tax (NTN):</span>
-                  <span className="text-[#0B192C] font-bold">5561026-7</span>
-                </div>
-              </div>
             </div>
           </div>
 
