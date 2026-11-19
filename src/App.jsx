@@ -29,12 +29,12 @@ export default function App() {
       {/* Cookie and Privacy Preferences Banner */}
       <CookieConsent />
 
-      <div className="min-h-screen bg-white text-[#0B192C] flex flex-col justify-between selection:bg-[#0B192C] selection:text-[#F59E0B] w-full max-w-full overflow-x-hidden">
+      <div className="min-h-screen bg-white text-[#0B192C] flex flex-col justify-between selection:bg-[#0B192C] selection:text-[#F59E0B]">
         {/* Top Global Editorial Navigation Bar */}
         <Navbar />
 
         {/* Page Content Routes */}
-        <main className="flex-1 w-full max-w-full overflow-x-hidden">
+        <main className="flex-1">
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/about" element={<AboutPage />} />

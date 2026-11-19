@@ -72,28 +72,44 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
-    const observers = [];
-    stepRefs.current.forEach((el, index) => {
-      if (!el) return;
-      const obs = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              setActiveStep(index);
-            }
-          });
-        },
-        {
-          rootMargin: '-30% 0px -40% 0px',
-          threshold: 0.1
+    let ticking = false;
+
+    const updateActiveStep = () => {
+      const viewportTarget = window.innerHeight * 0.45;
+      let bestIndex = 0;
+      let minDistance = Infinity;
+
+      stepRefs.current.forEach((el, index) => {
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        // Measure element center relative to reading zone
+        const elementCenter = rect.top + rect.height * 0.35;
+        const distance = Math.abs(elementCenter - viewportTarget);
+
+        if (distance < minDistance) {
+          minDistance = distance;
+          bestIndex = index;
         }
-      );
-      obs.observe(el);
-      observers.push(obs);
-    });
+      });
+
+      setActiveStep((prev) => (prev !== bestIndex ? bestIndex : prev));
+      ticking = false;
+    };
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateActiveStep);
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll);
+    updateActiveStep();
 
     return () => {
-      observers.forEach((obs) => obs.disconnect());
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
     };
   }, []);
 
@@ -169,6 +185,18 @@ export default function HomePage() {
         );
       }
 
+      // 1b. Synchronized Scrollytelling Step Triggers for Sticky Card
+      stepRefs.current.forEach((el, index) => {
+        if (!el) return;
+        ScrollTrigger.create({
+          trigger: el,
+          start: 'top 55%',
+          end: 'bottom 45%',
+          onEnter: () => setActiveStep(index),
+          onEnterBack: () => setActiveStep(index),
+        });
+      });
+
       // 2. Divisions Header & 4 Flagship Cards Stagger
       if (divisionsHeaderRef.current) {
         gsap.fromTo(
@@ -203,10 +231,10 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-12 relative">
             {/* Sticky Image Column (Left) */}
-            <div className="lg:col-span-5 relative">
+            <div className="lg:col-span-5 relative h-full">
               <div
-                className="lg:sticky w-full transition-all duration-300 z-20"
-                style={{ top: 'max(96px, calc(50vh - 210px))' }}
+                className="lg:sticky top-24 lg:top-28 w-full transition-all duration-300 z-20"
+                style={{ top: 'max(96px, calc(50vh - 200px))' }}
               >
                 <div
                   ref={teaserCardRef}
@@ -244,7 +272,7 @@ export default function HomePage() {
                   <div className="pt-3 px-1.5 flex items-center justify-between border-t border-[#E2E8F0] mt-3 text-xs text-[#64748B]">
                     <span className="font-mono text-[11px] font-semibold text-[#0B192C] flex items-center gap-1.5 truncate max-w-[210px] sm:max-w-none">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#C59B27] shrink-0" />
-                      <span className="truncate">{stickySteps[activeStep].subtitle}</span>
+                      <span className="truncate">{stickySteps[activeStep]?.subtitle}</span>
                     </span>
                     <div className="flex items-center gap-1.5 shrink-0 ml-2">
                       {stickySteps.map((_, i) => (
